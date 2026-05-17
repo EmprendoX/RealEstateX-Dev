@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Variables CSS para colores dinámicos desde siteConfig */
+  /* Estos valores se pueden sobrescribir con JavaScript si es necesario */
+  --color-primary: #0EA5E9;
+  --color-secondary: #06B6D4;
+}
+
+/* Aplicar colores primarios y secundarios dinámicamente */
+/* Nota: Para cambiar los colores, edita config/siteConfig.ts */
+/* Los colores se aplican usando las clases de Tailwind: bg-primary, text-primary, etc. */
+
+@layer base {
+  body {
+    @apply text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  /* Utilidades personalizadas si las necesitas */
+}
+
+/* Estilos para scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Estilos para imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+

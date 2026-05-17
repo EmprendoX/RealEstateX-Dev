@@ -1,0 +1,134 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+interface AdminLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function AdminLayout({ children }: AdminLayoutProps) {
+  const router = useRouter();
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Verificar autenticación
+    fetch("/api/admin/check-auth")
+      .then((res) => res.json())
+      .then((data) => {
+        setAuthenticated(data.authenticated);
+        setLoading(false);
+        if (!data.authenticated && router.pathname !== "/admin/login") {
+          router.push("/admin/login");
+        }
+      })
+      .catch(() => {
+        setAuthenticated(false);
+        setLoading(false);
+        if (router.pathname !== "/admin/login") {
+          router.push("/admin/login");
+        }
+      });
+  }, [router]);
+
+  const handleLogout = async () => {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin/login");
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!authenticated && router.pathname !== "/admin/login") {
+    return null;
+  }
+
+  if (router.pathname === "/admin/login") {
+    return <>{children}</>;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+        <title>Admin</title>
+      </Head>
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-8">
+              <Link href="/admin" className="text-xl font-bold text-gray-900">
+                Panel de Administración
+              </Link>
+              <nav className="hidden md:flex space-x-4">
+                <Link
+                  href="/admin"
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    router.pathname === "/admin"
+                      ? "bg-primary text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/admin/config"
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    router.pathname === "/admin/config"
+                      ? "bg-primary text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  Configuración
+                </Link>
+                <Link
+                  href="/admin/properties"
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    router.pathname.startsWith("/admin/properties")
+                      ? "bg-primary text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  Propiedades
+                </Link>
+              </nav>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Link
+                href="/"
+                target="_blank"
+                className="text-sm text-gray-600 hover:text-gray-900"
+              >
+                Ver sitio
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {children}
+      </main>
+    </div>
+  );
+}
+
+
