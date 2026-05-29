@@ -102,6 +102,26 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 >
                   Propiedades
                 </Link>
+                <Link
+                  href="/admin/integrations"
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    router.pathname === "/admin/integrations"
+                      ? "bg-primary text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  Integraciones
+                </Link>
+                <Link
+                  href="/admin/automations"
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    router.pathname === "/admin/automations"
+                      ? "bg-primary text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  Automatizaciones
+                </Link>
               </nav>
             </div>
             <div className="flex items-center space-x-4">
