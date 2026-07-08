@@ -1,6 +1,7 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
@@ -18,6 +19,7 @@ interface PropertyDetailPageProps {
 
 export default function PropertyDetailPage({ property }: PropertyDetailPageProps) {
   const { t } = useTranslation("common");
+  const { locale } = useRouter();
   const whatsappMessage = encodeURIComponent(
     t("propertyDetail.propertyMessage", { title: property.title })
   );
@@ -184,7 +186,7 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
                   </p>
                 </div>
                 <a
-                  href={`/api/properties/${property.slug}/pdf`}
+                  href={`/api/properties/${property.slug}/pdf?lang=${locale ?? "es"}`}
                   download={`${property.slug}.pdf`}
                   className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-medium transition-colors text-sm whitespace-nowrap"
                 >

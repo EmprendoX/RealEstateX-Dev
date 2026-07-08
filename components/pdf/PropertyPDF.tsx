@@ -12,6 +12,8 @@ import { Property } from "@/data/properties";
 import { SiteConfig } from "@/config/siteConfig";
 import { formatPrice } from "@/utils/formatPrice";
 
+type PdfLocale = "es" | "en";
+
 interface PropertyPDFProps {
   property: Property;
   siteConfig: SiteConfig;
@@ -19,7 +21,51 @@ interface PropertyPDFProps {
   /** Absolute image URLs (so the renderer can fetch them). */
   images: string[];
   generatedAt: string;
+  /** Language of the PDF. Defaults to "es". */
+  locale?: PdfLocale;
 }
+
+/** Self-contained labels for the PDF (the i18next hook isn't available here). */
+const PDF_LABELS: Record<PdfLocale, Record<string, string>> = {
+  es: {
+    sale: "VENTA",
+    rent: "RENTA",
+    saleWord: "Venta",
+    rentWord: "Renta",
+    price: "Precio",
+    bedrooms: "Recámaras",
+    bathrooms: "Baños",
+    parking: "Estacionamientos",
+    area: "Área",
+    description: "Descripción",
+    specs: "Ficha técnica",
+    type: "Tipo",
+    location: "Ubicación",
+    morePhotos: "Más fotos",
+    viewOnline: "Ver online:",
+    generatedOn: "Generado el",
+    subject: "Ficha de propiedad",
+  },
+  en: {
+    sale: "FOR SALE",
+    rent: "FOR RENT",
+    saleWord: "For sale",
+    rentWord: "For rent",
+    price: "Price",
+    bedrooms: "Bedrooms",
+    bathrooms: "Bathrooms",
+    parking: "Parking",
+    area: "Area",
+    description: "Description",
+    specs: "Specifications",
+    type: "Type",
+    location: "Location",
+    morePhotos: "More photos",
+    viewOnline: "View online:",
+    generatedOn: "Generated on",
+    subject: "Property fact sheet",
+  },
+};
 
 const PALETTE = {
   text: "#111827",
@@ -207,16 +253,18 @@ export default function PropertyPDF({
   propertyUrl,
   images,
   generatedAt,
+  locale = "es",
 }: PropertyPDFProps) {
   const styles = buildStyles(siteConfig.primaryColor);
   const heroImage = images[0];
   const thumbnails = images.slice(1, 5); // up to 4 extra thumbnails
+  const L = PDF_LABELS[locale] ?? PDF_LABELS.es;
 
   return (
     <Document
       title={`${property.title} — ${siteConfig.siteName}`}
       author={siteConfig.brokerName}
-      subject={`Ficha de propiedad: ${property.title}`}
+      subject={`${L.subject}: ${property.title}`}
     >
       <Page size="A4" style={styles.page}>
         {/* Header */}
@@ -238,7 +286,7 @@ export default function PropertyPDF({
               property.type === "venta" ? styles.badgeVenta : styles.badgeRenta,
             ]}
           >
-            {property.type === "venta" ? "VENTA" : "RENTA"}
+            {property.type === "venta" ? L.sale : L.rent}
           </Text>
         </View>
         <Text style={styles.location}>
@@ -250,7 +298,7 @@ export default function PropertyPDF({
 
         {/* Price */}
         <View style={styles.priceBox}>
-          <Text style={styles.priceLabel}>Precio</Text>
+          <Text style={styles.priceLabel}>{L.price}</Text>
           <Text style={styles.priceValue}>
             {formatPrice(property.price, property.currency)}
           </Text>
@@ -259,54 +307,54 @@ export default function PropertyPDF({
         {/* Features grid */}
         <View style={styles.features}>
           <View style={styles.feature}>
-            <Text style={styles.featureLabel}>Recámaras</Text>
+            <Text style={styles.featureLabel}>{L.bedrooms}</Text>
             <Text style={styles.featureValue}>{property.bedrooms}</Text>
           </View>
           <View style={styles.feature}>
-            <Text style={styles.featureLabel}>Baños</Text>
+            <Text style={styles.featureLabel}>{L.bathrooms}</Text>
             <Text style={styles.featureValue}>{property.bathrooms}</Text>
           </View>
           <View style={styles.feature}>
-            <Text style={styles.featureLabel}>Estacionamientos</Text>
+            <Text style={styles.featureLabel}>{L.parking}</Text>
             <Text style={styles.featureValue}>{property.parking}</Text>
           </View>
           <View style={styles.feature}>
-            <Text style={styles.featureLabel}>Área</Text>
+            <Text style={styles.featureLabel}>{L.area}</Text>
             <Text style={styles.featureValue}>{property.area} m²</Text>
           </View>
         </View>
 
         {/* Description */}
-        <Text style={styles.sectionTitle}>Descripción</Text>
+        <Text style={styles.sectionTitle}>{L.description}</Text>
         <Text style={styles.paragraph}>{property.description}</Text>
 
         {/* Spec sheet */}
-        <Text style={styles.sectionTitle}>Ficha técnica</Text>
+        <Text style={styles.sectionTitle}>{L.specs}</Text>
         <View style={styles.techGrid}>
           <View style={styles.techCell}>
-            <Text style={styles.techLabel}>Tipo</Text>
+            <Text style={styles.techLabel}>{L.type}</Text>
             <Text style={styles.techValue}>
-              {property.type === "venta" ? "Venta" : "Renta"}
+              {property.type === "venta" ? L.saleWord : L.rentWord}
             </Text>
           </View>
           <View style={styles.techCell}>
-            <Text style={styles.techLabel}>Recámaras</Text>
+            <Text style={styles.techLabel}>{L.bedrooms}</Text>
             <Text style={styles.techValue}>{property.bedrooms}</Text>
           </View>
           <View style={styles.techCell}>
-            <Text style={styles.techLabel}>Baños</Text>
+            <Text style={styles.techLabel}>{L.bathrooms}</Text>
             <Text style={styles.techValue}>{property.bathrooms}</Text>
           </View>
           <View style={styles.techCell}>
-            <Text style={styles.techLabel}>Estacionamientos</Text>
+            <Text style={styles.techLabel}>{L.parking}</Text>
             <Text style={styles.techValue}>{property.parking}</Text>
           </View>
           <View style={styles.techCell}>
-            <Text style={styles.techLabel}>Área</Text>
+            <Text style={styles.techLabel}>{L.area}</Text>
             <Text style={styles.techValue}>{property.area} m²</Text>
           </View>
           <View style={styles.techCell}>
-            <Text style={styles.techLabel}>Ubicación</Text>
+            <Text style={styles.techLabel}>{L.location}</Text>
             <Text style={styles.techValue}>{property.location}</Text>
           </View>
         </View>
@@ -314,7 +362,7 @@ export default function PropertyPDF({
         {/* Additional gallery */}
         {thumbnails.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Más fotos</Text>
+            <Text style={styles.sectionTitle}>{L.morePhotos}</Text>
             <View style={styles.thumbnailsRow}>
               {thumbnails.map((src, i) => (
                 <Image key={i} src={src} style={styles.thumbnail} />
@@ -328,13 +376,13 @@ export default function PropertyPDF({
           <View>
             <Text>{siteConfig.siteName} — {siteConfig.brokerName}</Text>
             <Text>
-              Ver online:{" "}
+              {L.viewOnline}{" "}
               <PDFLink src={propertyUrl} style={styles.link}>
                 {propertyUrl}
               </PDFLink>
             </Text>
           </View>
-          <Text>Generado el {generatedAt}</Text>
+          <Text>{L.generatedOn} {generatedAt}</Text>
         </View>
       </Page>
     </Document>

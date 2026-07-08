@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import React from "react";
 import { renderToBuffer } from "@react-pdf/renderer";
-import { getPropertyBySlug } from "@/data/properties";
+import { getPropertyBySlug, localizeProperty } from "@/data/properties";
 import { siteConfig } from "@/config/siteConfig";
 import PropertyPDF from "@/components/pdf/PropertyPDF";
 
@@ -43,21 +43,34 @@ export default async function handler(
     return res.status(400).json({ ok: false, message: "Slug inválido" });
   }
 
-  const property = getPropertyBySlug(slug);
-  if (!property) {
+  const rawProperty = getPropertyBySlug(slug);
+  if (!rawProperty) {
     return res.status(404).json({ ok: false, message: "Propiedad no encontrada" });
   }
 
+  // Language: "en" or "es" (default). Comes from the ?lang= query param.
+  const langParam = Array.isArray(req.query.lang)
+    ? req.query.lang[0]
+    : req.query.lang;
+  const locale = langParam === "en" ? "en" : "es";
+
+  // Localize the property text (title/description) to the requested language.
+  const property = localizeProperty(rawProperty, locale);
+
   try {
     const baseUrl = baseUrlFromRequest(req);
-    const propertyUrl = `${baseUrl}/properties/${property.slug}`;
+    const localePrefix = locale === "en" ? "/en" : "";
+    const propertyUrl = `${baseUrl}${localePrefix}/properties/${property.slug}`;
     const absoluteImages = property.images.map((img) =>
       toAbsoluteImageUrl(img, baseUrl)
     );
-    const generatedAt = new Date().toLocaleString("es-MX", {
-      dateStyle: "long",
-      timeStyle: "short",
-    });
+    const generatedAt = new Date().toLocaleString(
+      locale === "en" ? "en-US" : "es-MX",
+      {
+        dateStyle: "long",
+        timeStyle: "short",
+      }
+    );
 
     const buffer = await renderToBuffer(
       <PropertyPDF
@@ -66,6 +79,7 @@ export default async function handler(
         propertyUrl={propertyUrl}
         images={absoluteImages}
         generatedAt={generatedAt}
+        locale={locale}
       />
     );
 
