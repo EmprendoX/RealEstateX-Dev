@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18NextConfig from "../../next-i18next.config";
 import Layout from "@/components/Layout";
 import PropertyHero from "@/components/PropertyHero";
 import PropertyMap from "@/components/PropertyMap";
@@ -266,7 +267,7 @@ export const getStaticProps: GetStaticProps<PropertyDetailPageProps> = async ({
   return {
     props: {
       property: localizeProperty(property, locale),
-      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+      ...(await serverSideTranslations(locale ?? "es", ["common"], nextI18NextConfig)),
     },
     // Revalidate every 60s to reflect admin changes without a redeploy
     revalidate: 60,

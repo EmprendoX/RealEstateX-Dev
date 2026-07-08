@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18NextConfig from "../next-i18next.config";
 import Layout from "@/components/Layout";
 import { properties as allProperties, localizeProperties, Property } from "@/data/properties";
 import { formatPrice } from "@/utils/formatPrice";
@@ -207,7 +208,7 @@ export const getStaticProps: GetStaticProps<ComparePageProps> = async ({ locale 
   return {
     props: {
       properties: localizeProperties(allProperties, locale),
-      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+      ...(await serverSideTranslations(locale ?? "es", ["common"], nextI18NextConfig)),
     },
     revalidate: 60,
   };

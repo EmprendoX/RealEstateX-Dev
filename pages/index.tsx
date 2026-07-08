@@ -12,11 +12,12 @@ import { getTestimonials } from "@/data/testimonials";
 import { getAboutContent, renderTemplate } from "@/data/aboutPage";
 import type { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18NextConfig from "../next-i18next.config";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+      ...(await serverSideTranslations(locale ?? "es", ["common"], nextI18NextConfig)),
     },
   };
 };

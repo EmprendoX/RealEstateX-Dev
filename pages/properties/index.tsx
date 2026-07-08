@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18NextConfig from "../../next-i18next.config";
 import Layout from "@/components/Layout";
 import PropertyGrid from "@/components/PropertyGrid";
 import PropertyFiltersUI from "@/components/PropertyFilters";
@@ -162,7 +163,7 @@ export const getStaticProps: GetStaticProps<PropertiesPageProps> = async ({ loca
     props: {
       properties: localizeProperties(properties, locale),
       cities: getUniqueCities(),
-      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+      ...(await serverSideTranslations(locale ?? "es", ["common"], nextI18NextConfig)),
     },
     revalidate: 60,
   };

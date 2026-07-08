@@ -2,6 +2,7 @@ import React from "react";
 import type { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18NextConfig from "../next-i18next.config";
 import Layout from "@/components/Layout";
 import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/config/siteConfig";
@@ -9,7 +10,7 @@ import { siteConfig } from "@/config/siteConfig";
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+      ...(await serverSideTranslations(locale ?? "es", ["common"], nextI18NextConfig)),
     },
   };
 };
