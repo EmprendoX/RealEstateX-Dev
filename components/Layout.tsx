@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { siteConfig } from "@/config/siteConfig";
 import Navbar from "./Navbar";
@@ -32,6 +33,8 @@ export default function Layout({
   jsonLd,
 }: LayoutProps) {
   const { t } = useTranslation("common");
+  const { locale } = useRouter();
+  const ogLocale = locale === "en" ? "en_US" : "es_MX";
   const pageTitle = title
     ? `${title} | ${siteConfig.siteName}`
     : `${siteConfig.siteName} - ${siteConfig.slogan}`;
@@ -65,7 +68,7 @@ export default function Layout({
         <meta property="og:description" content={pageDescription} />
         <meta property="og:url" content={canonical} />
         {ogImage && <meta property="og:image" content={ogImage} />}
-        <meta property="og:locale" content="es_MX" />
+        <meta property="og:locale" content={ogLocale} />
 
         {/* Twitter */}
         <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />

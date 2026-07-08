@@ -179,7 +179,11 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
               )}
 
               {/* Share this property */}
-              <ShareButton title={property.title} />
+              <ShareButton
+                title={property.title}
+                path={canonicalPath}
+                locale={locale}
+              />
 
               {/* Download PDF */}
               <div className="bg-white rounded-lg shadow-md p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">

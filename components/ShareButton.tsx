@@ -6,8 +6,12 @@ import { useTranslation } from "next-i18next";
 interface ShareButtonProps {
   /** Title of the thing being shared (e.g. the property title). */
   title: string;
-  /** Optional explicit URL. Defaults to the current page URL. */
+  /** Optional explicit URL. Overrides path/locale if provided. */
   url?: string;
+  /** Locale-agnostic path of the page (e.g. "/properties/my-slug"). */
+  path?: string;
+  /** Active locale, so the shared link points to the right language. */
+  locale?: string;
 }
 
 /**
@@ -19,21 +23,30 @@ interface ShareButtonProps {
  * The shared link unfurls with title, description and image thanks to the
  * Open Graph / Twitter meta tags rendered by the Layout component.
  */
-export default function ShareButton({ title, url }: ShareButtonProps) {
+export default function ShareButton({ title, url, path, locale }: ShareButtonProps) {
   const { t } = useTranslation("common");
   const [shareUrl, setShareUrl] = useState(url || "");
   const [copied, setCopied] = useState(false);
   const [canNativeShare, setCanNativeShare] = useState(false);
 
   useEffect(() => {
-    // Resolve the URL on the client so it includes the current locale prefix.
-    if (!url && typeof window !== "undefined") {
-      setShareUrl(window.location.href);
+    if (url) {
+      setShareUrl(url);
+    } else if (typeof window !== "undefined") {
+      // Build a canonical link from the real deployed origin + the active
+      // locale prefix, so the shared URL always matches the displayed language
+      // (window.location.href can lag the locale prefix on some hosts).
+      if (path) {
+        const prefix = locale && locale !== "es" ? `/${locale}` : "";
+        setShareUrl(`${window.location.origin}${prefix}${path}`);
+      } else {
+        setShareUrl(window.location.href);
+      }
     }
     if (typeof navigator !== "undefined" && "share" in navigator) {
       setCanNativeShare(true);
     }
-  }, [url]);
+  }, [url, path, locale]);
 
   const shareText = `${title} — ${shareUrl}`;
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
