@@ -181,6 +181,12 @@
     "pdfTitle": "Ficha de la propiedad",
     "pdfSubtitle": "Descargá un PDF con toda la información para imprimir o compartir.",
     "downloadPdf": "Descargar PDF",
+    "shareTitle": "Compartir esta propiedad",
+    "shareSubtitle": "Copiá el link y envialo por WhatsApp, mensaje o donde quieras. Se verá con foto e información.",
+    "copyLink": "Copiar link",
+    "copied": "¡Copiado!",
+    "shareWhatsapp": "WhatsApp",
+    "shareMore": "Compartir",
     "questionsHeading": "¿Tienes preguntas sobre esta propiedad?",
     "questionsSubtitle": "Contáctanos directamente por WhatsApp para una respuesta rápida",
     "contactWhatsapp": "💬 Contactar por WhatsApp"

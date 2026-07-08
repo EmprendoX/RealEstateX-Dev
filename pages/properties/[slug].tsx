@@ -10,6 +10,7 @@ import PropertyMap from "@/components/PropertyMap";
 import PropertyTour from "@/components/PropertyTour";
 import MortgageCalculator from "@/components/MortgageCalculator";
 import ContactForm from "@/components/ContactForm";
+import ShareButton from "@/components/ShareButton";
 import { properties, getPropertyBySlug, localizeProperty, Property } from "@/data/properties";
 import { siteConfig } from "@/config/siteConfig";
 
@@ -176,6 +177,9 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
               {property.type === "venta" && (
                 <MortgageCalculator property={property} />
               )}
+
+              {/* Share this property */}
+              <ShareButton title={property.title} />
 
               {/* Download PDF */}
               <div className="bg-white rounded-lg shadow-md p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">

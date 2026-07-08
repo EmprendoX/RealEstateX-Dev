@@ -181,6 +181,12 @@
     "pdfTitle": "Property fact sheet",
     "pdfSubtitle": "Download a PDF with all the information to print or share.",
     "downloadPdf": "Download PDF",
+    "shareTitle": "Share this property",
+    "shareSubtitle": "Copy the link and send it via WhatsApp, message, or anywhere. It shows up with a photo and info.",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "shareWhatsapp": "WhatsApp",
+    "shareMore": "Share",
     "questionsHeading": "Have questions about this property?",
     "questionsSubtitle": "Contact us directly via WhatsApp for a quick response",
     "contactWhatsapp": "💬 Contact via WhatsApp"
