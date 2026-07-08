@@ -12,11 +12,15 @@ export interface SiteConfig {
   siteUrl: string; // Absolute production site URL (e.g. "https://juanperez.com") without a trailing slash
   logoText: string;
   logoUrl?: string; // Logo image URL (optional)
+  heroImage?: string; // Hero section background image URL (optional)
   primaryColor: string; // Primary color in hex format (e.g. "#0EA5E9")
   secondaryColor: string; // Secondary color in hex format (e.g. "#06B6D4")
 
   // Broker data
+  businessType?: "broker" | "agencia" | "desarrollador"; // Type of account. Defaults to "broker"
   brokerName: string;
+  agentsCount?: number; // Agency only: number of agents
+  developmentName?: string; // Developer only: name of the project/development
   phone: string;
   whatsapp: string; // Number without spaces or special characters (e.g. "5215512345678")
   email: string;
@@ -44,13 +48,17 @@ export const siteConfig: SiteConfig = {
   siteUrl: "https://realestatex.com",
   logoText: "RealEX",
   logoUrl: undefined,
+  heroImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920",
   primaryColor: "#008cb4",
   secondaryColor: "#004d65",
   
   // ============================================
   // BROKER DATA
   // ============================================
+  businessType: "broker",
   brokerName: "Juan Pérez",
+  agentsCount: undefined,
+  developmentName: undefined,
   phone: "+52 55 1234 5678",
   whatsapp: "5215512345678",
   email: "contacto@realestatex.com",

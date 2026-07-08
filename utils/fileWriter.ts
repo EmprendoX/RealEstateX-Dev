@@ -24,11 +24,15 @@ export interface SiteConfig {
   siteUrl: string; // Absolute production URL (e.g. "https://juanperez.com") with no trailing slash
   logoText: string;
   logoUrl?: string; // Logo image URL (optional)
+  heroImage?: string; // Hero section background image URL (optional)
   primaryColor: string; // Primary color in hex format (e.g. "#0EA5E9")
   secondaryColor: string; // Secondary color in hex format (e.g. "#06B6D4")
 
   // Broker details
+  businessType?: "broker" | "agencia" | "desarrollador"; // Type of account. Defaults to "broker"
   brokerName: string;
+  agentsCount?: number; // Agency only: number of agents
+  developmentName?: string; // Developer only: name of the project/development
   phone: string;
   whatsapp: string; // Number without spaces or special characters (e.g. "5215512345678")
   email: string;
@@ -56,13 +60,17 @@ export const siteConfig: SiteConfig = {
   siteUrl: ${JSON.stringify(config.siteUrl)},
   logoText: ${JSON.stringify(config.logoText)},
   logoUrl: ${config.logoUrl ? JSON.stringify(config.logoUrl) : "undefined"},
+  heroImage: ${config.heroImage ? JSON.stringify(config.heroImage) : "undefined"},
   primaryColor: ${JSON.stringify(config.primaryColor)},
   secondaryColor: ${JSON.stringify(config.secondaryColor)},
   
   // ============================================
   // BROKER DETAILS
   // ============================================
+  businessType: ${config.businessType ? JSON.stringify(config.businessType) : "\"broker\""},
   brokerName: ${JSON.stringify(config.brokerName)},
+  agentsCount: ${config.agentsCount !== undefined && config.agentsCount !== null && !Number.isNaN(config.agentsCount) ? config.agentsCount : "undefined"},
+  developmentName: ${config.developmentName ? JSON.stringify(config.developmentName) : "undefined"},
   phone: ${JSON.stringify(config.phone)},
   whatsapp: ${JSON.stringify(config.whatsapp)},
   email: ${JSON.stringify(config.email)},

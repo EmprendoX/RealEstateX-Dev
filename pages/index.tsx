@@ -71,18 +71,25 @@ export default function Home() {
         slogan: siteConfig.slogan,
       })}
       canonicalPath="/"
-      image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200"
+      image={
+        siteConfig.heroImage ||
+        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200"
+      }
     >
       {/* Main Hero */}
       <section className="relative h-screen flex items-center justify-center text-white">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920"
+            src={
+              siteConfig.heroImage ||
+              "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920"
+            }
             alt={t("home.heroAlt")}
             fill
             className="object-cover"
             priority
             sizes="100vw"
+            unoptimized
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>

@@ -61,7 +61,7 @@ export default async function handler(
     }
 
     // Validate file type
-    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
     if (!file.mimetype || !allowedTypes.includes(file.mimetype)) {
       // Delete file if it is not valid
       if (fs.existsSync(file.filepath)) {
@@ -69,7 +69,7 @@ export default async function handler(
       }
       return res.status(400).json({
         ok: false,
-        message: "File type not allowed. Only images are allowed (JPG, PNG, WEBP, GIF)",
+        message: "File type not allowed. Only images are allowed (JPG, PNG, WEBP, GIF, SVG)",
       });
     }
 
