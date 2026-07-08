@@ -15,6 +15,10 @@ export interface Property {
   slug: string; // URL amigable (ej: "departamento-reforma-123")
   title: string;
   description: string;
+  /** Traducción al inglés del título (opcional). Si falta, se usa `title`. */
+  titleEn?: string;
+  /** Traducción al inglés de la descripción (opcional). Si falta, se usa `description`. */
+  descriptionEn?: string;
   type: PropertyType;
   price: number;
   currency: Currency;
@@ -34,7 +38,9 @@ export const properties: Property[] = [
     id: "1",
     slug: "casa-moderna-santa-fe",
     title: "Casa Moderna en Santa Fe",
+    titleEn: "Modern House in Santa Fe",
     description: "Casa contemporánea con diseño arquitectónico único. Amplios espacios, jardín privado, terraza con vista y cocina integral de alta gama. Ubicada en una zona residencial exclusiva con fácil acceso a centros comerciales y corporativos.",
+    descriptionEn: "Contemporary house with a unique architectural design. Spacious rooms, a private garden, a terrace with views and a high-end fitted kitchen. Located in an exclusive residential area with easy access to shopping and business centers.",
     type: "venta",
     price: 12500000,
     currency: "MXN",
@@ -52,7 +58,9 @@ export const properties: Property[] = [
     id: "2",
     slug: "departamento-renta-roma",
     title: "Departamento en Renta - Roma Norte",
+    titleEn: "Apartment for Rent - Roma Norte",
     description: "Acogedor departamento en una de las zonas más vibrantes de la ciudad. Cerca de restaurantes, cafeterías y vida nocturna. Ideal para jóvenes profesionales. Incluye todos los servicios y está listo para habitar.",
+    descriptionEn: "Cozy apartment in one of the city's most vibrant neighborhoods. Close to restaurants, cafés and nightlife. Ideal for young professionals. Includes all utilities and is move-in ready.",
     type: "renta",
     price: 25000,
     currency: "MXN",
@@ -69,7 +77,9 @@ export const properties: Property[] = [
     id: "3",
     slug: "penthouse-lujo-reforma",
     title: "Penthouse de Lujo en Reforma",
+    titleEn: "Luxury Penthouse in Reforma",
     description: "Exclusivo penthouse con terraza privada y vista 360° de la ciudad. Acabados premium, cocina italiana, sistema de domótica y acceso a piscina y gimnasio. La oportunidad perfecta para vivir en el corazón financiero de la ciudad.",
+    descriptionEn: "Exclusive penthouse with a private terrace and 360° views of the city. Premium finishes, an Italian kitchen, a home automation system and access to a pool and gym. The perfect opportunity to live in the city's financial heart.",
     type: "venta",
     price: 18500000,
     currency: "MXN",
@@ -86,7 +96,9 @@ export const properties: Property[] = [
     id: "4",
     slug: "casa-renta-coyoacan",
     title: "Casa en Renta - Coyoacán",
+    titleEn: "House for Rent - Coyoacán",
     description: "Encantadora casa tradicional con patio central y mucho carácter. Ubicada en una calle tranquila del histórico barrio de Coyoacán. Perfecta para familias que buscan un ambiente tranquilo y cercano a parques y escuelas.",
+    descriptionEn: "Charming traditional house with a central courtyard and plenty of character. Located on a quiet street in the historic neighborhood of Coyoacán. Perfect for families looking for a peaceful setting close to parks and schools.",
     type: "renta",
     price: 35000,
     currency: "MXN",
@@ -123,3 +135,25 @@ export function getUniqueCities(): string[] {
   return Array.from(new Set(cities));
 }
 
+/**
+ * Devuelve una copia de la propiedad con los campos de texto en el idioma dado.
+ * Para "en" usa titleEn/descriptionEn si existen; en cualquier otro caso (o si
+ * falta la traducción) devuelve el texto en español. El precio, la moneda, la
+ * ciudad y la ubicación se mantienen intactos (contexto local).
+ */
+export function localizeProperty(property: Property, locale?: string): Property {
+  if (locale !== "en") return property;
+  return {
+    ...property,
+    title: property.titleEn ?? property.title,
+    description: property.descriptionEn ?? property.description,
+  };
+}
+
+/** Aplica localizeProperty a una lista de propiedades. */
+export function localizeProperties(
+  list: Property[],
+  locale?: string
+): Property[] {
+  return list.map((property) => localizeProperty(property, locale));
+}

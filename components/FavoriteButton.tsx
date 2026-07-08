@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslation } from "next-i18next";
 import { useFavorites } from "@/utils/useFavorites";
 
 interface FavoriteButtonProps {
@@ -14,6 +15,7 @@ export default function FavoriteButton({
   className = "",
   size = "md",
 }: FavoriteButtonProps) {
+  const { t } = useTranslation("common");
   const { isFavorite, toggle, hydrated } = useFavorites();
   const active = isFavorite(propertyId);
 
@@ -24,15 +26,15 @@ export default function FavoriteButton({
     <button
       type="button"
       onClick={(e) => {
-        // Si el botón está dentro de un <Link>, evitar navegar al togglear
+        // If the button is inside a <Link>, avoid navigating when toggling
         e.preventDefault();
         e.stopPropagation();
         toggle(propertyId);
       }}
-      aria-label={active ? "Quitar de favoritos" : "Agregar a favoritos"}
+      aria-label={active ? t("favoriteButton.remove") : t("favoriteButton.add")}
       aria-pressed={active}
-      // suppressHydrationWarning: el estado inicial (server) es siempre "no favorito"
-      // y se hidrata en el cliente. Es deseado y no representa un error real.
+      // suppressHydrationWarning: the initial state (server) is always "not favorite"
+      // and hydrates on the client. This is intended and not a real error.
       suppressHydrationWarning
       className={`${btnSize} rounded-full bg-white/95 hover:bg-white shadow-md flex items-center justify-center transition-all hover:scale-110 ${className}`}
     >

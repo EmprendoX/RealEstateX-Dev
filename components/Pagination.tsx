@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslation } from "next-i18next";
 
 interface PaginationProps {
   currentPage: number;
@@ -13,14 +14,15 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
+  const { t } = useTranslation("common");
   if (totalPages <= 1) return null;
 
-  // Construye la lista de páginas a mostrar: siempre 1 y total,
-  // current y vecinos, y "..." para gaps.
+  // Builds the list of pages to show: always 1 and total,
+  // current and neighbors, and "..." for gaps.
   const pages: (number | "ellipsis")[] = [];
   const add = (p: number | "ellipsis") => pages.push(p);
 
-  const window = 1; // cuántos vecinos a cada lado de la actual
+  const window = 1; // how many neighbors on each side of the current page
   const showFirst = 1;
   const showLast = totalPages;
 
@@ -42,15 +44,15 @@ export default function Pagination({
   };
 
   return (
-    <nav className="flex items-center justify-center gap-2 mt-8" aria-label="Paginación">
+    <nav className="flex items-center justify-center gap-2 mt-8" aria-label={t("pagination.label")}>
       <button
         type="button"
         onClick={() => goTo(currentPage - 1)}
         disabled={currentPage === 1}
         className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-        aria-label="Página anterior"
+        aria-label={t("pagination.previousLabel")}
       >
-        ← Anterior
+        {t("pagination.previous")}
       </button>
 
       {pages.map((p, i) =>
@@ -80,9 +82,9 @@ export default function Pagination({
         onClick={() => goTo(currentPage + 1)}
         disabled={currentPage === totalPages}
         className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-        aria-label="Página siguiente"
+        aria-label={t("pagination.nextLabel")}
       >
-        Siguiente →
+        {t("pagination.next")}
       </button>
     </nav>
   );

@@ -27,13 +27,13 @@ export default function EditPropertyPage() {
         if (found) {
           setProperty(found);
         } else {
-          alert("Propiedad no encontrada");
+          alert("Property not found");
           router.push("/admin/properties");
         }
       }
     } catch (error) {
-      console.error("Error cargando propiedad:", error);
-      alert("Error al cargar la propiedad");
+      console.error("Error loading property:", error);
+      alert("Error loading the property");
       router.push("/admin/properties");
     } finally {
       setLoading(false);
@@ -52,10 +52,10 @@ export default function EditPropertyPage() {
     const data = await response.json();
 
     if (data.ok) {
-      alert("Propiedad actualizada exitosamente");
+      alert("Property updated successfully");
       router.push("/admin/properties");
     } else {
-      throw new Error(data.message || "Error al actualizar la propiedad");
+      throw new Error(data.message || "Error updating the property");
     }
   };
 
@@ -63,7 +63,7 @@ export default function EditPropertyPage() {
     return (
       <AdminLayout>
         <div className="text-center py-12">
-          <p className="text-gray-600">Cargando propiedad...</p>
+          <p className="text-gray-600">Loading property...</p>
         </div>
       </AdminLayout>
     );
@@ -77,10 +77,10 @@ export default function EditPropertyPage() {
     <AdminLayout>
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          Editar Propiedad
+          Edit Property
         </h1>
         <p className="text-gray-600 mb-8">
-          Modifica los datos de la propiedad.
+          Modify the property details.
         </p>
         <PropertyForm
           property={property}

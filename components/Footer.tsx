@@ -1,19 +1,19 @@
 import React from "react";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 import { siteConfig } from "@/config/siteConfig";
 
 export default function Footer() {
+  const { t } = useTranslation("common");
   const currentYear = new Date().getFullYear();
-  const whatsappMessage = encodeURIComponent(
-    "Hola, me interesa una propiedad. ¿Me puedes dar más información?"
-  );
+  const whatsappMessage = encodeURIComponent(t("whatsapp.defaultMessage"));
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
 
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Información del sitio */}
+          {/* Site info */}
           <div>
             <h3 className="text-xl font-bold mb-4">{siteConfig.siteName}</h3>
             <p className="text-gray-400 mb-4">{siteConfig.slogan}</p>
@@ -22,16 +22,16 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Enlaces rápidos */}
+          {/* Quick links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Enlaces rápidos</h4>
+            <h4 className="text-lg font-semibold mb-4">{t("footer.quickLinks")}</h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  Inicio
+                  {t("nav.home")}
                 </Link>
               </li>
               <li>
@@ -39,7 +39,7 @@ export default function Footer() {
                   href="/properties"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  Propiedades
+                  {t("nav.properties")}
                 </Link>
               </li>
               <li>
@@ -47,7 +47,7 @@ export default function Footer() {
                   href="/about"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  Sobre mí
+                  {t("nav.about")}
                 </Link>
               </li>
               <li>
@@ -55,15 +55,15 @@ export default function Footer() {
                   href="/contact"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  Contacto
+                  {t("nav.contact")}
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contacto y redes sociales */}
+          {/* Contact and social media */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contacto</h4>
+            <h4 className="text-lg font-semibold mb-4">{t("footer.contact")}</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
               <li>
                 <a
@@ -93,13 +93,13 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* Redes sociales */}
+            {/* Social media */}
             {(siteConfig.facebook ||
               siteConfig.instagram ||
               siteConfig.tiktok ||
               siteConfig.linkedin) && (
               <div className="mt-6">
-                <h5 className="text-sm font-semibold mb-2">Síguenos</h5>
+                <h5 className="text-sm font-semibold mb-2">{t("footer.followUs")}</h5>
                 <div className="flex space-x-4">
                   {siteConfig.facebook && (
                     <a
@@ -154,11 +154,13 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
           <p>
-            © {currentYear} {siteConfig.siteName}. Todos los derechos
-            reservados.
+            {t("footer.copyright", {
+              year: currentYear,
+              site: siteConfig.siteName,
+            })}
           </p>
           <p className="mt-2">
-            Desarrollado por {siteConfig.brokerName}
+            {t("footer.developedBy", { name: siteConfig.brokerName })}
           </p>
         </div>
       </div>

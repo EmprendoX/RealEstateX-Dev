@@ -21,20 +21,20 @@ function writeToStorage(ids: string[]) {
   if (typeof window === "undefined") return;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
-    // Notificar a otros componentes en la misma pestaña (storage event no se dispara local)
+    // Notify other components in the same tab (the storage event doesn't fire locally)
     window.dispatchEvent(new CustomEvent(EVENT_NAME));
   } catch {
-    // localStorage lleno o bloqueado — silenciar; el favorito no persiste.
+    // localStorage full or blocked — silence it; the favorite won't persist.
   }
 }
 
 /**
- * Hook compartido para favoritos (localStorage).
- * SSR-safe: en el servidor devuelve [] y se hidrata al montar.
+ * Shared hook for favorites (localStorage).
+ * SSR-safe: on the server it returns [] and hydrates on mount.
  *
- * Múltiples instancias del hook en la misma página se mantienen sincronizadas
- * via un CustomEvent — útil para que el heart en el card y el contador del
- * navbar reaccionen al toque sin que el usuario tenga que recargar.
+ * Multiple instances of the hook on the same page stay in sync
+ * via a CustomEvent — useful so the heart on the card and the navbar
+ * counter react to a tap without the user having to reload.
  */
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -46,7 +46,7 @@ export function useFavorites() {
 
     const sync = () => setFavorites(readFromStorage());
     window.addEventListener(EVENT_NAME, sync);
-    window.addEventListener("storage", sync); // sincroniza entre pestañas
+    window.addEventListener("storage", sync); // syncs across tabs
 
     return () => {
       window.removeEventListener(EVENT_NAME, sync);

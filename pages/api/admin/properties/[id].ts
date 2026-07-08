@@ -14,7 +14,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<PropertyResponse>
 ) {
-  // Verificar autenticación
+  // Check authentication
   if (!requireAuth(req, res)) {
     return;
   }
@@ -24,118 +24,118 @@ export default function handler(
   if (!id || typeof id !== "string") {
     return res.status(400).json({
       ok: false,
-      message: "ID de propiedad requerido",
+      message: "Property ID required",
     });
   }
 
-  // PUT - Actualizar propiedad
+  // PUT - Update property
   if (req.method === "PUT") {
     try {
       const updatedProperty: Property = req.body;
 
-      // Validar que el ID coincida
+      // Validate that the ID matches
       if (updatedProperty.id !== id) {
         return res.status(400).json({
           ok: false,
-          message: "El ID de la propiedad no coincide",
+          message: "The property ID does not match",
         });
       }
 
-      // Buscar la propiedad existente
+      // Find the existing property
       const propertyIndex = properties.findIndex((p) => p.id === id);
       if (propertyIndex === -1) {
         return res.status(404).json({
           ok: false,
-          message: "Propiedad no encontrada",
+          message: "Property not found",
         });
       }
 
-      // Validar que el slug sea único (si cambió)
+      // Validate that the slug is unique (if it changed)
       if (
         updatedProperty.slug !== properties[propertyIndex].slug &&
         properties.some((p) => p.slug === updatedProperty.slug && p.id !== id)
       ) {
         return res.status(400).json({
           ok: false,
-          message: "Ya existe otra propiedad con ese slug",
+          message: "Another property with that slug already exists",
         });
       }
 
-      // Validaciones
+      // Validations
       if (!updatedProperty.title || !updatedProperty.slug || !updatedProperty.description) {
         return res.status(400).json({
           ok: false,
-          message: "Campos requeridos faltantes",
+          message: "Missing required fields",
         });
       }
 
-      // Validar tipos
+      // Validate types
       if (!["venta", "renta"].includes(updatedProperty.type)) {
         return res.status(400).json({
           ok: false,
-          message: "Tipo debe ser 'venta' o 'renta'",
+          message: "Type must be 'venta' or 'renta'",
         });
       }
 
       if (!["MXN", "USD"].includes(updatedProperty.currency)) {
         return res.status(400).json({
           ok: false,
-          message: "Moneda debe ser 'MXN' o 'USD'",
+          message: "Currency must be 'MXN' or 'USD'",
         });
       }
 
-      // Actualizar propiedad
+      // Update property
       const updatedProperties = [...properties];
       updatedProperties[propertyIndex] = updatedProperty;
       writeProperties(updatedProperties);
 
       return res.status(200).json({
         ok: true,
-        message: "Propiedad actualizada exitosamente",
+        message: "Property updated successfully",
         property: updatedProperty,
         count: updatedProperties.length,
       });
     } catch (error) {
-      console.error("Error actualizando propiedad:", error);
+      console.error("Error updating property:", error);
       return res.status(500).json({
         ok: false,
-        message: "Error al actualizar la propiedad",
+        message: "Error updating the property",
       });
     }
   }
 
-  // DELETE - Borrar propiedad
+  // DELETE - Delete property
   if (req.method === "DELETE") {
     try {
       const propertyIndex = properties.findIndex((p) => p.id === id);
       if (propertyIndex === -1) {
         return res.status(404).json({
           ok: false,
-          message: "Propiedad no encontrada",
+          message: "Property not found",
         });
       }
 
-      // Eliminar propiedad
+      // Delete property
       const updatedProperties = properties.filter((p) => p.id !== id);
       writeProperties(updatedProperties);
 
       return res.status(200).json({
         ok: true,
-        message: "Propiedad eliminada exitosamente",
+        message: "Property deleted successfully",
         count: updatedProperties.length,
       });
     } catch (error) {
-      console.error("Error eliminando propiedad:", error);
+      console.error("Error deleting property:", error);
       return res.status(500).json({
         ok: false,
-        message: "Error al eliminar la propiedad",
+        message: "Error deleting the property",
       });
     }
   }
 
   return res.status(405).json({
     ok: false,
-    message: "Método no permitido",
+    message: "Method not allowed",
   });
 }
 

@@ -86,16 +86,16 @@ export default function PropertyForm({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validar tipo de archivo
+    // Validate file type
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
     if (!allowedTypes.includes(file.type)) {
-      setError("Tipo de archivo no permitido. Solo se permiten imágenes (JPG, PNG, WEBP, GIF)");
+      setError("File type not allowed. Only images are permitted (JPG, PNG, WEBP, GIF)");
       return;
     }
 
-    // Validar tamaño (10MB máximo)
+    // Validate size (10MB max)
     if (file.size > 10 * 1024 * 1024) {
-      setError("El archivo es demasiado grande. Máximo 10MB");
+      setError("The file is too large. Maximum 10MB");
       return;
     }
 
@@ -118,13 +118,13 @@ export default function PropertyForm({
           ...prev,
           images: [...prev.images, data.url],
         }));
-        // Limpiar input
+        // Clear input
         e.target.value = "";
       } else {
-        setError(data.message || "Error al subir la imagen");
+        setError(data.message || "Failed to upload the image");
       }
     } catch (error) {
-      setError("Error al subir la imagen");
+      setError("Failed to upload the image");
     } finally {
       setUploadingImage(false);
     }
@@ -135,15 +135,15 @@ export default function PropertyForm({
     setLoading(true);
     setError("");
 
-    // Validaciones
+    // Validation
     if (!formData.id || !formData.slug || !formData.title) {
-      setError("ID, Slug y Título son requeridos");
+      setError("ID, Slug and Title are required");
       setLoading(false);
       return;
     }
 
     if (formData.images.length === 0) {
-      setError("Debes agregar al menos una imagen");
+      setError("You must add at least one image");
       setLoading(false);
       return;
     }
@@ -151,22 +151,22 @@ export default function PropertyForm({
     try {
       await onSubmit(formData);
     } catch (err) {
-      setError("Error al guardar la propiedad");
+      setError("Failed to save the property");
       setLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Información Básica */}
+      {/* Basic information */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Información Básica
+          Basic Information
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              ID * (único)
+              ID * (unique)
             </label>
             <input
               type="text"
@@ -180,7 +180,7 @@ export default function PropertyForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Slug * (URL amigable, único)
+              Slug * (friendly URL, unique)
             </label>
             <input
               type="text"
@@ -194,7 +194,7 @@ export default function PropertyForm({
           </div>
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Título *
+              Title * <span className="text-xs font-normal text-gray-500">(Spanish)</span>
             </label>
             <input
               type="text"
@@ -207,7 +207,7 @@ export default function PropertyForm({
           </div>
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Descripción *
+              Description * <span className="text-xs font-normal text-gray-500">(Spanish)</span>
             </label>
             <textarea
               name="description"
@@ -218,18 +218,42 @@ export default function PropertyForm({
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
             />
           </div>
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Title <span className="text-xs font-normal text-gray-500">(English — optional, shown on the English site)</span>
+            </label>
+            <input
+              type="text"
+              name="titleEn"
+              value={formData.titleEn || ""}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+            />
+          </div>
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description <span className="text-xs font-normal text-gray-500">(English — optional, shown on the English site)</span>
+            </label>
+            <textarea
+              name="descriptionEn"
+              value={formData.descriptionEn || ""}
+              onChange={handleChange}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Tipo y Precio */}
+      {/* Type and price */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Tipo y Precio
+          Type and Price
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tipo *
+              Type *
             </label>
             <select
               name="type"
@@ -238,13 +262,13 @@ export default function PropertyForm({
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
             >
-              <option value="venta">Venta</option>
-              <option value="renta">Renta</option>
+              <option value="venta">For sale</option>
+              <option value="renta">For rent</option>
             </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Precio *
+              Price *
             </label>
             <input
               type="number"
@@ -259,7 +283,7 @@ export default function PropertyForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Moneda *
+              Currency *
             </label>
             <select
               name="currency"
@@ -275,13 +299,13 @@ export default function PropertyForm({
         </div>
       </div>
 
-      {/* Ubicación */}
+      {/* Location */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Ubicación</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Location</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Dirección/Colonia *
+              Address/Neighborhood *
             </label>
             <input
               type="text"
@@ -294,7 +318,7 @@ export default function PropertyForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Ciudad *
+              City *
             </label>
             <input
               type="text"
@@ -308,15 +332,15 @@ export default function PropertyForm({
         </div>
       </div>
 
-      {/* Características */}
+      {/* Features */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Características
+          Features
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Recámaras *
+              Bedrooms *
             </label>
             <input
               type="number"
@@ -330,7 +354,7 @@ export default function PropertyForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Baños *
+              Bathrooms *
             </label>
             <input
               type="number"
@@ -344,7 +368,7 @@ export default function PropertyForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Estacionamientos *
+              Parking *
             </label>
             <input
               type="number"
@@ -358,7 +382,7 @@ export default function PropertyForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Área (m²) *
+              Area (m²) *
             </label>
             <input
               type="number"
@@ -382,39 +406,39 @@ export default function PropertyForm({
               className="rounded border-gray-300 text-primary focus:ring-primary"
             />
             <span className="ml-2 text-sm text-gray-700">
-              Propiedad destacada
+              Featured property
             </span>
           </label>
         </div>
       </div>
 
-      {/* Tour virtual */}
+      {/* Virtual tour */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-1">
-          Tour virtual <span className="text-sm font-normal text-gray-500">(opcional)</span>
+          Virtual tour <span className="text-sm font-normal text-gray-500">(optional)</span>
         </h2>
         <p className="text-sm text-gray-600 mb-3">
-          Pegá una URL de YouTube, Vimeo, Matterport u otro proveedor de tour 360°.
-          Se mostrará embebido en el detalle de la propiedad.
+          Paste a URL from YouTube, Vimeo, Matterport or another 360° tour provider.
+          It will be embedded on the property detail page.
         </p>
         <input
           type="url"
           name="tourUrl"
           value={formData.tourUrl || ""}
           onChange={handleChange}
-          placeholder="https://my.matterport.com/show/?m=XXXX  o  https://youtu.be/XXXX"
+          placeholder="https://my.matterport.com/show/?m=XXXX  or  https://youtu.be/XXXX"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
         />
       </div>
 
-      {/* Imágenes */}
+      {/* Images */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Imágenes</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Images</h2>
         <div className="space-y-4">
-          {/* Opción 1: Subir archivo */}
+          {/* Option 1: Upload file */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Subir imagen desde tu computadora
+              Upload an image from your computer
             </label>
             <div className="flex gap-2">
               <input
@@ -426,26 +450,26 @@ export default function PropertyForm({
               />
               {uploadingImage && (
                 <span className="flex items-center text-sm text-gray-600">
-                  Subiendo...
+                  Uploading...
                 </span>
               )}
             </div>
             <p className="mt-1 text-xs text-gray-500">
-              Formatos permitidos: JPG, PNG, WEBP, GIF. Tamaño máximo: 10MB
+              Allowed formats: JPG, PNG, WEBP, GIF. Maximum size: 10MB
             </p>
           </div>
 
-          {/* Opción 2: Agregar URL */}
+          {/* Option 2: Add URL */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              O agregar imagen desde URL
+              Or add an image from a URL
             </label>
             <div className="flex gap-2">
               <input
                 type="url"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="https://ejemplo.com/imagen.jpg"
+                placeholder="https://example.com/image.jpg"
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
@@ -459,7 +483,7 @@ export default function PropertyForm({
                 onClick={handleAddImage}
                 className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md"
               >
-                Agregar URL
+                Add URL
               </button>
             </div>
           </div>
@@ -469,11 +493,11 @@ export default function PropertyForm({
                 <div key={index} className="relative">
                   <img
                     src={image}
-                    alt={`Imagen ${index + 1}`}
+                    alt={`Image ${index + 1}`}
                     className="w-full h-32 object-cover rounded-md"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
-                        "https://via.placeholder.com/400x300?text=Imagen+no+disponible";
+                        "https://via.placeholder.com/400x300?text=Image+unavailable";
                     }}
                   />
                   <button
@@ -490,14 +514,14 @@ export default function PropertyForm({
         </div>
       </div>
 
-      {/* Mensajes */}
+      {/* Messages */}
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
           {error}
         </div>
       )}
 
-      {/* Botones */}
+      {/* Buttons */}
       <div className="flex justify-end gap-4">
         {onCancel && (
           <button
@@ -505,7 +529,7 @@ export default function PropertyForm({
             onClick={onCancel}
             className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
-            Cancelar
+            Cancel
           </button>
         )}
         <button
@@ -513,10 +537,9 @@ export default function PropertyForm({
           disabled={loading}
           className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Guardando..." : property ? "Actualizar" : "Crear"} Propiedad
+          {loading ? "Saving..." : property ? "Update" : "Create"} Property
         </button>
       </div>
     </form>
   );
 }
-

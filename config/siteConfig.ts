@@ -1,44 +1,44 @@
 /**
- * CONFIGURACIÓN CENTRAL DEL SITIO
- * 
- * Este archivo contiene toda la configuración que necesita ser personalizada
- * para cada broker. Para duplicar el sitio para otro broker, solo necesitas
- * cambiar los valores en este archivo.
+ * CENTRAL SITE CONFIGURATION
+ *
+ * This file contains all the configuration that needs to be customized
+ * for each broker. To duplicate the site for another broker, you only need
+ * to change the values in this file.
  */
 
 export interface SiteConfig {
-  // Información del sitio
+  // Site information
   siteName: string;
-  siteUrl: string; // URL absoluta del sitio en producción (ej: "https://juanperez.com") sin barra final
+  siteUrl: string; // Absolute production site URL (e.g. "https://juanperez.com") without a trailing slash
   logoText: string;
-  logoUrl?: string; // URL de la imagen del logo (opcional)
-  primaryColor: string; // Color principal en formato hex (ej: "#0EA5E9")
-  secondaryColor: string; // Color secundario en formato hex (ej: "#06B6D4")
-  
-  // Datos del broker
+  logoUrl?: string; // Logo image URL (optional)
+  primaryColor: string; // Primary color in hex format (e.g. "#0EA5E9")
+  secondaryColor: string; // Secondary color in hex format (e.g. "#06B6D4")
+
+  // Broker data
   brokerName: string;
   phone: string;
-  whatsapp: string; // Número sin espacios ni caracteres especiales (ej: "5215512345678")
+  whatsapp: string; // Number without spaces or special characters (e.g. "5215512345678")
   email: string;
   city: string;
   address: string;
   slogan: string;
-  
-  // Redes sociales (opcionales)
+
+  // Social media (optional)
   facebook?: string;
   instagram?: string;
   tiktok?: string;
   linkedin?: string;
   website?: string;
-  
-  // Hooks para automatización (opcionales)
-  leadWebhookUrl?: string; // URL del webhook para enviar leads (Make, Zapier, etc.)
-  chatScript?: string; // HTML/JS del widget de chat (Crisp, Intercom, Tidio, etc.)
+
+  // Automation hooks (optional)
+  leadWebhookUrl?: string; // Webhook URL for sending leads (Make, Zapier, etc.)
+  chatScript?: string; // Chat widget HTML/JS (Crisp, Intercom, Tidio, etc.)
 }
 
 export const siteConfig: SiteConfig = {
   // ============================================
-  // INFORMACIÓN DEL SITIO
+  // SITE INFORMATION
   // ============================================
   siteName: "RealEX",
   siteUrl: "https://realestatex.com",
@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
   secondaryColor: "#004d65",
   
   // ============================================
-  // DATOS DEL BROKER
+  // BROKER DATA
   // ============================================
   brokerName: "Juan Pérez",
   phone: "+52 55 1234 5678",
@@ -59,7 +59,7 @@ export const siteConfig: SiteConfig = {
   slogan: "Tu hogar ideal te está esperando",
   
   // ============================================
-  // REDES SOCIALES
+  // SOCIAL MEDIA
   // ============================================
   facebook: "https://facebook.com/tu-pagina",
   instagram: "https://instagram.com/tu-cuenta",
@@ -68,7 +68,7 @@ export const siteConfig: SiteConfig = {
   website: undefined,
   
   // ============================================
-  // AUTOMATIZACIONES
+  // AUTOMATIONS
   // ============================================
   leadWebhookUrl: undefined,
   chatScript: undefined,

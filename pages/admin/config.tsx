@@ -6,10 +6,10 @@ export default function ConfigPage() {
     <AdminLayout>
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          Configuración del Sitio
+          Site Settings
         </h1>
         <p className="text-gray-600 mb-8">
-          Edita la configuración general del sitio, datos del broker y automatizaciones.
+          Edit the general site settings, broker details and automations.
         </p>
         <ConfigForm />
       </div>

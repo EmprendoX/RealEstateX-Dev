@@ -16,7 +16,7 @@ interface PropertyPDFProps {
   property: Property;
   siteConfig: SiteConfig;
   propertyUrl: string;
-  /** URLs absolutas de las imágenes (para que el renderer las pueda fetchar). */
+  /** Absolute image URLs (so the renderer can fetch them). */
   images: string[];
   generatedAt: string;
 }
@@ -210,7 +210,7 @@ export default function PropertyPDF({
 }: PropertyPDFProps) {
   const styles = buildStyles(siteConfig.primaryColor);
   const heroImage = images[0];
-  const thumbnails = images.slice(1, 5); // hasta 4 miniaturas extra
+  const thumbnails = images.slice(1, 5); // up to 4 extra thumbnails
 
   return (
     <Document
@@ -229,7 +229,7 @@ export default function PropertyPDF({
           </View>
         </View>
 
-        {/* Título + badge */}
+        {/* Title + badge */}
         <View style={styles.titleRow}>
           <Text style={styles.title}>{property.title}</Text>
           <Text
@@ -248,7 +248,7 @@ export default function PropertyPDF({
         {/* Hero image */}
         {heroImage && <Image src={heroImage} style={styles.heroImage} />}
 
-        {/* Precio */}
+        {/* Price */}
         <View style={styles.priceBox}>
           <Text style={styles.priceLabel}>Precio</Text>
           <Text style={styles.priceValue}>
@@ -256,7 +256,7 @@ export default function PropertyPDF({
           </Text>
         </View>
 
-        {/* Características en grid */}
+        {/* Features grid */}
         <View style={styles.features}>
           <View style={styles.feature}>
             <Text style={styles.featureLabel}>Recámaras</Text>
@@ -276,11 +276,11 @@ export default function PropertyPDF({
           </View>
         </View>
 
-        {/* Descripción */}
+        {/* Description */}
         <Text style={styles.sectionTitle}>Descripción</Text>
         <Text style={styles.paragraph}>{property.description}</Text>
 
-        {/* Ficha técnica */}
+        {/* Spec sheet */}
         <Text style={styles.sectionTitle}>Ficha técnica</Text>
         <View style={styles.techGrid}>
           <View style={styles.techCell}>
@@ -311,7 +311,7 @@ export default function PropertyPDF({
           </View>
         </View>
 
-        {/* Galería adicional */}
+        {/* Additional gallery */}
         {thumbnails.length > 0 && (
           <>
             <Text style={styles.sectionTitle}>Más fotos</Text>

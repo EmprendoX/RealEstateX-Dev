@@ -17,7 +17,7 @@ export default function handler(
   if (req.method !== "POST") {
     return res.status(405).json({
       ok: false,
-      message: "Método no permitido",
+      message: "Method not allowed",
     });
   }
 
@@ -27,7 +27,7 @@ export default function handler(
     if (!password) {
       return res.status(400).json({
         ok: false,
-        message: "La contraseña es requerida",
+        message: "Password is required",
       });
     }
 
@@ -35,19 +35,19 @@ export default function handler(
       setAuthCookie(res);
       return res.status(200).json({
         ok: true,
-        message: "Login exitoso",
+        message: "Login successful",
       });
     } else {
       return res.status(401).json({
         ok: false,
-        message: "Contraseña incorrecta",
+        message: "Incorrect password",
       });
     }
   } catch (error) {
-    console.error("Error en login:", error);
+    console.error("Login error:", error);
     return res.status(500).json({
       ok: false,
-      message: "Error interno del servidor",
+      message: "Internal server error",
     });
   }
 }

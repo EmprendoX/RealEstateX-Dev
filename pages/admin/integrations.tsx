@@ -16,7 +16,7 @@ import {
 
 type Tab = "connectors" | "apikeys" | "mcp";
 
-// Estado de conexión sembrado a partir de los defaults del catálogo
+// Connection state seeded from the catalog defaults
 const initialConnections: Record<string, boolean> = CONNECTORS.reduce(
   (acc, c) => ({ ...acc, [c.id]: !!c.defaultConnected }),
   {} as Record<string, boolean>
@@ -41,23 +41,23 @@ export default function IntegrationsPage() {
   return (
     <AdminLayout>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-3xl font-bold text-gray-900">Integraciones</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Integrations</h1>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1">
           <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          Plataforma API-first
+          API-first platform
         </span>
       </div>
       <p className="text-gray-500 mb-6">
-        Conectá IA, mensajería, automatizaciones y portales. Todo enchufa sobre la API pública de RealEstateX.
+        Connect AI, messaging, automations and portals. Everything plugs into the public RealEstateX API.
       </p>
 
       {/* Tabs */}
       <div className="border-b border-gray-200 mb-6">
         <nav className="flex gap-6">
           {[
-            { id: "connectors", label: "Conectores" },
+            { id: "connectors", label: "Connectors" },
             { id: "apikeys", label: "API Keys" },
-            { id: "mcp", label: "Servidores MCP" },
+            { id: "mcp", label: "MCP Servers" },
           ].map((t) => (
             <button
               key={t.id}
@@ -81,7 +81,7 @@ export default function IntegrationsPage() {
   );
 }
 
-/* ============================ CONECTORES ============================ */
+/* ============================ CONNECTORS ============================ */
 
 function ConnectorsTab() {
   const [connections, setConnections, hydrated] = useDemoState<Record<string, boolean>>(
@@ -114,10 +114,10 @@ function ConnectorsTab() {
       <div className="flex items-center gap-3 mb-6 text-sm text-gray-600">
         <span className="inline-flex items-center gap-1.5 font-medium text-gray-900">
           <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
-          {hydrated ? connectedCount : 0} conectadas
+          {hydrated ? connectedCount : 0} connected
         </span>
         <span className="text-gray-300">·</span>
-        <span>{CONNECTORS.length} integraciones disponibles</span>
+        <span>{CONNECTORS.length} integrations available</span>
       </div>
 
       {categories.map((cat) => (
@@ -140,11 +140,11 @@ function ConnectorsTab() {
                     {isConnected ? (
                       <span className="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                        Conectado
+                        Connected
                       </span>
                     ) : (
                       <span className="inline-flex items-center rounded-full bg-gray-100 text-gray-500 text-xs font-medium px-2.5 py-1">
-                        Desconectado
+                        Disconnected
                       </span>
                     )}
                   </div>
@@ -156,14 +156,14 @@ function ConnectorsTab() {
                         onClick={() => disconnect(c.id)}
                         className="w-full text-sm font-medium text-gray-600 border border-gray-200 rounded-md py-2 hover:bg-gray-50 transition-colors"
                       >
-                        Desconectar
+                        Disconnect
                       </button>
                     ) : (
                       <button
                         onClick={() => setModal(c)}
                         className="w-full text-sm font-medium text-white bg-primary rounded-md py-2 hover:opacity-90 transition-opacity"
                       >
-                        Conectar
+                        Connect
                       </button>
                     )}
                   </div>
@@ -174,7 +174,7 @@ function ConnectorsTab() {
         </div>
       ))}
 
-      {/* Modal de conexión */}
+      {/* Connection modal */}
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
@@ -183,7 +183,7 @@ function ConnectorsTab() {
                 {modal.icon}
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Conectar {modal.name}</h3>
+                <h3 className="font-semibold text-gray-900">Connect {modal.name}</h3>
                 <p className="text-xs text-gray-500">{modal.category}</p>
               </div>
             </div>
@@ -193,24 +193,24 @@ function ConnectorsTab() {
             <input
               type="text"
               autoFocus
-              placeholder="Pegá tu credencial aquí…"
+              placeholder="Paste your credential here…"
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             <p className="mt-2 text-xs text-gray-400">
-              Tus credenciales se guardan cifradas. Podés revocarlas en cualquier momento.
+              Your credentials are stored encrypted. You can revoke them at any time.
             </p>
             <div className="mt-5 flex gap-3">
               <button
                 onClick={() => setModal(null)}
                 className="flex-1 text-sm font-medium text-gray-600 border border-gray-200 rounded-md py-2 hover:bg-gray-50"
               >
-                Cancelar
+                Cancel
               </button>
               <button
                 onClick={confirmConnect}
                 className="flex-1 text-sm font-medium text-white bg-primary rounded-md py-2 hover:opacity-90"
               >
-                Conectar
+                Connect
               </button>
             </div>
           </div>
@@ -224,7 +224,7 @@ function ConnectorsTab() {
 
 function ApiKeysTab() {
   const [keys, setKeys, hydrated] = useDemoState<ApiKey[]>("demo.apikeys", DEFAULT_API_KEYS);
-  const [revealed, setRevealed] = useState<string | null>(null); // id de key recién creada
+  const [revealed, setRevealed] = useState<string | null>(null); // id of the newly created key
   const [copied, setCopied] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [newName, setNewName] = useState("");
@@ -234,7 +234,7 @@ function ApiKeysTab() {
   const createKey = () => {
     const key: ApiKey = {
       id: `key_${Math.random().toString(36).slice(2, 8)}`,
-      name: newName.trim() || "Nueva API key",
+      name: newName.trim() || "New API key",
       key: genApiKey(),
       createdAt: new Date().toISOString(),
       lastUsed: null,
@@ -269,7 +269,7 @@ function ApiKeysTab() {
             onClick={() => copy(baseUrl, "baseurl")}
             className="text-sm font-medium text-primary hover:underline"
           >
-            {copied === "baseurl" ? "¡Copiado!" : "Copiar"}
+            {copied === "baseurl" ? "Copied!" : "Copy"}
           </button>
         </div>
       </div>
@@ -277,12 +277,12 @@ function ApiKeysTab() {
       {/* Keys */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-gray-900">Tus API keys</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Your API keys</h3>
           <button
             onClick={() => setCreating(true)}
             className="text-sm font-medium text-white bg-primary rounded-md px-4 py-2 hover:opacity-90"
           >
-            + Generar API key
+            + Generate API key
           </button>
         </div>
 
@@ -292,21 +292,21 @@ function ApiKeysTab() {
               autoFocus
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              placeholder="Nombre (ej: Integración Make)"
+              placeholder="Name (e.g. Make integration)"
               className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             <button onClick={createKey} className="text-sm font-medium text-white bg-primary rounded-md px-4 hover:opacity-90">
-              Crear
+              Create
             </button>
             <button onClick={() => setCreating(false)} className="text-sm text-gray-500 px-2">
-              Cancelar
+              Cancel
             </button>
           </div>
         )}
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 divide-y divide-gray-100">
           {!hydrated ? (
-            <div className="p-5 text-sm text-gray-400">Cargando…</div>
+            <div className="p-5 text-sm text-gray-400">Loading…</div>
           ) : (
             keys.map((k) => (
               <div key={k.id} className="p-4 flex items-center justify-between gap-4">
@@ -320,21 +320,21 @@ function ApiKeysTab() {
                       onClick={() => copy(k.key, k.id)}
                       className="text-xs font-medium text-primary hover:underline"
                     >
-                      {copied === k.id ? "¡Copiado!" : "Copiar"}
+                      {copied === k.id ? "Copied!" : "Copy"}
                     </button>
                   </div>
                   <p className="text-xs text-gray-400 mt-1">
-                    Creada {new Date(k.createdAt).toLocaleDateString("es-MX")} ·{" "}
+                    Created {new Date(k.createdAt).toLocaleDateString("en-US")} ·{" "}
                     {k.lastUsed
-                      ? `último uso ${new Date(k.lastUsed).toLocaleDateString("es-MX")}`
-                      : "sin uso aún"}
+                      ? `last used ${new Date(k.lastUsed).toLocaleDateString("en-US")}`
+                      : "not used yet"}
                   </p>
                 </div>
                 <button
                   onClick={() => revoke(k.id)}
                   className="text-sm font-medium text-red-500 hover:text-red-600 shrink-0"
                 >
-                  Revocar
+                  Revoke
                 </button>
               </div>
             ))
@@ -344,7 +344,7 @@ function ApiKeysTab() {
 
       {/* Endpoints */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-3">Endpoints disponibles</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Available endpoints</h3>
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 divide-y divide-gray-100">
           {API_ENDPOINTS.map((e) => (
             <div key={`${e.method}-${e.path}`} className="p-4 flex items-center gap-4">
@@ -368,9 +368,9 @@ function ApiKeysTab() {
         </div>
       </div>
 
-      {/* Ejemplo curl */}
+      {/* curl example */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-3">Ejemplo</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Example</h3>
         <pre className="bg-gray-900 text-gray-100 rounded-lg p-4 text-sm overflow-x-auto">
           <code>{curl}</code>
         </pre>
@@ -396,7 +396,7 @@ function McpTab() {
   const add = () => {
     const server: McpServer = {
       id: `mcp_${Math.random().toString(36).slice(2, 8)}`,
-      name: form.name.trim() || "Nuevo servidor MCP",
+      name: form.name.trim() || "New MCP server",
       transport: form.transport,
       target: form.target.trim() || (form.transport === "http" ? "https://" : "npx ..."),
       status: "connected",
@@ -422,14 +422,14 @@ function McpTab() {
     <div>
       <div className="flex items-start justify-between mb-4">
         <p className="text-sm text-gray-500 max-w-xl">
-          Conectá servidores <strong>MCP (Model Context Protocol)</strong> para que tus agentes de IA
-          accedan a herramientas: buscar propiedades, agendar visitas, registrar leads y más.
+          Connect <strong>MCP (Model Context Protocol)</strong> servers so your AI agents
+          can access tools: search properties, schedule visits, log leads and more.
         </p>
         <button
           onClick={() => setAdding(true)}
           className="text-sm font-medium text-white bg-primary rounded-md px-4 py-2 hover:opacity-90 shrink-0"
         >
-          + Agregar MCP
+          + Add MCP
         </button>
       </div>
 
@@ -440,7 +440,7 @@ function McpTab() {
               autoFocus
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              placeholder="Nombre del servidor"
+              placeholder="Server name"
               className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             <select
@@ -449,21 +449,21 @@ function McpTab() {
               className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
               <option value="http">HTTP / SSE</option>
-              <option value="stdio">stdio (comando)</option>
+              <option value="stdio">stdio (command)</option>
             </select>
             <input
               value={form.target}
               onChange={(e) => setForm((f) => ({ ...f, target: e.target.value }))}
-              placeholder={form.transport === "http" ? "https://mcp.tuservidor.com" : "npx -y @tu/mcp"}
+              placeholder={form.transport === "http" ? "https://mcp.yourserver.com" : "npx -y @your/mcp"}
               className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
           </div>
           <div className="flex gap-3">
             <button onClick={add} className="text-sm font-medium text-white bg-primary rounded-md px-4 py-2 hover:opacity-90">
-              Conectar servidor
+              Connect server
             </button>
             <button onClick={() => setAdding(false)} className="text-sm text-gray-500 px-2">
-              Cancelar
+              Cancel
             </button>
           </div>
         </div>
@@ -499,13 +499,13 @@ function McpTab() {
                       s.status === "connected" ? "bg-green-500" : "bg-gray-400"
                     }`}
                   />
-                  {s.status === "connected" ? "Conectado" : "Desconectado"}
+                  {s.status === "connected" ? "Connected" : "Disconnected"}
                 </button>
               </div>
 
               <div className="mt-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
-                  Herramientas expuestas ({s.tools.length})
+                  Exposed tools ({s.tools.length})
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {s.tools.map((t) => (
@@ -524,7 +524,7 @@ function McpTab() {
                   onClick={() => remove(s.id)}
                   className="text-sm font-medium text-red-500 hover:text-red-600"
                 >
-                  Eliminar
+                  Delete
                 </button>
               </div>
             </div>

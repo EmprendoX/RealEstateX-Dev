@@ -1,18 +1,31 @@
 import React from "react";
+import type { GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
 import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/config/siteConfig";
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+    },
+  };
+};
+
 export default function ContactPage() {
-  const whatsappMessage = encodeURIComponent(
-    "Hola, me gustaría obtener más información sobre tus servicios inmobiliarios."
-  );
+  const { t } = useTranslation("common");
+  const whatsappMessage = encodeURIComponent(t("contact.message"));
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
 
   return (
     <Layout
-      title="Contacto"
-      description={`Contacta con ${siteConfig.brokerName} para encontrar tu propiedad ideal en ${siteConfig.city}`}
+      title={t("contact.metaTitle")}
+      description={t("contact.metaDescription", {
+        name: siteConfig.brokerName,
+        city: siteConfig.city,
+      })}
       canonicalPath="/contact"
     >
       <div className="bg-gray-50 min-h-screen py-12">
@@ -20,31 +33,31 @@ export default function ContactPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Contáctanos
+              {t("contact.heading")}
             </h1>
             <p className="text-lg text-gray-600">
-              Estamos aquí para ayudarte a encontrar tu propiedad ideal
+              {t("contact.subtitle")}
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Columna izquierda - Formulario */}
+            {/* Left column - Form */}
             <div>
               <ContactForm />
             </div>
 
-            {/* Columna derecha - Información de contacto */}
+            {/* Right column - Contact information */}
             <div className="space-y-6">
-              {/* Información de contacto destacada */}
+              {/* Highlighted contact information */}
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Información de contacto
+                  {t("contact.contactInfo")}
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className="text-2xl">📞</div>
                     <div>
-                      <p className="font-semibold text-gray-900">Teléfono</p>
+                      <p className="font-semibold text-gray-900">{t("contact.phone")}</p>
                       <a
                         href={`tel:${siteConfig.phone}`}
                         className="text-primary hover:underline"
@@ -56,7 +69,7 @@ export default function ContactPage() {
                   <div className="flex items-start gap-4">
                     <div className="text-2xl">✉️</div>
                     <div>
-                      <p className="font-semibold text-gray-900">Email</p>
+                      <p className="font-semibold text-gray-900">{t("contact.email")}</p>
                       <a
                         href={`mailto:${siteConfig.email}`}
                         className="text-primary hover:underline"
@@ -68,21 +81,21 @@ export default function ContactPage() {
                   <div className="flex items-start gap-4">
                     <div className="text-2xl">💬</div>
                     <div>
-                      <p className="font-semibold text-gray-900">WhatsApp</p>
+                      <p className="font-semibold text-gray-900">{t("contact.whatsapp")}</p>
                       <a
                         href={whatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary hover:underline"
                       >
-                        Enviar mensaje
+                        {t("contact.sendMessage")}
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="text-2xl">📍</div>
                     <div>
-                      <p className="font-semibold text-gray-900">Ubicación</p>
+                      <p className="font-semibold text-gray-900">{t("contact.location")}</p>
                       <p className="text-gray-700">{siteConfig.address}</p>
                       <p className="text-gray-700">{siteConfig.city}</p>
                     </div>
@@ -90,35 +103,34 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Horarios de atención */}
+              {/* Business hours */}
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Horarios de atención
+                  {t("contact.hoursTitle")}
                 </h3>
                 <div className="space-y-2 text-gray-700">
                   <p>
-                    <strong>Lunes a Viernes:</strong> 9:00 AM - 7:00 PM
+                    <strong>{t("contact.weekdays")}</strong> {t("contact.weekdaysHours")}
                   </p>
                   <p>
-                    <strong>Sábados:</strong> 10:00 AM - 4:00 PM
+                    <strong>{t("contact.saturday")}</strong> {t("contact.saturdayHours")}
                   </p>
                   <p>
-                    <strong>Domingos:</strong> Solo citas programadas
+                    <strong>{t("contact.sunday")}</strong> {t("contact.sundayHours")}
                   </p>
                 </div>
                 <p className="text-sm text-gray-600 mt-4">
-                  También puedes contactarnos por WhatsApp en cualquier momento.
-                  Responderemos lo antes posible.
+                  {t("contact.hoursNote")}
                 </p>
               </div>
 
-              {/* Botón WhatsApp destacado */}
+              {/* Highlighted WhatsApp button */}
               <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6 text-center">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  ¿Prefieres WhatsApp?
+                  {t("contact.preferWhatsapp")}
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Contáctanos directamente por WhatsApp para una respuesta rápida
+                  {t("contact.preferWhatsappSubtitle")}
                 </p>
                 <a
                   href={whatsappUrl}
@@ -126,22 +138,22 @@ export default function ContactPage() {
                   rel="noopener noreferrer"
                   className="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
                 >
-                  💬 Abrir WhatsApp
+                  {t("contact.openWhatsapp")}
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Mapa placeholder */}
+          {/* Map placeholder */}
           <div className="mt-12 bg-white rounded-lg shadow-md overflow-hidden">
             <div className="h-96 bg-gray-200 flex items-center justify-center">
               <div className="text-center text-gray-500">
-                <p className="text-lg font-semibold mb-2">Mapa</p>
+                <p className="text-lg font-semibold mb-2">{t("contact.map")}</p>
                 <p className="text-sm">
                   {siteConfig.address}, {siteConfig.city}
                 </p>
                 <p className="text-xs mt-2">
-                  (Integra Google Maps aquí si lo deseas)
+                  {t("contact.mapNote")}
                 </p>
               </div>
             </div>

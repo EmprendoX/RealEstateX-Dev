@@ -15,12 +15,12 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<PropertiesResponse>
 ) {
-  // Verificar autenticación
+  // Check authentication
   if (!requireAuth(req, res)) {
     return;
   }
 
-  // GET - Listar todas las propiedades
+  // GET - List all properties
   if (req.method === "GET") {
     return res.status(200).json({
       ok: true,
@@ -29,59 +29,59 @@ export default function handler(
     });
   }
 
-  // POST - Crear nueva propiedad
+  // POST - Create new property
   if (req.method === "POST") {
     try {
-      // Validar límite de 22 propiedades
+      // Validate the limit of 22 properties
       if (properties.length >= MAX_PROPERTIES) {
         return res.status(400).json({
           ok: false,
-          message: `No se pueden agregar más de ${MAX_PROPERTIES} propiedades. Actualmente tienes ${properties.length}.`,
+          message: `You cannot add more than ${MAX_PROPERTIES} properties. You currently have ${properties.length}.`,
         });
       }
 
       const newProperty: Property = req.body;
 
-      // Validaciones
+      // Validations
       if (!newProperty.title || !newProperty.slug || !newProperty.description) {
         return res.status(400).json({
           ok: false,
-          message: "Campos requeridos faltantes (title, slug, description)",
+          message: "Missing required fields (title, slug, description)",
         });
       }
 
-      // Validar que el slug sea único
+      // Validate that the slug is unique
       if (properties.some((p) => p.slug === newProperty.slug)) {
         return res.status(400).json({
           ok: false,
-          message: "Ya existe una propiedad con ese slug",
+          message: "A property with that slug already exists",
         });
       }
 
-      // Validar que el ID sea único
+      // Validate that the ID is unique
       if (properties.some((p) => p.id === newProperty.id)) {
         return res.status(400).json({
           ok: false,
-          message: "Ya existe una propiedad con ese ID",
+          message: "A property with that ID already exists",
         });
       }
 
-      // Validar tipos
+      // Validate types
       if (!["venta", "renta"].includes(newProperty.type)) {
         return res.status(400).json({
           ok: false,
-          message: "Tipo debe ser 'venta' o 'renta'",
+          message: "Type must be 'venta' or 'renta'",
         });
       }
 
       if (!["MXN", "USD"].includes(newProperty.currency)) {
         return res.status(400).json({
           ok: false,
-          message: "Moneda debe ser 'MXN' o 'USD'",
+          message: "Currency must be 'MXN' or 'USD'",
         });
       }
 
-      // Validar números
+      // Validate numbers
       if (
         typeof newProperty.price !== "number" ||
         typeof newProperty.bedrooms !== "number" ||
@@ -91,32 +91,32 @@ export default function handler(
       ) {
         return res.status(400).json({
           ok: false,
-          message: "Los campos numéricos deben ser números válidos",
+          message: "Numeric fields must be valid numbers",
         });
       }
 
-      // Agregar nueva propiedad
+      // Add new property
       const updatedProperties = [...properties, newProperty];
       writeProperties(updatedProperties);
 
       return res.status(200).json({
         ok: true,
-        message: "Propiedad creada exitosamente",
+        message: "Property created successfully",
         property: newProperty,
         count: updatedProperties.length,
       });
     } catch (error) {
-      console.error("Error creando propiedad:", error);
+      console.error("Error creating property:", error);
       return res.status(500).json({
         ok: false,
-        message: "Error al crear la propiedad",
+        message: "Error creating the property",
       });
     }
   }
 
   return res.status(405).json({
     ok: false,
-    message: "Método no permitido",
+    message: "Method not allowed",
   });
 }
 

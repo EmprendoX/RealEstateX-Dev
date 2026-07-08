@@ -1,31 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import Layout from "@/components/Layout";
 import PropertyGrid from "@/components/PropertyGrid";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import { siteConfig } from "@/config/siteConfig";
-import { properties, getFeaturedProperties, getUniqueCities, PropertyType } from "@/data/properties";
+import { properties, getFeaturedProperties, getUniqueCities, localizeProperties, PropertyType } from "@/data/properties";
 import { getTestimonials } from "@/data/testimonials";
-import { aboutContent, renderTemplate } from "@/data/aboutPage";
+import { getAboutContent, renderTemplate } from "@/data/aboutPage";
+import type { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+    },
+  };
+};
 
 export default function Home() {
+  const { t } = useTranslation("common");
+  const { locale } = useRouter();
   const [selectedType, setSelectedType] = useState<PropertyType | "all">("all");
   const [selectedCity, setSelectedCity] = useState<string>("all");
-  const [filteredProperties, setFilteredProperties] = useState(properties);
 
-  const featuredProperties = getFeaturedProperties();
-  const cities = getUniqueCities();
-  const testimonials = getTestimonials();
-  const tplVars = { city: siteConfig.city, brokerName: siteConfig.brokerName };
-  const whatsappMessage = encodeURIComponent(
-    "Hola, me interesa una propiedad. ¿Me puedes dar más información?"
+  // Properties and content in the active language (with Spanish fallback).
+  const localizedProperties = useMemo(
+    () => localizeProperties(properties, locale),
+    [locale]
   );
+  const [filteredProperties, setFilteredProperties] = useState(localizedProperties);
+
+  const featuredProperties = useMemo(
+    () => localizeProperties(getFeaturedProperties(), locale),
+    [locale]
+  );
+  const cities = getUniqueCities();
+  const testimonials = useMemo(
+    () => getTestimonials(undefined, locale),
+    [locale]
+  );
+  const aboutContent = getAboutContent(locale);
+  const tplVars = { city: siteConfig.city, brokerName: siteConfig.brokerName };
+  const whatsappMessage = encodeURIComponent(t("whatsapp.defaultMessage"));
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
 
-  // Filtrar propiedades cuando cambian los filtros
+  // Filter properties when the filters or language change
   useEffect(() => {
-    let filtered = properties;
+    let filtered = localizedProperties;
 
     if (selectedType !== "all") {
       filtered = filtered.filter((p) => p.type === selectedType);
@@ -36,21 +61,24 @@ export default function Home() {
     }
 
     setFilteredProperties(filtered);
-  }, [selectedType, selectedCity]);
+  }, [selectedType, selectedCity, localizedProperties]);
 
   return (
     <Layout
-      title="Inicio"
-      description={`Encuentra tu propiedad ideal en ${siteConfig.city}. ${siteConfig.slogan}`}
+      title={t("home.metaTitle")}
+      description={t("home.metaDescription", {
+        city: siteConfig.city,
+        slogan: siteConfig.slogan,
+      })}
       canonicalPath="/"
       image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200"
     >
-      {/* Hero Principal */}
+      {/* Main Hero */}
       <section className="relative h-screen flex items-center justify-center text-white">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920"
-            alt="Hero"
+            alt={t("home.heroAlt")}
             fill
             className="object-cover"
             priority
@@ -64,14 +92,14 @@ export default function Home() {
           </h1>
           <p className="text-xl md:text-2xl mb-2">{siteConfig.slogan}</p>
           <p className="text-lg md:text-xl mb-8 text-gray-200">
-            En {siteConfig.city}
+            {t("home.inCity", { city: siteConfig.city })}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/properties"
               className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
             >
-              Ver propiedades
+              {t("home.viewProperties")}
             </Link>
             <a
               href={whatsappUrl}
@@ -79,24 +107,24 @@ export default function Home() {
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
             >
-              Contactar por WhatsApp
+              {t("home.contactWhatsapp")}
             </a>
           </div>
         </div>
       </section>
 
-      {/* Buscador Simple */}
+      {/* Simple Search */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-            Busca tu propiedad ideal
+            {t("home.searchHeading")}
           </h2>
           <div className="max-w-2xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Filtro por tipo */}
+              {/* Filter by type */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Tipo de operación
+                  {t("home.operationType")}
                 </label>
                 <select
                   value={selectedType}
@@ -105,23 +133,23 @@ export default function Home() {
                   }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
-                  <option value="all">Todos</option>
-                  <option value="venta">Venta</option>
-                  <option value="renta">Renta</option>
+                  <option value="all">{t("home.allTypes")}</option>
+                  <option value="venta">{t("home.typeSale")}</option>
+                  <option value="renta">{t("home.typeRent")}</option>
                 </select>
               </div>
 
-              {/* Filtro por ciudad */}
+              {/* Filter by city */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ciudad
+                  {t("home.city")}
                 </label>
                 <select
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
-                  <option value="all">Todas</option>
+                  <option value="all">{t("home.allCities")}</option>
                   {cities.map((city) => (
                     <option key={city} value={city}>
                       {city}
@@ -136,7 +164,7 @@ export default function Home() {
                   href="/properties"
                   className="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg font-medium transition-colors"
                 >
-                  Ver {filteredProperties.length} propiedades
+                  {t("home.viewCountProperties", { count: filteredProperties.length })}
                 </Link>
               </div>
             )}
@@ -144,32 +172,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Propiedades Destacadas */}
+      {/* Featured Properties */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-4 text-gray-900">
-            Propiedades destacadas
+            {t("home.featuredHeading")}
           </h2>
           <p className="text-center text-gray-600 mb-12">
-            Las mejores opciones para ti
+            {t("home.featuredSubtitle")}
           </p>
           {featuredProperties.length > 0 ? (
             <PropertyGrid properties={featuredProperties.slice(0, 3)} />
           ) : (
-            <PropertyGrid properties={properties.slice(0, 3)} />
+            <PropertyGrid properties={localizedProperties.slice(0, 3)} />
           )}
           <div className="text-center mt-8">
             <Link
               href="/properties"
               className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
             >
-              Ver todas las propiedades
+              {t("home.viewAllProperties")}
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Sobre mí / Sobre nosotros */}
+      {/* About me / About us */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -186,7 +214,7 @@ export default function Home() {
                 href="/about"
                 className="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors mt-2"
               >
-                Conocer más
+                {t("home.learnMore")}
               </Link>
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden">
@@ -204,21 +232,21 @@ export default function Home() {
 
       <TestimonialsSection testimonials={testimonials} />
 
-      {/* CTA Final */}
+      {/* Final CTA */}
       <section className="py-16 bg-primary text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            ¿Listo para encontrar tu propiedad ideal?
+            {t("home.ctaHeading")}
           </h2>
           <p className="text-xl mb-8 text-primary-100">
-            Agenda una llamada o pide una valoración gratuita de tu propiedad
+            {t("home.ctaSubtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
               className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
             >
-              Contactar ahora
+              {t("home.contactNow")}
             </Link>
             <a
               href={whatsappUrl}
@@ -226,7 +254,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
             >
-              WhatsApp
+              {t("home.whatsapp")}
             </a>
           </div>
         </div>

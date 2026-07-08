@@ -3,8 +3,10 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
-import { properties as allProperties, Property } from "@/data/properties";
+import { properties as allProperties, localizeProperties, Property } from "@/data/properties";
 import { useFavorites } from "@/utils/useFavorites";
 import { formatPrice } from "@/utils/formatPrice";
 
@@ -15,6 +17,7 @@ interface FavoritesPageProps {
 }
 
 export default function FavoritesPage({ properties: allProps }: FavoritesPageProps) {
+  const { t } = useTranslation("common");
   const router = useRouter();
   const { favorites, hydrated, toggle, clear } = useFavorites();
   const [selected, setSelected] = useState<string[]>([]);
@@ -37,16 +40,16 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
     router.push(`/compare?ids=${selected.join(",")}`);
   };
 
-  // Antes de hidratar mostramos un esqueleto neutro para evitar flash de "no hay"
+  // Before hydrating we show a neutral skeleton to avoid a flash of "none"
   if (!hydrated) {
     return (
-      <Layout title="Favoritos" canonicalPath="/favorites" noindex>
+      <Layout title={t("favorites.metaTitle")} canonicalPath="/favorites" noindex>
         <div className="bg-gray-50 min-h-screen py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">
-              Mis favoritos
+              {t("favorites.heading")}
             </h1>
-            <p className="text-center text-gray-500">Cargando...</p>
+            <p className="text-center text-gray-500">{t("favorites.loading")}</p>
           </div>
         </div>
       </Layout>
@@ -54,15 +57,15 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
   }
 
   return (
-    <Layout title="Favoritos" canonicalPath="/favorites" noindex>
+    <Layout title={t("favorites.metaTitle")} canonicalPath="/favorites" noindex>
       <div className="bg-gray-50 min-h-screen py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Mis favoritos
+              {t("favorites.heading")}
             </h1>
             <p className="text-lg text-gray-600">
-              Las propiedades que guardaste para revisar después
+              {t("favorites.subtitle")}
             </p>
           </div>
 
@@ -70,17 +73,16 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
             <div className="bg-white rounded-lg shadow-md p-12 text-center max-w-2xl mx-auto">
               <div className="text-6xl mb-4">💔</div>
               <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                Todavía no guardaste ninguna propiedad
+                {t("favorites.emptyTitle")}
               </h2>
               <p className="text-gray-600 mb-6">
-                Tocá el corazón en cualquier propiedad para guardarla acá y
-                compararla después.
+                {t("favorites.emptyHint")}
               </p>
               <Link
                 href="/properties"
                 className="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                Ver propiedades
+                {t("favorites.viewProperties")}
               </Link>
             </div>
           ) : (
@@ -89,10 +91,10 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
               <div className="bg-white rounded-lg shadow-md p-4 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="text-gray-700">
                   <span className="font-semibold">{favoriteProperties.length}</span>{" "}
-                  {favoriteProperties.length === 1 ? "propiedad guardada" : "propiedades guardadas"}
+                  {t("favorites.savedCount", { count: favoriteProperties.length })}
                   {selected.length > 0 && (
                     <span className="ml-2 text-sm text-gray-500">
-                      · {selected.length} seleccionadas para comparar
+                      {t("favorites.selectedForCompare", { count: selected.length })}
                     </span>
                   )}
                 </div>
@@ -100,14 +102,14 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
                   <button
                     type="button"
                     onClick={() => {
-                      if (confirm("¿Vaciar tu lista de favoritos?")) {
+                      if (confirm(t("favorites.clearListConfirm"))) {
                         clear();
                         setSelected([]);
                       }
                     }}
                     className="text-sm text-gray-500 hover:text-red-600 transition-colors"
                   >
-                    Vaciar lista
+                    {t("favorites.clearList")}
                   </button>
                   <button
                     type="button"
@@ -115,14 +117,14 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
                     disabled={selected.length < 2}
                     className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                   >
-                    Comparar ({selected.length})
+                    {t("favorites.compare", { count: selected.length })}
                   </button>
                 </div>
               </div>
 
               {selected.length === 0 && (
                 <p className="text-sm text-gray-500 mb-4 text-center">
-                  💡 Marcá hasta {MAX_COMPARE} propiedades para compararlas lado a lado
+                  {t("favorites.compareHint", { max: MAX_COMPARE })}
                 </p>
               )}
 
@@ -149,7 +151,7 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
                         <button
                           type="button"
                           onClick={() => toggle(p.id)}
-                          aria-label="Quitar de favoritos"
+                          aria-label={t("favorites.removeFromFavorites")}
                           className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 hover:bg-white shadow-md flex items-center justify-center"
                         >
                           <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
@@ -180,13 +182,13 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
                               onChange={() => toggleSelection(p.id)}
                               className="rounded border-gray-300 text-primary focus:ring-primary disabled:cursor-not-allowed"
                             />
-                            Comparar
+                            {t("favorites.compareCheckbox")}
                           </label>
                           <Link
                             href={`/properties/${p.slug}`}
                             className="text-sm text-primary hover:underline font-medium"
                           >
-                            Ver detalles →
+                            {t("favorites.viewDetails")}
                           </Link>
                         </div>
                       </div>
@@ -202,11 +204,14 @@ export default function FavoritesPage({ properties: allProps }: FavoritesPagePro
   );
 }
 
-export const getStaticProps: GetStaticProps<FavoritesPageProps> = async () => {
-  // Pasamos todas las propiedades pre-renderizadas; el filtrado por favoritos
-  // ocurre en el cliente porque la lista vive en localStorage.
+export const getStaticProps: GetStaticProps<FavoritesPageProps> = async ({ locale }) => {
+  // We pass all pre-rendered properties; filtering by favorites
+  // happens on the client because the list lives in localStorage.
   return {
-    props: { properties: allProperties },
+    props: {
+      properties: localizeProperties(allProperties, locale),
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+    },
     revalidate: 60,
   };
 };

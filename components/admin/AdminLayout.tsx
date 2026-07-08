@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar autenticación
+    // Check authentication
     fetch("/api/admin/check-auth")
       .then((res) => res.json())
       .then((data) => {
@@ -43,7 +43,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">Cargando...</p>
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
     );
@@ -69,7 +69,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <Link href="/admin" className="text-xl font-bold text-gray-900">
-                Panel de Administración
+                Admin Panel
               </Link>
               <nav className="hidden md:flex space-x-4">
                 <Link
@@ -90,7 +90,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  Configuración
+                  Settings
                 </Link>
                 <Link
                   href="/admin/properties"
@@ -100,7 +100,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  Propiedades
+                  Properties
                 </Link>
                 <Link
                   href="/admin/integrations"
@@ -110,7 +110,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  Integraciones
+                  Integrations
                 </Link>
                 <Link
                   href="/admin/automations"
@@ -120,7 +120,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  Automatizaciones
+                  Automations
                 </Link>
               </nav>
             </div>
@@ -130,13 +130,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 target="_blank"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                Ver sitio
+                View site
               </Link>
               <button
                 onClick={handleLogout}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
               >
-                Cerrar sesión
+                Log out
               </button>
             </div>
           </div>

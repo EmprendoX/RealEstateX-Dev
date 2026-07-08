@@ -1,13 +1,15 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
 import PropertyHero from "@/components/PropertyHero";
 import PropertyMap from "@/components/PropertyMap";
 import PropertyTour from "@/components/PropertyTour";
 import MortgageCalculator from "@/components/MortgageCalculator";
 import ContactForm from "@/components/ContactForm";
-import { properties, getPropertyBySlug, Property } from "@/data/properties";
+import { properties, getPropertyBySlug, localizeProperty, Property } from "@/data/properties";
 import { siteConfig } from "@/config/siteConfig";
 
 interface PropertyDetailPageProps {
@@ -15,8 +17,9 @@ interface PropertyDetailPageProps {
 }
 
 export default function PropertyDetailPage({ property }: PropertyDetailPageProps) {
+  const { t } = useTranslation("common");
   const whatsappMessage = encodeURIComponent(
-    `Hola, me interesa la propiedad: ${property.title}. ¿Me puedes dar más información?`
+    t("propertyDetail.propertyMessage", { title: property.title })
   );
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
 
@@ -26,8 +29,8 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
     /^https?:\/\//i.test(img) ? img : `${baseUrl}${img.startsWith("/") ? img : `/${img}`}`
   );
 
-  // Schema.org: RealEstateListing es el tipo más específico y reconocido por Google
-  // para anuncios inmobiliarios; mejora rich results y matching de intent.
+  // Schema.org: RealEstateListing is the most specific type recognized by Google
+  // for real-estate listings; it improves rich results and intent matching.
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
@@ -86,11 +89,11 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
           <nav className="mb-6">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Link href="/" className="hover:text-primary">
-                Inicio
+                {t("propertyDetail.breadcrumbHome")}
               </Link>
               <span>/</span>
               <Link href="/properties" className="hover:text-primary">
-                Propiedades
+                {t("propertyDetail.breadcrumbProperties")}
               </Link>
               <span>/</span>
               <span className="text-gray-900">{property.title}</span>
@@ -98,60 +101,62 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Columna principal - Información de la propiedad */}
+            {/* Main column - Property information */}
             <div className="lg:col-span-2">
               <PropertyHero property={property} />
 
-              {/* Descripción completa */}
+              {/* Full description */}
               <div className="bg-white rounded-lg shadow-md p-6 md:p-8 mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Descripción
+                  {t("propertyDetail.description")}
                 </h2>
                 <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                   {property.description}
                 </p>
               </div>
 
-              {/* Ficha técnica */}
+              {/* Spec sheet */}
               <div className="bg-white rounded-lg shadow-md p-6 md:p-8 mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Ficha técnica
+                  {t("propertyDetail.specs")}
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Tipo</p>
-                    <p className="font-semibold text-gray-900 capitalize">
-                      {property.type}
+                    <p className="text-sm text-gray-600 mb-1">{t("propertyDetail.type")}</p>
+                    <p className="font-semibold text-gray-900">
+                      {property.type === "venta"
+                        ? t("propertyCard.forSale")
+                        : t("propertyCard.forRent")}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Recámaras</p>
+                    <p className="text-sm text-gray-600 mb-1">{t("propertyDetail.bedrooms")}</p>
                     <p className="font-semibold text-gray-900">
                       {property.bedrooms}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Baños</p>
+                    <p className="text-sm text-gray-600 mb-1">{t("propertyDetail.bathrooms")}</p>
                     <p className="font-semibold text-gray-900">
                       {property.bathrooms}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 mb-1">
-                      Estacionamientos
+                      {t("propertyDetail.parking")}
                     </p>
                     <p className="font-semibold text-gray-900">
                       {property.parking}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Área</p>
+                    <p className="text-sm text-gray-600 mb-1">{t("propertyDetail.area")}</p>
                     <p className="font-semibold text-gray-900">
                       {property.area} m²
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Ubicación</p>
+                    <p className="text-sm text-gray-600 mb-1">{t("propertyDetail.location")}</p>
                     <p className="font-semibold text-gray-900">
                       {property.location}, {property.city}
                     </p>
@@ -159,23 +164,23 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
                 </div>
               </div>
 
-              {/* Tour virtual (si la propiedad lo tiene) */}
+              {/* Virtual tour (if the property has one) */}
               {property.tourUrl && <PropertyTour url={property.tourUrl} />}
 
-              {/* Mapa con ubicación */}
+              {/* Map with location */}
               <PropertyMap property={property} />
 
-              {/* Calculadora de hipoteca (solo en propiedades en venta) */}
+              {/* Mortgage calculator (only for properties for sale) */}
               {property.type === "venta" && (
                 <MortgageCalculator property={property} />
               )}
 
-              {/* Descargar PDF */}
+              {/* Download PDF */}
               <div className="bg-white rounded-lg shadow-md p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
-                  <h3 className="font-bold text-gray-900">Ficha de la propiedad</h3>
+                  <h3 className="font-bold text-gray-900">{t("propertyDetail.pdfTitle")}</h3>
                   <p className="text-sm text-gray-600">
-                    Descargá un PDF con toda la información para imprimir o compartir.
+                    {t("propertyDetail.pdfSubtitle")}
                   </p>
                 </div>
                 <a
@@ -186,17 +191,17 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
-                  Descargar PDF
+                  {t("propertyDetail.downloadPdf")}
                 </a>
               </div>
 
-              {/* Botón WhatsApp destacado */}
+              {/* Highlighted WhatsApp button */}
               <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6 text-center">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  ¿Tienes preguntas sobre esta propiedad?
+                  {t("propertyDetail.questionsHeading")}
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Contáctanos directamente por WhatsApp para una respuesta rápida
+                  {t("propertyDetail.questionsSubtitle")}
                 </p>
                 <a
                   href={whatsappUrl}
@@ -204,12 +209,12 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
                   rel="noopener noreferrer"
                   className="inline-block bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
                 >
-                  💬 Contactar por WhatsApp
+                  {t("propertyDetail.contactWhatsapp")}
                 </a>
               </div>
             </div>
 
-            {/* Columna lateral - Formulario de contacto */}
+            {/* Side column - Contact form */}
             <div className="lg:col-span-1">
               <div className="sticky top-24">
                 <ContactForm
@@ -228,14 +233,15 @@ export default function PropertyDetailPage({ property }: PropertyDetailPageProps
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: properties.map((p) => ({ params: { slug: p.slug } })),
-    // blocking: si se agrega una propiedad desde el admin y aún no fue rebuildeada,
-    // Next la renderiza on-demand en lugar de devolver 404.
+    // blocking: if a property is added from the admin and hasn't been rebuilt yet,
+    // Next renders it on-demand instead of returning 404.
     fallback: "blocking",
   };
 };
 
 export const getStaticProps: GetStaticProps<PropertyDetailPageProps> = async ({
   params,
+  locale,
 }) => {
   const slug = params?.slug;
   if (typeof slug !== "string") {
@@ -248,8 +254,11 @@ export const getStaticProps: GetStaticProps<PropertyDetailPageProps> = async ({
   }
 
   return {
-    props: { property },
-    // Revalida cada 60s para reflejar cambios del admin sin redeploy
+    props: {
+      property: localizeProperty(property, locale),
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+    },
+    // Revalidate every 60s to reflect admin changes without a redeploy
     revalidate: 60,
   };
 };

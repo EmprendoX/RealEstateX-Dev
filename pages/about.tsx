@@ -1,34 +1,50 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import type { GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
 import { siteConfig } from "@/config/siteConfig";
-import { aboutContent, renderTemplate } from "@/data/aboutPage";
+import { getAboutContent, renderTemplate } from "@/data/aboutPage";
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+    },
+  };
+};
 
 export default function AboutPage() {
+  const { t } = useTranslation("common");
+  const { locale } = useRouter();
+  const aboutContent = getAboutContent(locale);
   const tplVars = { city: siteConfig.city, brokerName: siteConfig.brokerName };
-  const whatsappMessage = encodeURIComponent(
-    "Hola, me gustaría conocer más sobre tus servicios."
-  );
+  const whatsappMessage = encodeURIComponent(t("about.servicesMessage"));
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
 
   return (
     <Layout
-      title="Sobre mí"
-      description={`Conoce más sobre ${siteConfig.brokerName}, tu asesor inmobiliario en ${siteConfig.city}`}
+      title={t("about.metaTitle")}
+      description={t("about.metaDescription", {
+        name: siteConfig.brokerName,
+        city: siteConfig.city,
+      })}
       canonicalPath="/about"
     >
       <div className="bg-gray-50 min-h-screen py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Sobre mí</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{t("about.heading")}</h1>
             <p className="text-lg text-gray-600">
-              Tu asesor inmobiliario de confianza en {siteConfig.city}
+              {t("about.subtitle", { city: siteConfig.city })}
             </p>
           </div>
 
-          {/* Foto y nombre */}
+          {/* Photo and name */}
           <div className="bg-white rounded-lg shadow-md p-8 mb-8">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               <div className="relative w-48 h-48 rounded-full overflow-hidden flex-shrink-0">
@@ -81,7 +97,7 @@ export default function AboutPage() {
             ))}
           </div>
 
-          {/* Cómo trabajo */}
+          {/* How I work */}
           <div className="bg-white rounded-lg shadow-md p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {aboutContent.howIWork.heading}
@@ -104,7 +120,7 @@ export default function AboutPage() {
             )}
           </div>
 
-          {/* Por qué trabajar conmigo */}
+          {/* Why work with me */}
           <div className="bg-white rounded-lg shadow-md p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {aboutContent.whyMe.heading}
@@ -126,17 +142,17 @@ export default function AboutPage() {
           {/* CTA */}
           <div className="bg-primary text-white rounded-lg shadow-md p-8 text-center">
             <h2 className="text-3xl font-bold mb-4">
-              ¿Listo para encontrar tu propiedad ideal?
+              {t("about.ctaHeading")}
             </h2>
             <p className="text-lg mb-6 text-primary-100">
-              Contáctame y juntos encontraremos el lugar perfecto para ti
+              {t("about.ctaSubtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/contact"
                 className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors"
               >
-                Contactar ahora
+                {t("about.contactNow")}
               </Link>
               <a
                 href={whatsappUrl}
@@ -144,7 +160,7 @@ export default function AboutPage() {
                 rel="noopener noreferrer"
                 className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
               >
-                WhatsApp
+                {t("about.whatsapp")}
               </a>
             </div>
           </div>

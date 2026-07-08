@@ -1,10 +1,12 @@
 import type { AppProps } from "next/app";
 import "@/styles/globals.css";
 import { useEffect } from "react";
+import { appWithTranslation } from "next-i18next";
 import { siteConfig } from "@/config/siteConfig";
+import nextI18NextConfig from "../next-i18next.config";
 
-export default function App({ Component, pageProps }: AppProps) {
-  // Aplicar colores dinámicos desde siteConfig a las variables CSS
+function App({ Component, pageProps }: AppProps) {
+  // Apply dynamic colors from siteConfig to the CSS variables
   useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty("--color-primary", siteConfig.primaryColor);
@@ -14,4 +16,4 @@ export default function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />;
 }
 
-
+export default appWithTranslation(App, nextI18NextConfig);

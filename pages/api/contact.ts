@@ -169,7 +169,7 @@ export default async function handler(
       return res.status(400).json({ ok: false, message: "El mensaje es obligatorio" });
     }
 
-    // Enriquecer con datos de la propiedad si vino propertyId
+    // Enrich with property data if a propertyId was provided
     const property = propertyId
       ? properties.find((p) => p.id === propertyId)
       : undefined;
@@ -191,11 +191,11 @@ export default async function handler(
       timestamp: new Date().toISOString(),
     };
 
-    // Log siempre (útil para debugging y como backup si Resend falla)
+    // Always log (useful for debugging and as a backup if Resend fails)
     console.log("=== NUEVO LEAD ===");
     console.log(JSON.stringify(leadData, null, 2));
 
-    // 1) Email al broker via Resend
+    // 1) Email to the broker via Resend
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey) {
       const resend = new Resend(resendApiKey);
@@ -219,8 +219,8 @@ export default async function handler(
           console.log("Email enviado, id:", result.data?.id);
         }
       } catch (emailError) {
-        // No fallar la respuesta — la decisión de producto es no perder leads
-        // por errores transitorios de Resend. El lead queda en logs.
+        // Don't fail the response — the product decision is not to lose leads
+        // over transient Resend errors. The lead remains in the logs.
         console.error("Excepción enviando email:", emailError);
       }
     } else {
@@ -229,7 +229,7 @@ export default async function handler(
       );
     }
 
-    // 2) Webhook opcional (Make/Zapier/CRM)
+    // 2) Optional webhook (Make/Zapier/CRM)
     if (siteConfig.leadWebhookUrl) {
       try {
         const webhookResponse = await fetch(siteConfig.leadWebhookUrl, {

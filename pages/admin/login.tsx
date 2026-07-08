@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Verificar si ya está autenticado
+    // Check whether the user is already authenticated
     fetch("/api/admin/check-auth")
       .then((res) => res.json())
       .then((data) => {
@@ -45,11 +45,11 @@ export default function LoginPage() {
       if (data.ok) {
         router.push("/admin");
       } else {
-        setError(data.message || "Contraseña incorrecta");
+        setError(data.message || "Incorrect password");
         setLoading(false);
       }
     } catch (error) {
-      setError("Error al iniciar sesión");
+      setError("Error while logging in");
       setLoading(false);
     }
   };
@@ -58,7 +58,7 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <p className="text-gray-600">Verificando...</p>
+          <p className="text-gray-600">Checking...</p>
         </div>
       </div>
     );
@@ -69,17 +69,17 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Panel de Administración
+            Admin Panel
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Ingresa tu contraseña para continuar
+            Enter your password to continue
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="password" className="sr-only">
-                Contraseña
+                Password
               </label>
               <input
                 id="password"
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                placeholder="Contraseña"
+                placeholder="Password"
               />
             </div>
           </div>
@@ -106,14 +106,14 @@ export default function LoginPage() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+              {loading ? "Logging in..." : "Log in"}
             </button>
           </div>
 
           <div className="text-center">
             <p className="text-xs text-gray-500">
-              Por defecto la contraseña es "admin123". Configura ADMIN_PASSWORD
-              en .env.local para producción.
+              The default password is "admin123". Set ADMIN_PASSWORD
+              in .env.local for production.
             </p>
           </div>
         </form>

@@ -11,7 +11,7 @@ export default function ConfigForm() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Cargar configuración actual
+    // Load the current settings
     setFormData(siteConfig);
   }, []);
 
@@ -45,29 +45,29 @@ export default function ConfigForm() {
       if (data.ok) {
         setSuccess(true);
         setTimeout(() => {
-          window.location.reload(); // Recargar para ver cambios
+          window.location.reload(); // Reload to see the changes
         }, 1500);
       } else {
-        setError(data.message || "Error al guardar la configuración");
+        setError(data.message || "Error saving the settings");
         setLoading(false);
       }
     } catch (error) {
-      setError("Error al guardar la configuración");
+      setError("Error saving the settings");
       setLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Información del Sitio */}
+      {/* Site Information */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Información del Sitio
+          Site Information
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nombre del Sitio *
+              Site Name *
             </label>
             <input
               type="text"
@@ -80,7 +80,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              URL del Sitio *
+              Site URL *
             </label>
             <input
               type="url"
@@ -92,12 +92,12 @@ export default function ConfigForm() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
             />
             <p className="mt-1 text-xs text-gray-500">
-              URL absoluta sin barra final. Se usa en sitemap y SEO.
+              Absolute URL without a trailing slash. Used in the sitemap and SEO.
             </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Texto del Logo *
+              Logo Text *
             </label>
             <input
               type="text"
@@ -110,7 +110,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              URL del Logo (opcional)
+              Logo URL (optional)
             </label>
             <input
               type="url"
@@ -118,12 +118,12 @@ export default function ConfigForm() {
               value={formData.logoUrl || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://ejemplo.com/logo.png"
+              placeholder="https://example.com/logo.png"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Color Primario * (hex)
+              Primary Color * (hex)
             </label>
             <div className="flex gap-2">
               <input
@@ -147,7 +147,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Color Secundario * (hex)
+              Secondary Color * (hex)
             </label>
             <div className="flex gap-2">
               <input
@@ -172,15 +172,15 @@ export default function ConfigForm() {
         </div>
       </div>
 
-      {/* Datos del Broker */}
+      {/* Broker Details */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Datos del Broker
+          Broker Details
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nombre del Broker *
+              Broker Name *
             </label>
             <input
               type="text"
@@ -193,7 +193,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Teléfono *
+              Phone *
             </label>
             <input
               type="tel"
@@ -206,7 +206,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              WhatsApp * (sin + ni espacios)
+              WhatsApp * (no + or spaces)
             </label>
             <input
               type="text"
@@ -233,7 +233,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Ciudad *
+              City *
             </label>
             <input
               type="text"
@@ -246,7 +246,7 @@ export default function ConfigForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Dirección *
+              Address *
             </label>
             <input
               type="text"
@@ -273,10 +273,10 @@ export default function ConfigForm() {
         </div>
       </div>
 
-      {/* Redes Sociales */}
+      {/* Social Media */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Redes Sociales (opcional)
+          Social Media (optional)
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -289,7 +289,7 @@ export default function ConfigForm() {
               value={formData.facebook || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://facebook.com/tu-pagina"
+              placeholder="https://facebook.com/your-page"
             />
           </div>
           <div>
@@ -302,7 +302,7 @@ export default function ConfigForm() {
               value={formData.instagram || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://instagram.com/tu-cuenta"
+              placeholder="https://instagram.com/your-account"
             />
           </div>
           <div>
@@ -315,7 +315,7 @@ export default function ConfigForm() {
               value={formData.tiktok || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://tiktok.com/@tu-cuenta"
+              placeholder="https://tiktok.com/@your-account"
             />
           </div>
           <div>
@@ -328,12 +328,12 @@ export default function ConfigForm() {
               value={formData.linkedin || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://linkedin.com/in/tu-perfil"
+              placeholder="https://linkedin.com/in/your-profile"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Sitio Web
+              Website
             </label>
             <input
               type="url"
@@ -341,21 +341,21 @@ export default function ConfigForm() {
               value={formData.website || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://tu-sitio.com"
+              placeholder="https://your-site.com"
             />
           </div>
         </div>
       </div>
 
-      {/* Automatizaciones */}
+      {/* Automations */}
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Automatizaciones (opcional)
+          Automations (optional)
         </h2>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              URL del Webhook para Leads
+              Lead Webhook URL
             </label>
             <input
               type="url"
@@ -363,15 +363,15 @@ export default function ConfigForm() {
               value={formData.leadWebhookUrl || ""}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-              placeholder="https://hook.make.com/tu-webhook-id"
+              placeholder="https://hook.make.com/your-webhook-id"
             />
             <p className="mt-1 text-sm text-gray-500">
-              URL del webhook para enviar leads automáticamente (Make, Zapier, etc.)
+              Webhook URL to send leads automatically (Make, Zapier, etc.)
             </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Script de Chat
+              Chat Script
             </label>
             <textarea
               name="chatScript"
@@ -382,13 +382,13 @@ export default function ConfigForm() {
               placeholder='<script type="text/javascript">window.$crisp=[];...</script>'
             />
             <p className="mt-1 text-sm text-gray-500">
-              Script HTML/JS del widget de chat (Crisp, Intercom, Tidio, etc.)
+              HTML/JS script for the chat widget (Crisp, Intercom, Tidio, etc.)
             </p>
           </div>
         </div>
       </div>
 
-      {/* Mensajes */}
+      {/* Messages */}
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
           {error}
@@ -397,18 +397,18 @@ export default function ConfigForm() {
 
       {success && (
         <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md">
-          Configuración guardada exitosamente. Recargando...
+          Settings saved successfully. Reloading...
         </div>
       )}
 
-      {/* Botón Guardar */}
+      {/* Save Button */}
       <div className="flex justify-end">
         <button
           type="submit"
           disabled={loading}
           className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Guardando..." : "Guardar Configuración"}
+          {loading ? "Saving..." : "Save Settings"}
         </button>
       </div>
     </form>

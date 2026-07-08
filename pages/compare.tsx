@@ -3,8 +3,10 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
-import { properties as allProperties, Property } from "@/data/properties";
+import { properties as allProperties, localizeProperties, Property } from "@/data/properties";
 import { formatPrice } from "@/utils/formatPrice";
 import { siteConfig } from "@/config/siteConfig";
 
@@ -16,32 +18,33 @@ interface ComparePageProps {
 
 interface Row {
   label: string;
-  /** Función que toma una propiedad y devuelve el valor a mostrar. */
+  /** Function that takes a property and returns the value to display. */
   value: (p: Property) => React.ReactNode;
-  /** Cuando todas las celdas son iguales, atenuamos la fila para resaltar diferencias. */
+  /** When all cells are equal, we dim the row to highlight differences. */
   highlight?: boolean;
 }
 
-const ROWS: Row[] = [
-  {
-    label: "Precio",
-    value: (p) => (
-      <span className="text-xl font-bold text-primary">
-        {formatPrice(p.price, p.currency)}
-      </span>
-    ),
-  },
-  { label: "Tipo", value: (p) => (p.type === "venta" ? "Venta" : "Renta") },
-  { label: "Ubicación", value: (p) => `${p.location}, ${p.city}` },
-  { label: "Recámaras", value: (p) => p.bedrooms },
-  { label: "Baños", value: (p) => p.bathrooms },
-  { label: "Estacionamientos", value: (p) => p.parking },
-  { label: "Área", value: (p) => `${p.area} m²` },
-  { label: "Destacada", value: (p) => (p.featured ? "Sí" : "No") },
-];
-
 export default function ComparePage({ properties: allProps }: ComparePageProps) {
+  const { t } = useTranslation("common");
   const router = useRouter();
+
+  const ROWS: Row[] = [
+    {
+      label: t("compare.rowPrice"),
+      value: (p) => (
+        <span className="text-xl font-bold text-primary">
+          {formatPrice(p.price, p.currency)}
+        </span>
+      ),
+    },
+    { label: t("compare.rowType"), value: (p) => (p.type === "venta" ? t("compare.typeSale") : t("compare.typeRent")) },
+    { label: t("compare.rowLocation"), value: (p) => `${p.location}, ${p.city}` },
+    { label: t("compare.rowBedrooms"), value: (p) => p.bedrooms },
+    { label: t("compare.rowBathrooms"), value: (p) => p.bathrooms },
+    { label: t("compare.rowParking"), value: (p) => p.parking },
+    { label: t("compare.rowArea"), value: (p) => `${p.area} m²` },
+    { label: t("compare.rowFeatured"), value: (p) => (p.featured ? t("compare.yes") : t("compare.no")) },
+  ];
   const idsParam = router.query.ids;
   const ids = useMemo(() => {
     if (typeof idsParam !== "string") return [];
@@ -59,21 +62,21 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
 
   const whatsappForProperty = (p: Property) => {
     const msg = encodeURIComponent(
-      `Hola, me interesa la propiedad: ${p.title}. ¿Me puedes dar más información?`
+      t("whatsapp.propertyMessage", { title: p.title })
     );
     return `https://wa.me/${siteConfig.whatsapp}?text=${msg}`;
   };
 
   return (
-    <Layout title="Comparar propiedades" canonicalPath="/compare" noindex>
+    <Layout title={t("compare.metaTitle")} canonicalPath="/compare" noindex>
       <div className="bg-gray-50 min-h-screen py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-3">
-              Comparar propiedades
+              {t("compare.heading")}
             </h1>
             <p className="text-gray-600">
-              Hasta {MAX_COMPARE} propiedades lado a lado
+              {t("compare.subtitle", { max: MAX_COMPARE })}
             </p>
           </div>
 
@@ -81,17 +84,16 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
             <div className="bg-white rounded-lg shadow-md p-12 text-center max-w-2xl mx-auto">
               <div className="text-5xl mb-4">⚖️</div>
               <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                Necesitás al menos 2 propiedades
+                {t("compare.needAtLeastTwo")}
               </h2>
               <p className="text-gray-600 mb-6">
-                Ingresá a Favoritos, marcá 2 o 3 propiedades y tocá
-                "Comparar".
+                {t("compare.needAtLeastTwoHint")}
               </p>
               <Link
                 href="/favorites"
                 className="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                Ir a Favoritos
+                {t("compare.goToFavorites")}
               </Link>
             </div>
           ) : (
@@ -102,7 +104,7 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
                     <tr>
                       <th className="text-left p-4 bg-gray-50 border-b border-gray-200 w-40 align-top">
                         <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                          Característica
+                          {t("compare.feature")}
                         </span>
                       </th>
                       {compared.map((p) => (
@@ -155,7 +157,7 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
                     })}
                     <tr>
                       <th className="text-left p-4 bg-gray-50 text-sm font-medium text-gray-700 align-top">
-                        Acciones
+                        {t("compare.actions")}
                       </th>
                       {compared.map((p) => (
                         <td key={p.id} className="p-4 border-l border-gray-200 align-top">
@@ -164,7 +166,7 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
                               href={`/properties/${p.slug}`}
                               className="bg-primary hover:bg-primary/90 text-white text-center py-2 px-3 rounded-md text-sm font-medium transition-colors"
                             >
-                              Ver detalles
+                              {t("compare.viewDetails")}
                             </Link>
                             <a
                               href={whatsappForProperty(p)}
@@ -172,7 +174,7 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
                               rel="noopener noreferrer"
                               className="bg-green-500 hover:bg-green-600 text-white text-center py-2 px-3 rounded-md text-sm font-medium transition-colors"
                             >
-                              WhatsApp
+                              {t("compare.whatsapp")}
                             </a>
                           </div>
                         </td>
@@ -182,7 +184,7 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
                 </table>
               </div>
               <div className="p-4 border-t border-gray-200 bg-gray-50 text-center text-sm text-gray-500">
-                Las filas atenuadas son iguales en todas las propiedades.
+                {t("compare.dimmedNote")}
               </div>
             </div>
           )}
@@ -192,7 +194,7 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
               href="/favorites"
               className="text-primary hover:underline font-medium"
             >
-              ← Volver a Favoritos
+              {t("compare.backToFavorites")}
             </Link>
           </div>
         </div>
@@ -201,9 +203,12 @@ export default function ComparePage({ properties: allProps }: ComparePageProps) 
   );
 }
 
-export const getStaticProps: GetStaticProps<ComparePageProps> = async () => {
+export const getStaticProps: GetStaticProps<ComparePageProps> = async ({ locale }) => {
   return {
-    props: { properties: allProperties },
+    props: {
+      properties: localizeProperties(allProperties, locale),
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
+    },
     revalidate: 60,
   };
 };

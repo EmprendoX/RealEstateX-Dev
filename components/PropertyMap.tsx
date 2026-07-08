@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "next-i18next";
 import { Property } from "@/data/properties";
 
 interface PropertyMapProps {
@@ -6,10 +7,11 @@ interface PropertyMapProps {
 }
 
 export default function PropertyMap({ property }: PropertyMapProps) {
+  const { t } = useTranslation("common");
   const query = encodeURIComponent(`${property.location}, ${property.city}`);
-  // Google Maps embed sin API key: muestra la dirección con pin.
-  // Limitación: si la dirección es ambigua puede caer en el lugar equivocado.
-  // Para precisión exacta habría que agregar lat/lng a Property.
+  // Google Maps embed without an API key: shows the address with a pin.
+  // Limitation: if the address is ambiguous it may land on the wrong place.
+  // For exact precision we would need to add lat/lng to Property.
   const embedSrc = `https://www.google.com/maps?q=${query}&output=embed`;
   const openInMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
 
@@ -17,14 +19,14 @@ export default function PropertyMap({ property }: PropertyMapProps) {
     <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
       <div className="p-6 md:p-8 pb-4">
         <div className="flex items-start justify-between gap-4 mb-2">
-          <h2 className="text-2xl font-bold text-gray-900">Ubicación</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{t("propertyMap.title")}</h2>
           <a
             href={openInMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-primary hover:underline whitespace-nowrap"
           >
-            Ver en Google Maps →
+            {t("propertyMap.viewOnGoogleMaps")}
           </a>
         </div>
         <p className="text-gray-600 flex items-center gap-1.5">
@@ -40,7 +42,7 @@ export default function PropertyMap({ property }: PropertyMapProps) {
           src={embedSrc}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title={`Mapa de ${property.title}`}
+          title={t("propertyMap.mapAlt", { title: property.title })}
           className="absolute inset-0 w-full h-full border-0"
           allowFullScreen
         />

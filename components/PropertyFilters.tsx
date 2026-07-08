@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslation } from "next-i18next";
 import { PropertyType, Currency } from "@/data/properties";
 import {
   PropertyFilters as Filters,
@@ -22,14 +23,15 @@ export default function PropertyFiltersUI({
   onChange,
   onReset,
 }: PropertyFiltersProps) {
+  const { t } = useTranslation("common");
   const priceDisabled = filters.currency === "all";
 
   const update = (patch: Partial<Filters>) => {
     onChange({ ...filters, ...patch });
   };
 
-  // Cuando el usuario cambia moneda a "all", limpiamos el rango de precio
-  // para evitar que quede invisible-pero-aplicado por el helper.
+  // When the user changes currency to "all", we clear the price range
+  // to avoid it staying invisible-but-applied by the helper.
   const handleCurrencyChange = (currency: Currency | "all") => {
     if (currency === "all") {
       update({ currency, minPrice: null, maxPrice: null });
@@ -41,29 +43,29 @@ export default function PropertyFiltersUI({
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-8">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">Filtrar propiedades</h2>
+        <h2 className="text-xl font-semibold text-gray-900">{t("filters.title")}</h2>
         {hasActiveFilters(filters) && (
           <button
             type="button"
             onClick={onReset}
             className="text-sm text-primary hover:underline font-medium"
           >
-            Limpiar filtros
+            {t("filters.clear")}
           </button>
         )}
       </div>
 
-      {/* Búsqueda libre */}
+      {/* Free-text search */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Buscar
+          {t("filters.search")}
         </label>
         <div className="relative">
           <input
             type="text"
             value={filters.q}
             onChange={(e) => update({ q: e.target.value })}
-            placeholder="Buscar por título, descripción o ubicación..."
+            placeholder={t("filters.searchPlaceholder")}
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           />
           <svg
@@ -82,11 +84,11 @@ export default function PropertyFiltersUI({
         </div>
       </div>
 
-      {/* Tipo y ciudad */}
+      {/* Type and city */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tipo de operación
+            {t("filters.operationType")}
           </label>
           <select
             value={filters.type}
@@ -95,21 +97,21 @@ export default function PropertyFiltersUI({
             }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           >
-            <option value="all">Todas</option>
-            <option value="venta">Venta</option>
-            <option value="renta">Renta</option>
+            <option value="all">{t("filters.all")}</option>
+            <option value="venta">{t("filters.typeSale")}</option>
+            <option value="renta">{t("filters.typeRent")}</option>
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Ciudad
+            {t("filters.city")}
           </label>
           <select
             value={filters.city}
             onChange={(e) => update({ city: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           >
-            <option value="all">Todas</option>
+            <option value="all">{t("filters.all")}</option>
             {cities.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -119,11 +121,11 @@ export default function PropertyFiltersUI({
         </div>
       </div>
 
-      {/* Precio y moneda */}
+      {/* Price and currency */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Moneda
+            {t("filters.currency")}
           </label>
           <select
             value={filters.currency}
@@ -132,14 +134,14 @@ export default function PropertyFiltersUI({
             }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           >
-            <option value="all">Todas</option>
+            <option value="all">{t("filters.all")}</option>
             <option value="MXN">MXN</option>
             <option value="USD">USD</option>
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Precio mínimo
+            {t("filters.minPrice")}
           </label>
           <input
             type="number"
@@ -151,13 +153,13 @@ export default function PropertyFiltersUI({
               })
             }
             disabled={priceDisabled}
-            placeholder={priceDisabled ? "Elegí una moneda" : "0"}
+            placeholder={priceDisabled ? t("filters.chooseCurrency") : "0"}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Precio máximo
+            {t("filters.maxPrice")}
           </label>
           <input
             type="number"
@@ -169,17 +171,17 @@ export default function PropertyFiltersUI({
               })
             }
             disabled={priceDisabled}
-            placeholder={priceDisabled ? "Elegí una moneda" : "Sin límite"}
+            placeholder={priceDisabled ? t("filters.chooseCurrency") : t("filters.noLimit")}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
           />
         </div>
       </div>
 
-      {/* Recámaras y baños */}
+      {/* Bedrooms and bathrooms */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Recámaras (mínimo)
+            {t("filters.bedrooms")}
           </label>
           <select
             value={filters.minBedrooms ?? ""}
@@ -190,7 +192,7 @@ export default function PropertyFiltersUI({
             }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           >
-            <option value="">Cualquiera</option>
+            <option value="">{t("filters.any")}</option>
             <option value="1">1+</option>
             <option value="2">2+</option>
             <option value="3">3+</option>
@@ -200,7 +202,7 @@ export default function PropertyFiltersUI({
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Baños (mínimo)
+            {t("filters.bathrooms")}
           </label>
           <select
             value={filters.minBathrooms ?? ""}
@@ -211,7 +213,7 @@ export default function PropertyFiltersUI({
             }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           >
-            <option value="">Cualquiera</option>
+            <option value="">{t("filters.any")}</option>
             <option value="1">1+</option>
             <option value="2">2+</option>
             <option value="3">3+</option>
@@ -220,11 +222,11 @@ export default function PropertyFiltersUI({
         </div>
       </div>
 
-      {/* Contador de resultados */}
+      {/* Results counter */}
       <div className="mt-4 pt-4 border-t border-gray-200">
         <p className="text-sm text-gray-600">
-          Mostrando <span className="font-semibold">{resultCount}</span>{" "}
-          {resultCount === 1 ? "propiedad" : "propiedades"}
+          {t("filters.showing")} <span className="font-semibold">{resultCount}</span>{" "}
+          {t("filters.resultsCount", { count: resultCount })}
         </p>
       </div>
     </div>

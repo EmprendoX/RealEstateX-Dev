@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 import { useFavorites } from "@/utils/useFavorites";
 
 interface FavoritesNavLinkProps {
@@ -13,6 +14,7 @@ export default function FavoritesNavLink({
   onClick,
   variant = "desktop",
 }: FavoritesNavLinkProps) {
+  const { t } = useTranslation("common");
   const { count, hydrated } = useFavorites();
   const showBadge = hydrated && count > 0;
 
@@ -23,7 +25,7 @@ export default function FavoritesNavLink({
         onClick={onClick}
         className="text-gray-700 hover:text-primary transition-colors font-medium px-2 flex items-center gap-2"
       >
-        <span>Favoritos</span>
+        <span>{t("nav.favorites")}</span>
         {showBadge && (
           <span className="bg-red-500 text-white text-xs font-semibold rounded-full px-2 py-0.5 min-w-[20px] text-center">
             {count}
@@ -37,7 +39,7 @@ export default function FavoritesNavLink({
     <Link
       href="/favorites"
       onClick={onClick}
-      aria-label={`Favoritos${showBadge ? ` (${count})` : ""}`}
+      aria-label={`${t("nav.favorites")}${showBadge ? ` (${count})` : ""}`}
       className="relative text-gray-700 hover:text-primary transition-colors p-2"
     >
       <svg

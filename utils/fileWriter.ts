@@ -7,50 +7,50 @@ const CONFIG_PATH = path.join(process.cwd(), "config", "siteConfig.ts");
 const PROPERTIES_PATH = path.join(process.cwd(), "data", "properties.ts");
 
 /**
- * Genera el contenido del archivo siteConfig.ts
+ * Generates the contents of the siteConfig.ts file.
  */
 function generateSiteConfigFile(config: SiteConfig): string {
   return `/**
- * CONFIGURACIÓN CENTRAL DEL SITIO
- * 
- * Este archivo contiene toda la configuración que necesita ser personalizada
- * para cada broker. Para duplicar el sitio para otro broker, solo necesitas
- * cambiar los valores en este archivo.
+ * CENTRAL SITE CONFIGURATION
+ *
+ * This file contains all the configuration that needs to be customized
+ * for each broker. To duplicate the site for another broker, you only need
+ * to change the values in this file.
  */
 
 export interface SiteConfig {
-  // Información del sitio
+  // Site information
   siteName: string;
-  siteUrl: string; // URL absoluta del sitio en producción (ej: "https://juanperez.com") sin barra final
+  siteUrl: string; // Absolute production URL (e.g. "https://juanperez.com") with no trailing slash
   logoText: string;
-  logoUrl?: string; // URL de la imagen del logo (opcional)
-  primaryColor: string; // Color principal en formato hex (ej: "#0EA5E9")
-  secondaryColor: string; // Color secundario en formato hex (ej: "#06B6D4")
-  
-  // Datos del broker
+  logoUrl?: string; // Logo image URL (optional)
+  primaryColor: string; // Primary color in hex format (e.g. "#0EA5E9")
+  secondaryColor: string; // Secondary color in hex format (e.g. "#06B6D4")
+
+  // Broker details
   brokerName: string;
   phone: string;
-  whatsapp: string; // Número sin espacios ni caracteres especiales (ej: "5215512345678")
+  whatsapp: string; // Number without spaces or special characters (e.g. "5215512345678")
   email: string;
   city: string;
   address: string;
   slogan: string;
-  
-  // Redes sociales (opcionales)
+
+  // Social networks (optional)
   facebook?: string;
   instagram?: string;
   tiktok?: string;
   linkedin?: string;
   website?: string;
-  
-  // Hooks para automatización (opcionales)
-  leadWebhookUrl?: string; // URL del webhook para enviar leads (Make, Zapier, etc.)
-  chatScript?: string; // HTML/JS del widget de chat (Crisp, Intercom, Tidio, etc.)
+
+  // Automation hooks (optional)
+  leadWebhookUrl?: string; // Webhook URL to send leads (Make, Zapier, etc.)
+  chatScript?: string; // Chat widget HTML/JS (Crisp, Intercom, Tidio, etc.)
 }
 
 export const siteConfig: SiteConfig = {
   // ============================================
-  // INFORMACIÓN DEL SITIO
+  // SITE INFORMATION
   // ============================================
   siteName: ${JSON.stringify(config.siteName)},
   siteUrl: ${JSON.stringify(config.siteUrl)},
@@ -60,7 +60,7 @@ export const siteConfig: SiteConfig = {
   secondaryColor: ${JSON.stringify(config.secondaryColor)},
   
   // ============================================
-  // DATOS DEL BROKER
+  // BROKER DETAILS
   // ============================================
   brokerName: ${JSON.stringify(config.brokerName)},
   phone: ${JSON.stringify(config.phone)},
@@ -71,7 +71,7 @@ export const siteConfig: SiteConfig = {
   slogan: ${JSON.stringify(config.slogan)},
   
   // ============================================
-  // REDES SOCIALES
+  // SOCIAL NETWORKS
   // ============================================
   facebook: ${config.facebook ? JSON.stringify(config.facebook) : "undefined"},
   instagram: ${config.instagram ? JSON.stringify(config.instagram) : "undefined"},
@@ -80,7 +80,7 @@ export const siteConfig: SiteConfig = {
   website: ${config.website ? JSON.stringify(config.website) : "undefined"},
   
   // ============================================
-  // AUTOMATIZACIONES
+  // AUTOMATIONS
   // ============================================
   leadWebhookUrl: ${config.leadWebhookUrl ? JSON.stringify(config.leadWebhookUrl) : "undefined"},
   chatScript: ${config.chatScript ? JSON.stringify(config.chatScript) : "undefined"},
@@ -89,7 +89,7 @@ export const siteConfig: SiteConfig = {
 }
 
 /**
- * Genera el contenido del archivo properties.ts
+ * Generates the contents of the properties.ts file.
  */
 function generatePropertiesFile(properties: Property[]): string {
   const propertiesString = properties
@@ -98,7 +98,7 @@ function generatePropertiesFile(properties: Property[]): string {
     id: ${JSON.stringify(prop.id)},
     slug: ${JSON.stringify(prop.slug)},
     title: ${JSON.stringify(prop.title)},
-    description: ${JSON.stringify(prop.description)},
+    description: ${JSON.stringify(prop.description)},${prop.titleEn ? `\n    titleEn: ${JSON.stringify(prop.titleEn)},` : ""}${prop.descriptionEn ? `\n    descriptionEn: ${JSON.stringify(prop.descriptionEn)},` : ""}
     type: ${JSON.stringify(prop.type)},
     price: ${prop.price},
     currency: ${JSON.stringify(prop.currency)},
@@ -115,10 +115,10 @@ function generatePropertiesFile(properties: Property[]): string {
     .join(",\n");
 
   return `/**
- * DATOS DE PROPIEDADES
- * 
- * Este archivo contiene el tipo Property y el array de propiedades.
- * Para agregar o modificar propiedades, edita el array 'properties' abajo.
+ * PROPERTY DATA
+ *
+ * This file contains the Property type and the properties array.
+ * To add or edit properties, modify the 'properties' array below.
  */
 
 export const MAX_PROPERTIES = 50;
@@ -128,21 +128,25 @@ export type Currency = "MXN" | "USD";
 
 export interface Property {
   id: string;
-  slug: string; // URL amigable (ej: "departamento-reforma-123")
+  slug: string; // Friendly URL (e.g. "departamento-reforma-123")
   title: string;
   description: string;
+  /** English translation of the title (optional). Falls back to \`title\`. */
+  titleEn?: string;
+  /** English translation of the description (optional). Falls back to \`description\`. */
+  descriptionEn?: string;
   type: PropertyType;
   price: number;
   currency: Currency;
-  location: string; // Dirección o colonia
+  location: string; // Address or neighborhood
   city: string;
   bedrooms: number;
   bathrooms: number;
   parking: number;
-  area: number; // Área en m²
-  featured?: boolean; // Si es true, aparecerá en la sección destacada del home
-  images: string[]; // URLs de las imágenes
-  tourUrl?: string; // URL opcional de tour virtual (Matterport, YouTube, Vimeo, etc.)
+  area: number; // Area in m²
+  featured?: boolean; // If true, shows in the featured section on the home page
+  images: string[]; // Image URLs
+  tourUrl?: string; // Optional virtual tour URL (Matterport, YouTube, Vimeo, etc.)
 }
 
 export const properties: Property[] = [
@@ -150,52 +154,74 @@ ${propertiesString}
 ];
 
 /**
- * Función helper para obtener una propiedad por slug
+ * Helper to get a property by slug.
  */
 export function getPropertyBySlug(slug: string): Property | undefined {
   return properties.find((property) => property.slug === slug);
 }
 
 /**
- * Función helper para obtener propiedades destacadas
+ * Helper to get featured properties.
  */
 export function getFeaturedProperties(): Property[] {
   return properties.filter((property) => property.featured === true);
 }
 
 /**
- * Función helper para obtener ciudades únicas de las propiedades
+ * Helper to get the unique cities across all properties.
  */
 export function getUniqueCities(): string[] {
   const cities = properties.map((property) => property.city);
   return Array.from(new Set(cities));
 }
+
+/**
+ * Returns a copy of the property with text fields in the given locale.
+ * For "en" it uses titleEn/descriptionEn when present; otherwise Spanish.
+ * Price, currency, city and location are kept intact (local context).
+ */
+export function localizeProperty(property: Property, locale?: string): Property {
+  if (locale !== "en") return property;
+  return {
+    ...property,
+    title: property.titleEn ?? property.title,
+    description: property.descriptionEn ?? property.description,
+  };
+}
+
+/** Applies localizeProperty to a list of properties. */
+export function localizeProperties(
+  list: Property[],
+  locale?: string
+): Property[] {
+  return list.map((property) => localizeProperty(property, locale));
+}
 `;
 }
 
 /**
- * Escribe la configuración del sitio en el archivo
+ * Writes the site configuration to its file.
  */
 export function writeSiteConfig(config: SiteConfig): void {
   try {
     const content = generateSiteConfigFile(config);
     fs.writeFileSync(CONFIG_PATH, content, "utf-8");
   } catch (error) {
-    console.error("Error escribiendo siteConfig:", error);
-    throw new Error("Error al guardar la configuración");
+    console.error("Error writing siteConfig:", error);
+    throw new Error("Failed to save the configuration");
   }
 }
 
 /**
- * Escribe las propiedades en el archivo
+ * Writes the properties to their file.
  */
 export function writeProperties(properties: Property[]): void {
   try {
     const content = generatePropertiesFile(properties);
     fs.writeFileSync(PROPERTIES_PATH, content, "utf-8");
   } catch (error) {
-    console.error("Error escribiendo properties:", error);
-    throw new Error("Error al guardar las propiedades");
+    console.error("Error writing properties:", error);
+    throw new Error("Failed to save the properties");
   }
 }
 

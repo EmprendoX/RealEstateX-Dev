@@ -4,7 +4,7 @@ import formidable from "formidable";
 import fs from "fs";
 import path from "path";
 
-// Deshabilitar el parseo automático del body
+// Disable the automatic body parsing
 export const config = {
   api: {
     bodyParser: false,
@@ -21,7 +21,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<UploadResponse>
 ) {
-  // Verificar autenticación
+  // Check authentication
   if (!requireAuth(req, res)) {
     return;
   }
@@ -29,18 +29,18 @@ export default async function handler(
   if (req.method !== "POST") {
     return res.status(405).json({
       ok: false,
-      message: "Método no permitido",
+      message: "Method not allowed",
     });
   }
 
   try {
-    // Crear directorio si no existe
+    // Create directory if it does not exist
     const uploadDir = path.join(process.cwd(), "public", "images");
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
 
-    // Parsear el formulario
+    // Parse the form
     const form = formidable({
       uploadDir: uploadDir,
       keepExtensions: true,
@@ -56,24 +56,24 @@ export default async function handler(
     if (!file) {
       return res.status(400).json({
         ok: false,
-        message: "No se proporcionó ningún archivo",
+        message: "No file was provided",
       });
     }
 
-    // Validar tipo de archivo
+    // Validate file type
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
     if (!file.mimetype || !allowedTypes.includes(file.mimetype)) {
-      // Eliminar archivo si no es válido
+      // Delete file if it is not valid
       if (fs.existsSync(file.filepath)) {
         fs.unlinkSync(file.filepath);
       }
       return res.status(400).json({
         ok: false,
-        message: "Tipo de archivo no permitido. Solo se permiten imágenes (JPG, PNG, WEBP, GIF)",
+        message: "File type not allowed. Only images are allowed (JPG, PNG, WEBP, GIF)",
       });
     }
 
-    // Generar nombre único
+    // Generate a unique name
     const timestamp = Date.now();
     const originalName = file.originalFilename || "image";
     const extension = path.extname(originalName) || ".jpg";
@@ -81,29 +81,29 @@ export default async function handler(
     const newFileName = `${baseName}-${timestamp}${extension}`;
     const newFilePath = path.join(uploadDir, newFileName);
 
-    // Mover archivo al destino final
+    // Move file to the final destination
     if (fs.existsSync(file.filepath)) {
       fs.renameSync(file.filepath, newFilePath);
     } else {
       return res.status(500).json({
         ok: false,
-        message: "Error al procesar el archivo",
+        message: "Error processing the file",
       });
     }
 
-    // Retornar URL relativa
+    // Return relative URL
     const imageUrl = `/images/${newFileName}`;
 
     return res.status(200).json({
       ok: true,
-      message: "Imagen subida exitosamente",
+      message: "Image uploaded successfully",
       url: imageUrl,
     });
   } catch (error) {
-    console.error("Error subiendo imagen:", error);
+    console.error("Error uploading image:", error);
     return res.status(500).json({
       ok: false,
-      message: "Error al subir la imagen",
+      message: "Error uploading the image",
     });
   }
 }

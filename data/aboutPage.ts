@@ -112,6 +112,87 @@ export const aboutContent: AboutContent = {
 };
 
 /**
+ * Versión en inglés del contenido editorial. Mantiene las mismas variables de
+ * plantilla ({{city}}, {{brokerName}}). El precio/contexto local no aplica aquí.
+ */
+export const aboutContentEn: AboutContent = {
+  brokerPhoto:
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+  role: "Real Estate Broker",
+
+  homeIntro: {
+    heading: "Your real estate advisor in {{city}}",
+    paragraphs: [
+      "With years of experience in the real estate market, I specialize in helping individuals and families find their ideal home. My commitment is to give you a personalized, professional service that exceeds your expectations.",
+      "I work with the best properties in {{city}}, from modern apartments to family homes, always looking for the best option for each client.",
+      "My goal is to make the process of buying or renting your property simple, transparent and successful.",
+    ],
+  },
+
+  bio: {
+    heading: "Who I am",
+    paragraphs: [
+      "I'm {{brokerName}}, a real estate professional with years of experience helping individuals and families find their ideal home in {{city}}. My passion for real estate began when I realized how important it is to find the perfect place to live.",
+      "My goal is to provide a personalized, transparent and professional service that exceeds every client's expectations. I work with dedication to understand your needs and find the property that best fits your lifestyle and budget.",
+    ],
+  },
+
+  howIWork: {
+    heading: "How I work",
+    intro: "My approach is built on three core pillars:",
+    pillars: [
+      {
+        title: "Active listening",
+        description:
+          "I take the time needed to understand your needs, wishes and budget.",
+      },
+      {
+        title: "Careful selection",
+        description:
+          "I only show you properties that truly meet your criteria, saving you time and effort.",
+      },
+      {
+        title: "Full support",
+        description:
+          "I guide you through every step of the process, from the search to signing the paperwork.",
+      },
+    ],
+    outro:
+      "I work with the best properties available on the market, from modern apartments to family homes, always looking for the best option for each client.",
+  },
+
+  whyMe: {
+    heading: "Why work with me",
+    items: [
+      {
+        title: "Proven experience",
+        description: "Years of experience in the {{city}} real estate market.",
+      },
+      {
+        title: "Personalized attention",
+        description: "Every client is unique and deserves a tailored service.",
+      },
+      {
+        title: "Full transparency",
+        description: "Clear and honest information at every step of the process.",
+      },
+      {
+        title: "Commitment to results",
+        description: "I work tirelessly until I find your ideal property.",
+      },
+    ],
+  },
+};
+
+/**
+ * Devuelve el contenido editorial en el idioma dado. Para "en" usa la versión
+ * en inglés; en cualquier otro caso, español.
+ */
+export function getAboutContent(locale?: string): AboutContent {
+  return locale === "en" ? aboutContentEn : aboutContent;
+}
+
+/**
  * Reemplaza las variables de plantilla ({{city}}, {{brokerName}})
  * en cualquier string del contenido.
  */

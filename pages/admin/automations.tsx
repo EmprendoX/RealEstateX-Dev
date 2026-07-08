@@ -10,12 +10,12 @@ import {
 } from "@/data/demoIntegrations";
 
 function relativeTime(minutesAgo: number): string {
-  if (minutesAgo < 1) return "hace instantes";
-  if (minutesAgo < 60) return `hace ${minutesAgo} min`;
+  if (minutesAgo < 1) return "just now";
+  if (minutesAgo < 60) return `${minutesAgo} min ago`;
   const hours = Math.round(minutesAgo / 60);
-  if (hours < 24) return `hace ${hours} h`;
+  if (hours < 24) return `${hours} h ago`;
   const days = Math.round(hours / 24);
-  return `hace ${days} d`;
+  return `${days} d ago`;
 }
 
 export default function AutomationsPage() {
@@ -41,39 +41,39 @@ export default function AutomationsPage() {
   return (
     <AdminLayout>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-3xl font-bold text-gray-900">Automatizaciones</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Automations</h1>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold px-3 py-1">
           <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          Motor de flujos activo
+          Flow engine active
         </span>
       </div>
       <p className="text-gray-500 mb-6">
-        Cada evento del sitio dispara acciones automáticas. Sin tocar código.
+        Every site event triggers automated actions. No code required.
       </p>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-          <p className="text-sm text-gray-500">Flujos activos</p>
+          <p className="text-sm text-gray-500">Active flows</p>
           <p className="text-2xl font-bold text-gray-900 mt-1">
             {hydrated ? activeCount : "—"}{" "}
             <span className="text-base font-normal text-gray-400">/ {automations.length}</span>
           </p>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-          <p className="text-sm text-gray-500">Ejecuciones totales</p>
+          <p className="text-sm text-gray-500">Total runs</p>
           <p className="text-2xl font-bold text-gray-900 mt-1">
-            {hydrated ? totalRuns.toLocaleString("es-MX") : "—"}
+            {hydrated ? totalRuns.toLocaleString("en-US") : "—"}
           </p>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-          <p className="text-sm text-gray-500">Tasa de éxito</p>
+          <p className="text-sm text-gray-500">Success rate</p>
           <p className="text-2xl font-bold text-green-600 mt-1">98.6%</p>
         </div>
       </div>
 
-      {/* Recetas */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-3">Flujos</h3>
+      {/* Recipes */}
+      <h3 className="text-lg font-semibold text-gray-900 mb-3">Flows</h3>
       <div className="space-y-3 mb-10">
         {hydrated &&
           automations.map((a) => (
@@ -98,7 +98,7 @@ export default function AutomationsPage() {
                   ))}
                 </div>
                 <p className="text-xs text-gray-400 mt-2">
-                  {a.runs.toLocaleString("es-MX")} ejecuciones
+                  {a.runs.toLocaleString("en-US")} runs
                 </p>
               </div>
 
@@ -121,8 +121,8 @@ export default function AutomationsPage() {
           ))}
       </div>
 
-      {/* Historial */}
-      <h3 className="text-lg font-semibold text-gray-900 mb-3">Historial de ejecuciones</h3>
+      {/* History */}
+      <h3 className="text-lg font-semibold text-gray-900 mb-3">Run history</h3>
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 divide-y divide-gray-100">
         {RUN_LOG_TEMPLATES.map((log, i) => (
           <div key={i} className="p-4 flex items-center gap-4">
@@ -144,7 +144,7 @@ export default function AutomationsPage() {
                     : "bg-red-500"
                 }`}
               />
-              {log.status === "success" ? "OK" : log.status === "running" ? "En curso" : "Error"}
+              {log.status === "success" ? "OK" : log.status === "running" ? "Running" : "Error"}
             </span>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium text-gray-900 truncate">{log.automation}</p>

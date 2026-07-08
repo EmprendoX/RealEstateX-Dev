@@ -13,7 +13,7 @@ export default function handler(
   if (req.method !== "POST") {
     return res.status(405).json({
       ok: false,
-      message: "Método no permitido",
+      message: "Method not allowed",
     });
   }
 
@@ -21,13 +21,13 @@ export default function handler(
     clearAuthCookie(res);
     return res.status(200).json({
       ok: true,
-      message: "Sesión cerrada",
+      message: "Session closed",
     });
   } catch (error) {
-    console.error("Error en logout:", error);
+    console.error("Logout error:", error);
     return res.status(500).json({
       ok: false,
-      message: "Error interno del servidor",
+      message: "Internal server error",
     });
   }
 }

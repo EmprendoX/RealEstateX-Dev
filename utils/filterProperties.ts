@@ -2,13 +2,13 @@ import { Property, PropertyType, Currency } from "@/data/properties";
 
 export interface PropertyFilters {
   type: PropertyType | "all";
-  city: string; // "all" o nombre de ciudad
+  city: string; // "all" or city name
   currency: Currency | "all";
   minPrice: number | null;
   maxPrice: number | null;
   minBedrooms: number | null;
   minBathrooms: number | null;
-  q: string; // búsqueda de texto libre
+  q: string; // free-text search
 }
 
 export const DEFAULT_FILTERS: PropertyFilters = {
@@ -33,8 +33,8 @@ export function filterProperties(
     if (filters.city !== "all" && p.city !== filters.city) return false;
     if (filters.currency !== "all" && p.currency !== filters.currency) return false;
 
-    // El rango de precio solo aplica si el usuario fijó una moneda específica;
-    // comparar precios entre monedas distintas sin tipo de cambio sería incorrecto.
+    // The price range only applies if the user set a specific currency;
+    // comparing prices across different currencies without an exchange rate would be incorrect.
     if (filters.currency !== "all") {
       if (filters.minPrice !== null && p.price < filters.minPrice) return false;
       if (filters.maxPrice !== null && p.price > filters.maxPrice) return false;
@@ -53,8 +53,8 @@ export function filterProperties(
 }
 
 /**
- * Convierte un objeto de filtros a un query object para Next router.
- * Omite valores en su default para mantener la URL limpia.
+ * Converts a filters object into a query object for the Next router.
+ * Omits values at their default to keep the URL clean.
  */
 export function filtersToQuery(filters: PropertyFilters): Record<string, string> {
   const query: Record<string, string> = {};
@@ -70,8 +70,8 @@ export function filtersToQuery(filters: PropertyFilters): Record<string, string>
 }
 
 /**
- * Lee filtros desde el query object de Next router.
- * Valores inválidos vuelven al default.
+ * Reads filters from the Next router query object.
+ * Invalid values fall back to the default.
  */
 export function queryToFilters(query: Record<string, string | string[] | undefined>): PropertyFilters {
   const get = (k: string): string | undefined => {

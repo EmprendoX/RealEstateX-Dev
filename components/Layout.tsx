@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 import { siteConfig } from "@/config/siteConfig";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -30,12 +31,16 @@ export default function Layout({
   noindex,
   jsonLd,
 }: LayoutProps) {
+  const { t } = useTranslation("common");
   const pageTitle = title
     ? `${title} | ${siteConfig.siteName}`
     : `${siteConfig.siteName} - ${siteConfig.slogan}`;
   const pageDescription =
     description ||
-    `Encuentra tu propiedad ideal en ${siteConfig.city}. ${siteConfig.slogan}`;
+    t("layout.defaultDescription", {
+      city: siteConfig.city,
+      slogan: siteConfig.slogan,
+    });
 
   const baseUrl = siteConfig.siteUrl.replace(/\/$/, "");
   const canonical = canonicalPath
@@ -68,7 +73,7 @@ export default function Layout({
         <meta name="twitter:description" content={pageDescription} />
         {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-        {/* JSON-LD estructurado */}
+        {/* Structured JSON-LD */}
         {jsonLd && (
           <script
             type="application/ld+json"
@@ -82,7 +87,7 @@ export default function Layout({
         <main className="flex-grow">{children}</main>
         <Footer />
 
-        {/* Inyección condicional del script de chat */}
+        {/* Conditional injection of the chat script */}
         {siteConfig.chatScript && (
           <div
             dangerouslySetInnerHTML={{ __html: siteConfig.chatScript }}

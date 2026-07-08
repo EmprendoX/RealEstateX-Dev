@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 
 /**
- * Hook de estado persistente en localStorage para los módulos de demostración.
+ * Persistent localStorage state hook for the demo modules.
  *
- * Permite que toggles, conexiones, API keys generadas y servidores MCP
- * "se queden puestos" mientras se graba un demo o video, sin necesidad de
- * backend. El estado vive en el navegador.
+ * Lets toggles, connections, generated API keys, and MCP servers
+ * "stay set" while recording a demo or video, without needing a
+ * backend. The state lives in the browser.
  *
- * Devuelve [value, setValue, hydrated]. Usá `hydrated` para evitar parpadeos
- * de hidratación: renderizá la data dinámica solo cuando hydrated === true.
+ * Returns [value, setValue, hydrated]. Use `hydrated` to avoid hydration
+ * flicker: render the dynamic data only when hydrated === true.
  */
 export function useDemoState<T>(key: string, initialValue: T) {
   const [value, setValue] = useState<T>(initialValue);
   const [hydrated, setHydrated] = useState(false);
 
-  // Cargar desde localStorage al montar (solo cliente)
+  // Load from localStorage on mount (client only)
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(key);
@@ -22,19 +22,19 @@ export function useDemoState<T>(key: string, initialValue: T) {
         setValue(JSON.parse(raw) as T);
       }
     } catch {
-      // localStorage no disponible o JSON inválido: usar initialValue
+      // localStorage unavailable or invalid JSON: use initialValue
     }
     setHydrated(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
-  // Persistir cada cambio (una vez hidratado, para no pisar con el default)
+  // Persist every change (once hydrated, so we don't overwrite with the default)
   useEffect(() => {
     if (!hydrated) return;
     try {
       window.localStorage.setItem(key, JSON.stringify(value));
     } catch {
-      // Ignorar (modo privado, cuota, etc.)
+      // Ignore (private mode, quota, etc.)
     }
   }, [key, value, hydrated]);
 

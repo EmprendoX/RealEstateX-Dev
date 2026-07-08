@@ -11,7 +11,7 @@ export default function NewPropertyPage() {
   const [propertiesCount, setPropertiesCount] = useState(0);
 
   useEffect(() => {
-    // Verificar límite
+    // Check the limit
     fetch("/api/admin/properties")
       .then((res) => res.json())
       .then((data) => {
@@ -19,7 +19,7 @@ export default function NewPropertyPage() {
           setPropertiesCount(data.count || 0);
           if (data.count >= MAX_PROPERTIES) {
             alert(
-              `No se pueden agregar más de ${MAX_PROPERTIES} propiedades. Elimina una existente primero.`
+              `You cannot add more than ${MAX_PROPERTIES} properties. Delete an existing one first.`
             );
             router.push("/admin/properties");
           }
@@ -39,10 +39,10 @@ export default function NewPropertyPage() {
     const data = await response.json();
 
     if (data.ok) {
-      alert("Propiedad creada exitosamente");
+      alert("Property created successfully");
       router.push("/admin/properties");
     } else {
-      throw new Error(data.message || "Error al crear la propiedad");
+      throw new Error(data.message || "Error creating the property");
     }
   };
 
@@ -51,7 +51,7 @@ export default function NewPropertyPage() {
       <AdminLayout>
         <div className="text-center py-12">
           <p className="text-gray-600">
-            Has alcanzado el límite máximo de {MAX_PROPERTIES} propiedades.
+            You have reached the maximum limit of {MAX_PROPERTIES} properties.
           </p>
         </div>
       </AdminLayout>
@@ -62,11 +62,11 @@ export default function NewPropertyPage() {
     <AdminLayout>
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          Crear Nueva Propiedad
+          Create New Property
         </h1>
         <p className="text-gray-600 mb-8">
-          Completa el formulario para agregar una nueva propiedad. Recuerda que
-          el límite máximo es de {MAX_PROPERTIES} propiedades ({propertiesCount} / {MAX_PROPERTIES}).
+          Fill out the form to add a new property. Remember that
+          the maximum limit is {MAX_PROPERTIES} properties ({propertiesCount} / {MAX_PROPERTIES}).
         </p>
         <PropertyForm
           onSubmit={handleSubmit}

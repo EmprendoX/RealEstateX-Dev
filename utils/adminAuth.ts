@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123"; // Contraseña por defecto (cambiar en producción)
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123"; // Default password (change in production)
 const COOKIE_NAME = "admin_session";
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 días
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 /**
- * Verifica si el usuario está autenticado
+ * Checks whether the user is authenticated
  */
 export function checkAuth(req: NextApiRequest): boolean {
   const session = req.cookies[COOKIE_NAME];
@@ -14,7 +14,7 @@ export function checkAuth(req: NextApiRequest): boolean {
 }
 
 /**
- * Requiere autenticación, retorna 401 si no está autenticado
+ * Requires authentication, returns 401 if not authenticated
  */
 export function requireAuth(
   req: NextApiRequest,
@@ -28,7 +28,7 @@ export function requireAuth(
 }
 
 /**
- * Crea una cookie de sesión
+ * Creates a session cookie
  */
 export function setAuthCookie(res: NextApiResponse): void {
   const cookie = serialize(COOKIE_NAME, "authenticated", {
@@ -42,7 +42,7 @@ export function setAuthCookie(res: NextApiResponse): void {
 }
 
 /**
- * Elimina la cookie de sesión
+ * Removes the session cookie
  */
 export function clearAuthCookie(res: NextApiResponse): void {
   const cookie = serialize(COOKIE_NAME, "", {
@@ -56,7 +56,7 @@ export function clearAuthCookie(res: NextApiResponse): void {
 }
 
 /**
- * Verifica la contraseña
+ * Verifies the password
  */
 export function verifyPassword(password: string): boolean {
   return password === ADMIN_PASSWORD;

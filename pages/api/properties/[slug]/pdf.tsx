@@ -8,13 +8,13 @@ import PropertyPDF from "@/components/pdf/PropertyPDF";
 /**
  * GET /api/properties/[slug]/pdf
  *
- * Devuelve una ficha PDF de la propiedad lista para descargar / imprimir.
- * Es público (cualquier visitante puede generar el PDF de cualquier propiedad).
+ * Returns a property PDF sheet ready to download / print.
+ * It's public (any visitor can generate the PDF of any property).
  */
 
 function baseUrlFromRequest(req: NextApiRequest): string {
-  // Preferir siteUrl configurado (URL canónica) si parece válido,
-  // sino fallback a los headers del request — útil en preview deploys.
+  // Prefer the configured siteUrl (canonical URL) if it looks valid,
+  // otherwise fall back to the request headers — useful in preview deploys.
   if (siteConfig.siteUrl && /^https?:\/\//.test(siteConfig.siteUrl)) {
     return siteConfig.siteUrl.replace(/\/$/, "");
   }
@@ -74,8 +74,8 @@ export default async function handler(
       "Content-Disposition",
       `attachment; filename="${property.slug}.pdf"`
     );
-    // El PDF refleja datos estáticos de la propiedad; podemos cachear unos minutos
-    // en el CDN. ISR de la página detail también es de 60s, mantenemos en línea.
+    // The PDF reflects static property data; we can cache it for a few minutes
+    // on the CDN. The detail page's ISR is also 60s, so we keep it in line.
     res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=86400");
     return res.send(buffer);
   } catch (error) {

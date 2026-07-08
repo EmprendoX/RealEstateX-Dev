@@ -17,7 +17,7 @@ export default function PropertyList({
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("¿Estás seguro de que quieres eliminar esta propiedad?")) {
+    if (!confirm("Are you sure you want to delete this property?")) {
       return;
     }
 
@@ -32,12 +32,12 @@ export default function PropertyList({
   if (properties.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow p-12 text-center">
-        <p className="text-gray-600 mb-4">No hay propiedades registradas.</p>
+        <p className="text-gray-600 mb-4">No properties registered.</p>
         <Link
           href="/admin/properties/new"
           className="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors"
         >
-          Crear primera propiedad
+          Create first property
         </Link>
       </div>
     );
@@ -50,22 +50,22 @@ export default function PropertyList({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Título
+                Title
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Tipo
+                Type
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Precio
+                Price
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Ubicación
+                Location
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Destacada
+                Featured
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Acciones
+                Actions
               </th>
             </tr>
           </thead>
@@ -86,7 +86,7 @@ export default function PropertyList({
                         : "bg-blue-100 text-blue-800"
                     }`}
                   >
-                    {property.type === "venta" ? "Venta" : "Renta"}
+                    {property.type === "venta" ? "For sale" : "For rent"}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -108,14 +108,14 @@ export default function PropertyList({
                       href={`/admin/properties/${property.id}`}
                       className="text-primary hover:text-primary/80"
                     >
-                      Editar
+                      Edit
                     </Link>
                     <button
                       onClick={() => handleDelete(property.id)}
                       disabled={deletingId === property.id}
                       className="text-red-600 hover:text-red-900 disabled:opacity-50"
                     >
-                      {deletingId === property.id ? "Eliminando..." : "Eliminar"}
+                      {deletingId === property.id ? "Deleting..." : "Delete"}
                     </button>
                   </div>
                 </td>

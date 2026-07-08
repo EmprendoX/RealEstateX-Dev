@@ -24,7 +24,7 @@ export default function PropertiesPage() {
         setProperties(data.properties || []);
       }
     } catch (error) {
-      console.error("Error cargando propiedades:", error);
+      console.error("Error loading properties:", error);
     } finally {
       setLoading(false);
     }
@@ -39,13 +39,13 @@ export default function PropertiesPage() {
 
       if (data.ok) {
         setProperties(properties.filter((p) => p.id !== id));
-        alert("Propiedad eliminada exitosamente");
+        alert("Property deleted successfully");
       } else {
-        alert(data.message || "Error al eliminar la propiedad");
+        alert(data.message || "Error deleting the property");
       }
     } catch (error) {
-      console.error("Error eliminando propiedad:", error);
-      alert("Error al eliminar la propiedad");
+      console.error("Error deleting property:", error);
+      alert("Error deleting the property");
     }
   };
 
@@ -53,7 +53,7 @@ export default function PropertiesPage() {
     return (
       <AdminLayout>
         <div className="text-center py-12">
-          <p className="text-gray-600">Cargando propiedades...</p>
+          <p className="text-gray-600">Loading properties...</p>
         </div>
       </AdminLayout>
     );
@@ -65,10 +65,10 @@ export default function PropertiesPage() {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
-              Propiedades
+              Properties
             </h1>
             <p className="text-gray-600 mt-2">
-              {properties.length} / {MAX_PROPERTIES} propiedades
+              {properties.length} / {MAX_PROPERTIES} properties
             </p>
           </div>
           {properties.length < MAX_PROPERTIES ? (
@@ -76,11 +76,11 @@ export default function PropertiesPage() {
               href="/admin/properties/new"
               className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors"
             >
-              + Crear Propiedad
+              + Create Property
             </Link>
           ) : (
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-2 rounded-md text-sm">
-              Límite alcanzado ({MAX_PROPERTIES} propiedades)
+              Limit reached ({MAX_PROPERTIES} properties)
             </div>
           )}
         </div>
@@ -90,8 +90,8 @@ export default function PropertiesPage() {
             <div className="flex">
               <div className="ml-3">
                 <p className="text-sm text-yellow-700">
-                  Has alcanzado el límite máximo de {MAX_PROPERTIES} propiedades.
-                  Elimina una propiedad existente para crear una nueva.
+                  You have reached the maximum limit of {MAX_PROPERTIES} properties.
+                  Delete an existing property to create a new one.
                 </p>
               </div>
             </div>

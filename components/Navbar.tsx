@@ -2,15 +2,16 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 import { siteConfig } from "@/config/siteConfig";
 import FavoritesNavLink from "./FavoritesNavLink";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
+  const { t } = useTranslation("common");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const whatsappMessage = encodeURIComponent(
-    "Hola, me interesa una propiedad. ¿Me puedes dar más información?"
-  );
+  const whatsappMessage = encodeURIComponent(t("whatsapp.defaultMessage"));
   const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${whatsappMessage}`;
 
   const toggleMenu = () => {
@@ -42,27 +43,28 @@ export default function Navbar() {
               href="/"
               className="text-gray-700 hover:text-primary transition-colors font-medium"
             >
-              Inicio
+              {t("nav.home")}
             </Link>
             <Link
               href="/properties"
               className="text-gray-700 hover:text-primary transition-colors font-medium"
             >
-              Propiedades
+              {t("nav.properties")}
             </Link>
             <Link
               href="/about"
               className="text-gray-700 hover:text-primary transition-colors font-medium"
             >
-              Sobre mí
+              {t("nav.about")}
             </Link>
             <Link
               href="/contact"
               className="text-gray-700 hover:text-primary transition-colors font-medium"
             >
-              Contacto
+              {t("nav.contact")}
             </Link>
             <FavoritesNavLink />
+            <LanguageSwitcher />
             <a
               href={whatsappUrl}
               target="_blank"
@@ -138,30 +140,31 @@ export default function Navbar() {
                 className="text-gray-700 hover:text-primary transition-colors font-medium px-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Inicio
+                {t("nav.home")}
               </Link>
               <Link
                 href="/properties"
                 className="text-gray-700 hover:text-primary transition-colors font-medium px-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Propiedades
+                {t("nav.properties")}
               </Link>
               <Link
                 href="/about"
                 className="text-gray-700 hover:text-primary transition-colors font-medium px-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Sobre mí
+                {t("nav.about")}
               </Link>
               <Link
                 href="/contact"
                 className="text-gray-700 hover:text-primary transition-colors font-medium px-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contacto
+                {t("nav.contact")}
               </Link>
               <FavoritesNavLink variant="mobile" onClick={() => setIsMenuOpen(false)} />
+              <LanguageSwitcher variant="mobile" />
               <a
                 href={whatsappUrl}
                 target="_blank"

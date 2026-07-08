@@ -42,7 +42,7 @@ export default function AdminDashboard() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Total Propiedades
+                    Total Properties
                   </dt>
                   <dd className="text-lg font-semibold text-gray-900">
                     {propertiesCount} / {MAX_PROPERTIES}
@@ -72,7 +72,7 @@ export default function AdminDashboard() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Destacadas
+                    Featured
                   </dt>
                   <dd className="text-lg font-semibold text-gray-900">
                     {featuredCount}
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Sitio
+                    Site
                   </dt>
                   <dd className="text-lg font-semibold text-gray-900">
                     {siteConfig.siteName}
@@ -116,7 +116,7 @@ export default function AdminDashboard() {
         {/* Quick Actions */}
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Acciones rápidas
+            Quick actions
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Link
@@ -146,10 +146,10 @@ export default function AdminDashboard() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-900">
-                  Editar Configuración
+                  Edit Settings
                 </p>
                 <p className="text-sm text-gray-500">
-                  Actualiza los datos del sitio y broker
+                  Update the site and broker details
                 </p>
               </div>
             </Link>
@@ -175,10 +175,10 @@ export default function AdminDashboard() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-900">
-                  Gestionar Propiedades
+                  Manage Properties
                 </p>
                 <p className="text-sm text-gray-500">
-                  Crear, editar o eliminar propiedades
+                  Create, edit or delete properties
                 </p>
               </div>
             </Link>
@@ -204,10 +204,10 @@ export default function AdminDashboard() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-900">
-                  Integraciones
+                  Integrations
                 </p>
                 <p className="text-sm text-gray-500">
-                  Conectar IA, MCP, mensajería y API keys
+                  Connect AI, MCP, messaging and API keys
                 </p>
               </div>
             </Link>
@@ -233,10 +233,10 @@ export default function AdminDashboard() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-900">
-                  Automatizaciones
+                  Automations
                 </p>
                 <p className="text-sm text-gray-500">
-                  Flujos automáticos por cada evento del sitio
+                  Automated flows for every site event
                 </p>
               </div>
             </Link>

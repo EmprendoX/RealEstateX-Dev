@@ -1,5 +1,5 @@
 /**
- * Función helper para formatear precios según la moneda
+ * Helper function to format prices according to the currency
  */
 
 import { Currency } from "@/data/properties";

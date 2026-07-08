@@ -2,11 +2,13 @@ import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "@/components/Layout";
 import PropertyGrid from "@/components/PropertyGrid";
 import PropertyFiltersUI from "@/components/PropertyFilters";
 import Pagination from "@/components/Pagination";
-import { properties, getUniqueCities, Property } from "@/data/properties";
+import { properties, getUniqueCities, localizeProperties, Property } from "@/data/properties";
 import {
   PropertyFilters,
   DEFAULT_FILTERS,
@@ -23,11 +25,12 @@ interface PropertiesPageProps {
 }
 
 export default function PropertiesPage({ properties, cities }: PropertiesPageProps) {
+  const { t } = useTranslation("common");
   const router = useRouter();
 
-  // Filtros — fuente de verdad es la URL. Inicializamos en default y
-  // sincronizamos cuando router.isReady (sino habría flash de propiedades
-  // incorrectas al cargar con filtros en URL).
+  // Filters — the URL is the source of truth. We initialize to default and
+  // sync when router.isReady (otherwise there would be a flash of incorrect
+  // properties when loading with filters in the URL).
   const [filters, setFilters] = useState<PropertyFilters>(DEFAULT_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
   const [hydrated, setHydrated] = useState(false);
@@ -41,7 +44,7 @@ export default function PropertiesPage({ properties, cities }: PropertiesPagePro
     setHydrated(true);
   }, [router.isReady, router.query]);
 
-  // Filtrado memoizado
+  // Memoized filtering
   const filtered = useMemo(
     () => filterProperties(properties, filters),
     [properties, filters]
@@ -52,7 +55,7 @@ export default function PropertiesPage({ properties, cities }: PropertiesPagePro
   const pageStart = (safePage - 1) * PAGE_SIZE;
   const visible = filtered.slice(pageStart, pageStart + PAGE_SIZE);
 
-  // Empuja cambios a la URL sin recargar
+  // Pushes changes to the URL without reloading
   const pushQuery = useCallback(
     (nextFilters: PropertyFilters, nextPage: number) => {
       const query = filtersToQuery(nextFilters);
@@ -88,8 +91,8 @@ export default function PropertiesPage({ properties, cities }: PropertiesPagePro
 
   return (
     <Layout
-      title="Propiedades"
-      description="Explora nuestra selección de propiedades en venta y renta"
+      title={t("properties.metaTitle")}
+      description={t("properties.metaDescription")}
       canonicalPath="/properties"
     >
       <div className="bg-gray-50 min-h-screen py-12">
@@ -97,14 +100,14 @@ export default function PropertiesPage({ properties, cities }: PropertiesPagePro
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Nuestras Propiedades
+              {t("properties.heading")}
             </h1>
             <p className="text-lg text-gray-600">
-              Encuentra la propiedad perfecta para ti
+              {t("properties.subtitle")}
             </p>
           </div>
 
-          {/* Filtros */}
+          {/* Filters */}
           <PropertyFiltersUI
             filters={filters}
             cities={cities}
@@ -118,24 +121,24 @@ export default function PropertiesPage({ properties, cities }: PropertiesPagePro
             <div className="bg-white rounded-lg shadow-md p-12 text-center">
               <div className="text-5xl mb-4">🔎</div>
               <h2 className="text-xl font-bold text-gray-900 mb-2">
-                No encontramos propiedades con esos filtros
+                {t("properties.emptyTitle")}
               </h2>
               <p className="text-gray-600 mb-6">
-                Probá ajustar los filtros o limpiarlos para ver todas las opciones.
+                {t("properties.emptyHint")}
               </p>
               <button
                 type="button"
                 onClick={handleReset}
                 className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg font-medium transition-colors"
               >
-                Limpiar filtros
+                {t("properties.clearFilters")}
               </button>
               <p className="text-sm text-gray-500 mt-6">
-                ¿No encontrás lo que buscás?{" "}
+                {t("properties.notFoundPrompt")}{" "}
                 <Link href="/contact" className="text-primary hover:underline">
-                  Contactanos
+                  {t("properties.contactUs")}
                 </Link>{" "}
-                y te ayudamos.
+                {t("properties.andWeHelp")}
               </p>
             </div>
           ) : (
@@ -154,11 +157,12 @@ export default function PropertiesPage({ properties, cities }: PropertiesPagePro
   );
 }
 
-export const getStaticProps: GetStaticProps<PropertiesPageProps> = async () => {
+export const getStaticProps: GetStaticProps<PropertiesPageProps> = async ({ locale }) => {
   return {
     props: {
-      properties,
+      properties: localizeProperties(properties, locale),
       cities: getUniqueCities(),
+      ...(await serverSideTranslations(locale ?? "es", ["common"])),
     },
     revalidate: 60,
   };

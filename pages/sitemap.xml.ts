@@ -36,7 +36,7 @@ ${urls}
 }
 
 export default function Sitemap() {
-  // Renderizado en getServerSideProps; el componente nunca se monta
+  // Rendered in getServerSideProps; the component is never mounted
   return null;
 }
 
