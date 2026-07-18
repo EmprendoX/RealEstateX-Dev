@@ -1,0 +1,18 @@
+{
+  "siteName": "Cardón",
+  "siteUrl": "https://cardon.mx",
+  "logoText": "Cardón",
+  "phone": "+52 624 145 8200",
+  "whatsapp": "5216241458200",
+  "email": "hola@cardon.mx",
+  "officeAddress": "Camino a La Ribera Km 4, Baja California Sur",
+  "primaryColor": "#1E3A5F",
+  "accentColor": "#C9A87C",
+  "inkColor": "#1A1A1A",
+  "surfaceColor": "#F5F1EA",
+  "displayFont": "fraunces",
+  "bodyFont": "inter",
+  "developerCompany": "Nakawe Group",
+  "instagram": "https://instagram.com/cardon.mx",
+  "brochureRequiresLead": true
+}

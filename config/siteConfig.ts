@@ -1,10 +1,12 @@
 /**
  * SITE CONFIG
  *
- * Site-level branding, contact, and integration settings for THIS instance.
- * Development content (models, units, payment plan, etc.) lives in
- * `data/development.ts` — do not put it here.
+ * Site-level branding, contact, and integrations for THIS instance.
+ * Values live in config/siteConfig.json (edited via /admin/config or by hand).
+ * This file exposes the typed interface + the loaded value.
  */
+
+import raw from "./siteConfig.json";
 
 export type DisplayFont = "fraunces" | "cormorant" | "playfair";
 export type BodyFont = "inter" | "manrope";
@@ -22,17 +24,17 @@ export interface SiteConfig {
   email: string;
   officeAddress?: string;
 
-  // Branding — desert-modernism defaults
-  primaryColor: string;   // main brand color (Sea of Cortez blue for Cardón)
-  accentColor: string;    // secondary accent (warm sand)
-  inkColor: string;       // primary text / UI dark
-  surfaceColor: string;   // page background base
+  // Branding
+  primaryColor: string;
+  accentColor: string;
+  inkColor: string;
+  surfaceColor: string;
 
   // Typography
   displayFont: DisplayFont;
   bodyFont: BodyFont;
 
-  // Developer company name (short; full record in development.developer)
+  // Developer company (short — full record in development.developer)
   developerCompany: string;
 
   // Social (optional)
@@ -48,55 +50,4 @@ export interface SiteConfig {
   brochureRequiresLead?: boolean;
 }
 
-export const siteConfig: SiteConfig = {
-  // ============================================
-  // IDENTITY
-  // ============================================
-  siteName: "Cardón",
-  siteUrl: "https://cardon.mx",
-  logoText: "Cardón",
-  logoUrl: undefined,
-
-  // ============================================
-  // CONTACT
-  // ============================================
-  phone: "+52 624 145 8200",
-  whatsapp: "5216241458200",
-  email: "hola@cardon.mx",
-  officeAddress: "Camino a La Ribera Km 4, Baja California Sur",
-
-  // ============================================
-  // BRANDING — desert modernism
-  // ============================================
-  primaryColor: "#1E3A5F",   // deep Sea of Cortez blue
-  accentColor: "#C9A87C",    // warm sand
-  inkColor: "#1A1A1A",       // charcoal
-  surfaceColor: "#F5F1EA",   // bone
-
-  // ============================================
-  // TYPOGRAPHY
-  // ============================================
-  displayFont: "fraunces",
-  bodyFont: "inter",
-
-  // ============================================
-  // DEVELOPER COMPANY
-  // ============================================
-  developerCompany: "Nakawe Group",
-
-  // ============================================
-  // SOCIAL
-  // ============================================
-  instagram: "https://instagram.com/cardon.mx",
-  facebook: undefined,
-  tiktok: undefined,
-  linkedin: undefined,
-  website: undefined,
-
-  // ============================================
-  // INTEGRATIONS
-  // ============================================
-  leadWebhookUrl: undefined,
-  chatScript: undefined,
-  brochureRequiresLead: true,
-};
+export const siteConfig: SiteConfig = raw as unknown as SiteConfig;

@@ -37,4 +37,8 @@ next-env.d.ts
 # claude code — session state and worktrees, per-machine
 .claude/
 
+# admin — atomic-write backup copies of JSON data files
+.backups/
+**/.backups/
+
 
