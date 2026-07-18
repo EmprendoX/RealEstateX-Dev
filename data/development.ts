@@ -236,6 +236,7 @@ const CARDON_MODELS: DevelopmentModel[] = [
     parking: 1,
     priceFrom: 385000,
     priceTo: 445000,
+    floorPlanImage: "/floor-plans/studio.svg",
     renderImages: [
       "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=1600&q=80",
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1600&q=80",
@@ -272,6 +273,7 @@ const CARDON_MODELS: DevelopmentModel[] = [
     parking: 1,
     priceFrom: 580000,
     priceTo: 725000,
+    floorPlanImage: "/floor-plans/suite.svg",
     renderImages: [
       "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=1600&q=80",
       "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600&q=80",
@@ -308,6 +310,7 @@ const CARDON_MODELS: DevelopmentModel[] = [
     parking: 2,
     priceFrom: 1150000,
     priceTo: 1385000,
+    floorPlanImage: "/floor-plans/penthouse.svg",
     renderImages: [
       "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1600&q=80",
       "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80",
@@ -346,6 +349,7 @@ const CARDON_MODELS: DevelopmentModel[] = [
     parking: 2,
     priceFrom: 1850000,
     priceTo: 1985000,
+    floorPlanImage: "/floor-plans/sky-villa.svg",
     renderImages: [
       "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1600&q=80",
       "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1600&q=80",

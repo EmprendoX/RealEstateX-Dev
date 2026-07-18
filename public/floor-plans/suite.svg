@@ -1,0 +1,32 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="transparent"/>
+  <g stroke="#1E3A5F" stroke-width="1.5" fill="none">
+    <rect x="60" y="80" width="320" height="240"/>
+    <rect x="380" y="80" width="220" height="140"/>
+    <rect x="380" y="220" width="220" height="100"/>
+    <rect x="60" y="320" width="220" height="100"/>
+    <rect x="280" y="320" width="320" height="100"/>
+    <rect x="600" y="80" width="180" height="340"/>
+  </g>
+  <g font-family="Georgia, serif" fill="#1E3A5F" text-anchor="middle">
+    <text x="220" y="195" font-size="14" letter-spacing="1.5">SALA · COMEDOR</text>
+    <text x="490" y="145" font-size="14" letter-spacing="1.5">RECÁMARA</text>
+    <text x="490" y="265" font-size="12" letter-spacing="1.5">CLOSET</text>
+    <text x="170" y="370" font-size="12" letter-spacing="1.5">COCINA</text>
+    <text x="440" y="370" font-size="12" letter-spacing="1.5">BAÑO</text>
+    <text x="690" y="245" font-size="14" letter-spacing="1.5">TERRAZA</text>
+  </g>
+  <g font-family="Inter, sans-serif" fill="#1E3A5F" fill-opacity="0.55" text-anchor="middle" font-size="10">
+    <text x="220" y="215">28 m²</text>
+    <text x="490" y="165">18 m²</text>
+    <text x="490" y="283">8 m²</text>
+    <text x="170" y="390">12 m²</text>
+    <text x="440" y="390">10 m²</text>
+    <text x="690" y="265">22 m²</text>
+  </g>
+  <g stroke="#1E3A5F" stroke-width="1" fill="none">
+    <circle cx="740" cy="465" r="10"/>
+    <line x1="740" y1="465" x2="740" y2="458"/>
+  </g>
+  <text x="740" y="450" font-family="Inter, sans-serif" font-size="8" fill="#1E3A5F" text-anchor="middle" letter-spacing="1">N</text>
+</svg>

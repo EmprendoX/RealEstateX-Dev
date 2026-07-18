@@ -29,6 +29,15 @@ export default function DossierCTA() {
   }, []);
 
   useEffect(() => {
+    // Any component can request the dossier modal:
+    //   window.dispatchEvent(new CustomEvent("openDossier"))
+    // Or use the openDossier() helper in utils/dossier.ts
+    const onOpen = () => setOpen(true);
+    window.addEventListener("openDossier", onOpen);
+    return () => window.removeEventListener("openDossier", onOpen);
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
