@@ -42,13 +42,18 @@
     @apply text-xs uppercase tracking-eyebrow font-medium;
   }
   .hero-gradient {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.15) 40%,
-      rgba(0, 0, 0, 0.55) 85%,
-      rgba(0, 0, 0, 0.72) 100%
-    );
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0.10) 25%,
+        rgba(0, 0, 0, 0.30) 55%,
+        rgba(0, 0, 0, 0.70) 90%,
+        rgba(0, 0, 0, 0.85) 100%
+      );
+  }
+  .hero-text-shadow {
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.35);
   }
   .subtle-divider {
     background: linear-gradient(

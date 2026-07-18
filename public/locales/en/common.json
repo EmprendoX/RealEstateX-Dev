@@ -8,39 +8,52 @@
     "payment": "Payment plan",
     "investment": "Investment",
     "progress": "Progress",
-    "checkAvailability": "Check availability",
+    "contact": "Contact",
     "whatsappDefault": "Hi, I'd like to know more about {{name}}."
   },
 
   "hero": {
     "deliveryPrefix": "Delivery",
-    "residencesCount": "{{count}} residences",
     "priceFrom": "From {{price}}",
-    "checkAvailability": "Check availability",
-    "downloadBrochure": "Download brochure",
+    "exploreCta": "Explore residences",
+    "dossierCta": "Request private dossier",
     "scrollHint": "Discover",
-    "whatsappDefault": "Hi, I'd like more information about {{name}}.",
-    "whatsappCta": "WhatsApp",
-    "inquiryCta": "Contact"
+    "whatsappDefault": "Hi, I'd like more information about {{name}}."
   },
 
-  "heroInquiry": {
-    "eyebrow": "Get information",
-    "title": "Pricing, floor plans and availability",
+  "trustStrip": {
+    "eyebrow": "Track record",
+    "yearsExperience": "Years of experience",
+    "projectsDelivered": "Projects delivered",
+    "unitsDelivered": "Units titled",
+    "link": "Meet the developer"
+  },
+
+  "dossier": {
+    "openLabel": "Request private dossier",
+    "ctaLabel": "Request dossier",
+    "eyebrow": "Private dossier",
+    "title": "Receive the full {{name}} dossier",
+    "subtitle": "Floor plans, current price list, payment plan and rental projection. Sent by WhatsApp or email.",
     "name": "Name",
+    "email": "Email",
     "whatsapp": "WhatsApp",
     "goalLabel": "You're looking to",
-    "goal": {
+    "goals": {
       "live": "Live",
       "invest": "Invest",
       "both": "Both"
     },
-    "submit": "Send request",
+    "submit": "Request dossier",
     "sending": "Sending…",
-    "success": "Received. An advisor will be in touch.",
-    "required": "Please fill in name and WhatsApp.",
-    "sendError": "Couldn't send. Please try again.",
-    "disclaimer": "We don't share your data. Only our sales team uses it."
+    "required": "Please fill in name, email and WhatsApp.",
+    "invalidEmail": "Invalid email.",
+    "sendError": "Couldn't send. Please try again or message us on WhatsApp.",
+    "successEyebrow": "Received",
+    "successHeading": "Thanks, {{name}}.",
+    "successBody": "The dossier arrives on your WhatsApp within minutes. A Cardón advisor contacts you within 24 hours.",
+    "close": "Close",
+    "disclaimer": "We don't share your data with third parties."
   },
 
   "concept": {

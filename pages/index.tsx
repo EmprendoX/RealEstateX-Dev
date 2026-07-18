@@ -6,6 +6,7 @@ import nextI18NextConfig from "../next-i18next.config";
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import ConceptSection from "@/components/ConceptSection";
+import TrustStrip from "@/components/TrustStrip";
 import LocationSection from "@/components/LocationSection";
 import AmenitiesSection from "@/components/AmenitiesSection";
 import ModelsSection from "@/components/ModelsSection";
@@ -15,6 +16,7 @@ import InvestmentSection from "@/components/InvestmentSection";
 import ConstructionProgressSection from "@/components/ConstructionProgressSection";
 import DeveloperTrustSection from "@/components/DeveloperTrustSection";
 import LeadCaptureSection from "@/components/LeadCaptureSection";
+import DossierCTA from "@/components/DossierCTA";
 import { development, t as tDev } from "@/data/development";
 import { siteConfig } from "@/config/siteConfig";
 
@@ -57,8 +59,11 @@ export default function Home() {
 
   return (
     <Layout jsonLd={jsonLd}>
+      {/* Section order — per critique 2026-07-18:
+         desire → product → trust → location → deeper spec → action */}
       <Hero />
       <ConceptSection />
+      <TrustStrip />
       <LocationSection />
       <AmenitiesSection />
       <ModelsSection />
@@ -68,6 +73,7 @@ export default function Home() {
       <ConstructionProgressSection />
       <DeveloperTrustSection />
       <LeadCaptureSection />
+      <DossierCTA />
     </Layout>
   );
 }

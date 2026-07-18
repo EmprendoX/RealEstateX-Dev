@@ -8,39 +8,52 @@
     "payment": "Plan de pagos",
     "investment": "Inversión",
     "progress": "Avance",
-    "checkAvailability": "Consultar disponibilidad",
+    "contact": "Contacto",
     "whatsappDefault": "Hola, me gustaría saber más sobre {{name}}."
   },
 
   "hero": {
     "deliveryPrefix": "Entrega",
-    "residencesCount": "{{count}} residencias",
     "priceFrom": "Desde {{price}}",
-    "checkAvailability": "Consultar disponibilidad",
-    "downloadBrochure": "Descargar brochure",
+    "exploreCta": "Explorar residencias",
+    "dossierCta": "Solicitar dossier privado",
     "scrollHint": "Descubrir",
-    "whatsappDefault": "Hola, me gustaría más información sobre {{name}}.",
-    "whatsappCta": "WhatsApp",
-    "inquiryCta": "Contactar"
+    "whatsappDefault": "Hola, me gustaría más información sobre {{name}}."
   },
 
-  "heroInquiry": {
-    "eyebrow": "Recibí información",
-    "title": "Precios, planos y disponibilidad",
+  "trustStrip": {
+    "eyebrow": "Respaldo",
+    "yearsExperience": "Años de experiencia",
+    "projectsDelivered": "Proyectos entregados",
+    "unitsDelivered": "Unidades escrituradas",
+    "link": "Conocer al desarrollador"
+  },
+
+  "dossier": {
+    "openLabel": "Solicitar dossier privado",
+    "ctaLabel": "Solicitar dossier",
+    "eyebrow": "Dossier privado",
+    "title": "Recibe el dossier completo de {{name}}",
+    "subtitle": "Planos, lista de precios vigente, plan de pagos y proyección de renta. Enviado por WhatsApp o email.",
     "name": "Nombre",
+    "email": "Email",
     "whatsapp": "WhatsApp",
-    "goalLabel": "¿Buscás?",
-    "goal": {
+    "goalLabel": "¿Qué buscas?",
+    "goals": {
       "live": "Vivir",
       "invest": "Invertir",
       "both": "Ambos"
     },
-    "submit": "Recibir información",
+    "submit": "Solicitar dossier",
     "sending": "Enviando…",
-    "success": "¡Recibido! Un asesor se pondrá en contacto.",
-    "required": "Completá nombre y WhatsApp.",
-    "sendError": "No se pudo enviar. Probá de nuevo.",
-    "disclaimer": "No compartimos tus datos. Sólo los usa nuestro equipo comercial."
+    "required": "Completa nombre, email y WhatsApp.",
+    "invalidEmail": "Email no válido.",
+    "sendError": "No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.",
+    "successEyebrow": "Recibido",
+    "successHeading": "Gracias, {{name}}.",
+    "successBody": "El dossier llega a tu WhatsApp en los próximos minutos. Un asesor de Cardón se pone en contacto en las próximas 24 horas.",
+    "close": "Cerrar",
+    "disclaimer": "No compartimos tus datos con terceros."
   },
 
   "concept": {
@@ -81,8 +94,8 @@
 
   "availability": {
     "eyebrow": "Disponibilidad en tiempo real",
-    "heading": "Elegí tu unidad.",
-    "intro": "Inventario actualizado. Consultá precios finales, orientación y estatus de cada unidad.",
+    "heading": "Elige tu unidad.",
+    "intro": "Inventario actualizado. Consulta precios finales, orientación y estatus de cada unidad.",
     "unitsAvailable": "unidades disponibles",
     "absorbed": "colocado",
     "allModels": "Todos los modelos",
@@ -99,7 +112,7 @@
     "colStatus": "Estatus",
     "quote": "Cotizar",
     "empty": "No hay unidades que coincidan con los filtros seleccionados.",
-    "disclaimer": "Los precios pueden actualizarse sin previo aviso. Consultá disponibilidad final con un asesor."
+    "disclaimer": "Los precios pueden actualizarse sin previo aviso. Consulta la disponibilidad final con un asesor."
   },
 
   "payment": {
@@ -119,10 +132,10 @@
 
   "investment": {
     "eyebrow": "Análisis de inversión",
-    "heading": "Simulá el rendimiento de tu unidad.",
-    "intro": "Basado en el mercado de renta vacacional del corredor East Cape. Ajustá los supuestos y ve el impacto en tiempo real.",
+    "heading": "Simula el rendimiento de tu unidad.",
+    "intro": "Basado en el mercado de renta vacacional del corredor East Cape. Ajusta los supuestos y observa el impacto en tiempo real.",
     "assumptionsLabel": "Supuestos",
-    "selectModel": "Elegí un modelo",
+    "selectModel": "Elige un modelo",
     "adr": "ADR (renta promedio por noche)",
     "adrSuffix": "USD",
     "occupancy": "Ocupación anual",
@@ -165,7 +178,7 @@
 
   "leadCapture": {
     "eyebrow": "Hablemos",
-    "heading": "Recibí la información completa.",
+    "heading": "Recibe la información completa.",
     "intro": "Un asesor de {{name}} te contacta con precios, planos y planes de pago personalizados según tu perfil.",
     "showroom": "Showroom",
     "whatsappDefault": "Hola, me interesa recibir información sobre {{name}}.",
@@ -196,9 +209,9 @@
     "successHeading": "Gracias, {{name}}.",
     "you": "vos",
     "successBody": "Un asesor te va a contactar en las próximas 24 horas por WhatsApp con precios, planos y disponibilidad.",
-    "required": "Completá nombre, email y WhatsApp.",
+    "required": "Completa nombre, email y WhatsApp.",
     "invalidEmail": "Email no válido.",
-    "sendError": "No se pudo enviar. Probá de nuevo o escribinos por WhatsApp.",
+    "sendError": "No se pudo enviar. Intenta de nuevo o escríbenos por WhatsApp.",
     "disclaimer": "No compartimos tus datos con terceros. Sólo el equipo comercial del proyecto los recibe."
   },
 
@@ -206,7 +219,7 @@
     "explore": "Explorar",
     "contact": "Contacto",
     "locationLabel": "Ubicación",
-    "followUs": "Seguinos",
+    "followUs": "Síguenos",
     "rightsReserved": "Todos los derechos reservados.",
     "developedBy": "Desarrollado por"
   }

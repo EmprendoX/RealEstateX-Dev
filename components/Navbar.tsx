@@ -81,13 +81,13 @@ export default function Navbar() {
               </a>
               <a
                 href="#contacto"
-                className={`text-xs uppercase tracking-eyebrow px-5 py-2.5 transition-colors ${
+                className={`text-xs uppercase tracking-eyebrow whitespace-nowrap px-5 py-2.5 transition-colors ${
                   scrolled
                     ? "bg-ink text-white hover:bg-primary"
                     : "bg-white text-ink hover:bg-white/90"
                 }`}
               >
-                {t("nav.checkAvailability")}
+                {t("nav.contact")}
               </a>
             </div>
 

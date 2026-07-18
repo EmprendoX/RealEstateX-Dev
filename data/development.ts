@@ -133,6 +133,8 @@ export interface Development {
   slug: string;
   name: string;
   tagline: I18nText;
+  heroHeadline: I18nText;
+  heroPoints: I18nList;
   intro: I18nText;
   currency: Currency;
   status: DevelopmentStatus;
@@ -564,6 +566,14 @@ export const development: Development = {
   tagline: {
     es: "Vive el Mar de Cortés desde el desierto.",
     en: "Live the Sea of Cortez from the desert.",
+  },
+  heroHeadline: {
+    es: "Una colección privada de 28 residencias entre el desierto y el Mar de Cortés.",
+    en: "A private collection of 28 residences between the desert and the Sea of Cortez.",
+  },
+  heroPoints: {
+    es: ["Arquitectura contemporánea", "Beach club privado", "Rental management"],
+    en: ["Contemporary architecture", "Private beach club", "Rental management"],
   },
   intro: {
     es: "Un desarrollo boutique de 28 residencias en East Cape, entre Los Barriles y La Ribera. Arquitectura contemporánea de piedra y madera, playa privada y un programa de renta vacacional integrado para quienes buscan un hogar de escape con rendimiento real.",
