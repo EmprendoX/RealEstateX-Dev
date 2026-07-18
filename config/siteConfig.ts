@@ -1,84 +1,102 @@
 /**
- * CENTRAL SITE CONFIGURATION
+ * SITE CONFIG
  *
- * This file contains all the configuration that needs to be customized
- * for each broker. To duplicate the site for another broker, you only need
- * to change the values in this file.
+ * Site-level branding, contact, and integration settings for THIS instance.
+ * Development content (models, units, payment plan, etc.) lives in
+ * `data/development.ts` — do not put it here.
  */
 
+export type DisplayFont = "fraunces" | "cormorant" | "playfair";
+export type BodyFont = "inter" | "manrope";
+
 export interface SiteConfig {
-  // Site information
+  // Identity
   siteName: string;
-  siteUrl: string; // Absolute production site URL (e.g. "https://juanperez.com") without a trailing slash
+  siteUrl: string;
   logoText: string;
-  logoUrl?: string; // Logo image URL (optional)
-  heroImage?: string; // Hero section background image URL (optional)
-  primaryColor: string; // Primary color in hex format (e.g. "#0EA5E9")
-  secondaryColor: string; // Secondary color in hex format (e.g. "#06B6D4")
+  logoUrl?: string;
 
-  // Broker data
-  businessType?: "broker" | "agencia" | "desarrollador"; // Type of account. Defaults to "broker"
-  brokerName: string;
-  agentsCount?: number; // Agency only: number of agents
-  developmentName?: string; // Developer only: name of the project/development
+  // Contact
   phone: string;
-  whatsapp: string; // Number without spaces or special characters (e.g. "5215512345678")
+  whatsapp: string;
   email: string;
-  city: string;
-  address: string;
-  slogan: string;
+  officeAddress?: string;
 
-  // Social media (optional)
+  // Branding — desert-modernism defaults
+  primaryColor: string;   // main brand color (Sea of Cortez blue for Cardón)
+  accentColor: string;    // secondary accent (warm sand)
+  inkColor: string;       // primary text / UI dark
+  surfaceColor: string;   // page background base
+
+  // Typography
+  displayFont: DisplayFont;
+  bodyFont: BodyFont;
+
+  // Developer company name (short; full record in development.developer)
+  developerCompany: string;
+
+  // Social (optional)
   facebook?: string;
   instagram?: string;
   tiktok?: string;
   linkedin?: string;
   website?: string;
 
-  // Automation hooks (optional)
-  leadWebhookUrl?: string; // Webhook URL for sending leads (Make, Zapier, etc.)
-  chatScript?: string; // Chat widget HTML/JS (Crisp, Intercom, Tidio, etc.)
+  // Integrations (optional)
+  leadWebhookUrl?: string;
+  chatScript?: string;
+  brochureRequiresLead?: boolean;
 }
 
 export const siteConfig: SiteConfig = {
   // ============================================
-  // SITE INFORMATION
+  // IDENTITY
   // ============================================
-  siteName: "RealEX",
-  siteUrl: "https://realestatex.com",
-  logoText: "RealEX",
+  siteName: "Cardón",
+  siteUrl: "https://cardon.mx",
+  logoText: "Cardón",
   logoUrl: undefined,
-  heroImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920",
-  primaryColor: "#008cb4",
-  secondaryColor: "#004d65",
-  
+
   // ============================================
-  // BROKER DATA
+  // CONTACT
   // ============================================
-  businessType: "broker",
-  brokerName: "Juan Pérez",
-  agentsCount: undefined,
-  developmentName: undefined,
-  phone: "+52 55 1234 5678",
-  whatsapp: "5215512345678",
-  email: "contacto@realestatex.com",
-  city: "Ciudad de México",
-  address: "Av. Reforma 123, Col. Centro, CDMX",
-  slogan: "Tu hogar ideal te está esperando",
-  
+  phone: "+52 624 145 8200",
+  whatsapp: "5216241458200",
+  email: "hola@cardon.mx",
+  officeAddress: "Camino a La Ribera Km 4, Baja California Sur",
+
   // ============================================
-  // SOCIAL MEDIA
+  // BRANDING — desert modernism
   // ============================================
-  facebook: "https://facebook.com/tu-pagina",
-  instagram: "https://instagram.com/tu-cuenta",
+  primaryColor: "#1E3A5F",   // deep Sea of Cortez blue
+  accentColor: "#C9A87C",    // warm sand
+  inkColor: "#1A1A1A",       // charcoal
+  surfaceColor: "#F5F1EA",   // bone
+
+  // ============================================
+  // TYPOGRAPHY
+  // ============================================
+  displayFont: "fraunces",
+  bodyFont: "inter",
+
+  // ============================================
+  // DEVELOPER COMPANY
+  // ============================================
+  developerCompany: "Nakawe Group",
+
+  // ============================================
+  // SOCIAL
+  // ============================================
+  instagram: "https://instagram.com/cardon.mx",
+  facebook: undefined,
   tiktok: undefined,
   linkedin: undefined,
   website: undefined,
-  
+
   // ============================================
-  // AUTOMATIONS
+  // INTEGRATIONS
   // ============================================
   leadWebhookUrl: undefined,
   chatScript: undefined,
+  brochureRequiresLead: true,
 };
-

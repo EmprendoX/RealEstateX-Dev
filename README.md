@@ -1,255 +1,60 @@
-# RealEstateX - Plantilla Web para Brokers Inmobiliarios
+# RealEstateX — Development Template
 
-Una plantilla web profesional, moderna y fácil de personalizar para brokers inmobiliarios. Construida con Next.js, TypeScript y Tailwind CSS.
+Plantilla Next.js para lanzar **un sitio por desarrollo inmobiliario** en preventa. Cada instancia del repo se despliega como el sitio único de un proyecto: hero editorial, disponibilidad en vivo, plan de pagos, calculadora de inversión, avance de obra y captura de leads calificados.
 
-## 🚀 Características
+Showcase actual: **Cardón**, un proyecto boutique ficticio en East Cape, Baja California Sur.
 
-- ✅ Diseño moderno y responsive (mobile-first)
-- ✅ Configuración centralizada en un solo archivo
-- ✅ Sistema de propiedades fácil de gestionar
-- ✅ Formulario de contacto con validación
-- ✅ Preparado para automatizaciones (webhooks, chat widgets)
-- ✅ Optimizado para SEO
-- ✅ Fácil de duplicar y personalizar
+## Stack
 
-## 📋 Requisitos Previos
+- Next.js 14 (Pages Router) + TypeScript
+- Tailwind CSS con paleta y tipografía por configuración
+- next-i18next (español / inglés)
+- Resend para emails de leads + webhook opcional (Make, Zapier)
+- Datos del proyecto en `data/development.ts` (single-file source of truth)
 
-- Node.js 18+ instalado
-- npm o yarn
+## Requisitos
 
-## 🛠️ Instalación
+- Node 18+
 
-1. **Clonar o descargar el proyecto**
+## Uso
 
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
-
-3. **Ejecutar en modo desarrollo:**
-   ```bash
-   npm run dev
-   ```
-
-4. **Abrir en el navegador:**
-   ```
-   http://localhost:3000
-   ```
-
-## ⚙️ Personalización
-
-### 1. Configuración General del Sitio
-
-Edita el archivo `config/siteConfig.ts` para personalizar:
-
-- **Información del sitio:**
-  - `siteName`: Nombre del sitio
-  - `logoText`: Texto del logo (o `logoUrl` para imagen)
-  - `primaryColor` y `secondaryColor`: Colores principales (formato hex)
-
-- **Datos del broker:**
-  - `brokerName`: Tu nombre completo
-  - `phone`, `whatsapp`, `email`: Datos de contacto
-  - `city`, `address`: Ubicación
-  - `slogan`: Tu eslogan o frase principal
-
-- **Redes sociales:**
-  - Agrega las URLs de tus redes sociales (opcional)
-
-- **Automatizaciones:**
-  - `leadWebhookUrl`: URL del webhook para enviar leads automáticamente
-  - `chatScript`: Script HTML/JS del widget de chat (Crisp, Intercom, etc.)
-
-### 2. Agregar Propiedades
-
-Edita el archivo `data/properties.ts`:
-
-1. **Agregar una nueva propiedad:**
-   ```typescript
-   {
-     id: "6",
-     slug: "mi-nueva-propiedad",
-     title: "Título de la propiedad",
-     description: "Descripción detallada...",
-     type: "venta", // o "renta"
-     price: 1500000,
-     currency: "MXN", // o "USD"
-     location: "Colonia, Calle",
-     city: "Ciudad de México",
-     bedrooms: 3,
-     bathrooms: 2,
-     parking: 1,
-     area: 120,
-     featured: true, // Si quieres que aparezca en destacadas
-     images: [
-       "https://url-de-imagen-1.jpg",
-       "https://url-de-imagen-2.jpg",
-     ],
-   }
-   ```
-
-2. **Usar imágenes locales:**
-   - Coloca las imágenes en `public/images/`
-   - Usa rutas relativas: `images/mi-imagen.jpg`
-
-### 3. Cambiar Colores
-
-Los colores se definen en `config/siteConfig.ts`:
-
-```typescript
-primaryColor: "#0EA5E9",   // Color principal
-secondaryColor: "#06B6D4", // Color secundario
+```bash
+npm install
+npm run dev
+# http://localhost:3000
 ```
 
-Los colores se aplican automáticamente en toda la aplicación.
+## Personalizar el sitio para tu proyecto
 
-### 4. Agregar Logo
+Un despliegue = un desarrollo. Todo lo específico del proyecto vive en dos archivos:
 
-Tienes dos opciones:
+### 1. `data/development.ts`
+Contenido completo del desarrollo: nombre, tagline, concepto, ubicación, amenidades, modelos (tipologías), unidades (con status disponible / apartada / vendida), plan de pagos, supuestos de inversión, hitos de avance de obra, información del desarrollador. Cada campo con texto tiene su versión `es` y `en`.
 
-1. **Logo de texto:** Ya configurado con `logoText`
-2. **Logo de imagen:** Agrega la URL en `logoUrl` dentro de `config/siteConfig.ts`
+### 2. `config/siteConfig.ts`
+Branding + contacto + integraciones: nombre del sitio, URL, logo, paleta (primary, accent, ink, surface), tipografía (Fraunces / Cormorant / Playfair para display; Inter / Manrope para body), WhatsApp, email, redes sociales, `leadWebhookUrl`.
 
-## 🔄 Duplicar el Sitio para Otro Broker
-
-Para crear una nueva web para otro broker:
-
-1. **Duplica la carpeta del proyecto**
-
-2. **Cambia la configuración:**
-   - Edita `config/siteConfig.ts` con los nuevos datos
-   - Actualiza `data/properties.ts` con las nuevas propiedades
-
-3. **Opcionalmente configura:**
-   - `leadWebhookUrl` si quieres enviar leads a un CRM
-   - `chatScript` si quieres agregar un widget de chat
-
-4. **Instala dependencias y ejecuta:**
-   ```bash
-   npm install
-   npm run dev
-   ```
-
-## 📡 Automatizaciones
-
-### Webhook para Leads
-
-Para recibir leads automáticamente en tu CRM o herramienta de automatización:
-
-1. Crea un webhook en tu plataforma (Make, Zapier, etc.)
-2. Copia la URL del webhook
-3. Pégala en `siteConfig.leadWebhookUrl` en `config/siteConfig.ts`
-
-El webhook recibirá un JSON con:
-```json
-{
-  "name": "Nombre del cliente",
-  "email": "email@ejemplo.com",
-  "phone": "+52 55 1234 5678",
-  "message": "Mensaje del cliente",
-  "propertyId": "1",
-  "timestamp": "2024-01-01T12:00:00.000Z",
-  "siteName": "RealEstateX",
-  "brokerName": "Juan Pérez",
-  "city": "Ciudad de México"
-}
-```
-
-### Widget de Chat
-
-Para agregar un widget de chat (Crisp, Intercom, Tidio, etc.):
-
-1. Obtén el script de instalación de tu proveedor
-2. Pégalo en `siteConfig.chatScript` en `config/siteConfig.ts`
-
-Ejemplo:
-```typescript
-chatScript: '<script type="text/javascript">window.$crisp=[];...</script>'
-```
-
-## 🏗️ Estructura del Proyecto
+## Variables de entorno
 
 ```
-RealEstateX/
-├── config/
-│   └── siteConfig.ts          # Configuración centralizada
-├── data/
-│   └── properties.ts          # Datos de propiedades
-├── components/
-│   ├── Layout.tsx             # Layout principal
-│   ├── Navbar.tsx            # Barra de navegación
-│   ├── Footer.tsx            # Pie de página
-│   ├── PropertyCard.tsx      # Tarjeta de propiedad
-│   ├── PropertyGrid.tsx      # Grid de propiedades
-│   ├── PropertyHero.tsx      # Hero del detalle
-│   └── ContactForm.tsx       # Formulario de contacto
-├── pages/
-│   ├── index.tsx             # Página de inicio
-│   ├── about.tsx            # Sobre mí
-│   ├── contact.tsx          # Contacto
-│   ├── properties/
-│   │   ├── index.tsx        # Listado de propiedades
-│   │   └── [slug].tsx       # Detalle de propiedad
-│   └── api/
-│       └── contact.ts       # API endpoint para leads
-├── styles/
-│   └── globals.css          # Estilos globales
-└── utils/
-    └── formatPrice.ts       # Helper para formatear precios
+RESEND_API_KEY=re_...              # opcional — sin esto, los leads sólo se loguean en consola
+LEAD_FROM_EMAIL=hola@tudominio.com # opcional
+ADMIN_PASSWORD=elige-una-fuerte    # login del admin (por implementar)
 ```
 
-## 🚢 Despliegue
+## Deploy
 
-### Vercel (Recomendado)
+Compatible con cualquier host que soporte Next.js (Vercel, Netlify, Railway, Amplify). Sitemap y robots incluidos.
 
-1. Sube tu proyecto a GitHub
-2. Conecta tu repositorio en [Vercel](https://vercel.com)
-3. Vercel detectará automáticamente Next.js y desplegará
+## Estado
 
-### Otros Proveedores
-
-El proyecto es compatible con cualquier proveedor que soporte Next.js:
-- Netlify
-- AWS Amplify
-- Railway
-- Render
-
-## 📝 Scripts Disponibles
-
-- `npm run dev` - Ejecuta el servidor de desarrollo
-- `npm run build` - Construye la aplicación para producción
-- `npm run start` - Ejecuta el servidor de producción
-- `npm run lint` - Ejecuta el linter
-
-## 🐛 Solución de Problemas
-
-### Las imágenes no se cargan
-
-- Verifica que las URLs de las imágenes sean correctas
-- Si usas imágenes locales, asegúrate de que estén en `public/images/`
-- Revisa `next.config.js` para agregar dominios externos si es necesario
-
-### Los colores no cambian
-
-- Verifica que los colores en `siteConfig.ts` estén en formato hex (ej: `#0EA5E9`)
-- Reinicia el servidor de desarrollo después de cambiar los colores
-
-### El formulario no envía
-
-- Revisa la consola del navegador para ver errores
-- Verifica que el endpoint `/api/contact` esté funcionando
-- Revisa los logs del servidor en la terminal
-
-## 📄 Licencia
-
-Este proyecto es una plantilla libre para uso personal y comercial.
-
-## 🤝 Soporte
-
-Para preguntas o problemas, revisa la documentación de Next.js y Tailwind CSS.
+- ✅ Landing público completo (hero + 10 secciones + captura de leads)
+- ✅ API de leads (email vía Resend + webhook opcional)
+- ✅ Bilingüe ES / EN
+- ⏳ Admin panel (edición del desarrollo desde `/admin` — pendiente)
+- ⏳ Script `setup-development` para clonar el template para un proyecto nuevo — pendiente
+- ⏳ Brochure PDF auto-generado — pendiente
 
 ---
 
-**Desarrollado con ❤️ para brokers inmobiliarios**
-
-
+Diseñado para desarrolladores que buscan un sitio web que **luzca y convierta como ningún otro** en preventa.

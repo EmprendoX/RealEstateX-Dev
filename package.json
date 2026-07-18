@@ -1,14 +1,13 @@
 {
-  "name": "realestatex-broker-template",
-  "version": "1.0.0",
-  "description": "Plantilla web clonable para brokers inmobiliarios",
+  "name": "realestatex-development-template",
+  "version": "2.0.0",
+  "description": "One-site-per-development template for boutique real estate preventa",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "setup-broker": "tsx scripts/setup-broker.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",

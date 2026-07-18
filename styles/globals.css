@@ -2,36 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fallback palette — the real values are injected from siteConfig.ts in _app.tsx.
+   These only apply if _app.tsx hasn't loaded yet (SSR shell). */
 :root {
-  /* CSS variables for dynamic colors from siteConfig */
-  /* These values can be overridden with JavaScript if needed */
-  --color-primary: #0EA5E9;
-  --color-secondary: #06B6D4;
+  --color-primary: #1E3A5F;
+  --color-accent: #C9A87C;
+  --color-ink: #1A1A1A;
+  --color-surface: #F5F1EA;
+  --font-display: ui-serif, Georgia, serif;
+  --font-body: ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Apply primary and secondary colors dynamically */
-/* Note: To change the colors, edit config/siteConfig.ts */
-/* Colors are applied using Tailwind classes: bg-primary, text-primary, etc. */
-
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-surface);
+  }
   body {
-    @apply text-gray-900 antialiased;
+    @apply bg-surface text-ink antialiased font-body;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  ::selection {
+    background-color: var(--color-primary);
+    color: #ffffff;
   }
 }
 
-@layer components {
-  /* Custom utilities if you need them */
+@layer utilities {
+  .text-eyebrow {
+    @apply text-xs uppercase tracking-eyebrow font-medium;
+  }
+  .hero-gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 40%,
+      rgba(0, 0, 0, 0.55) 85%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+  }
+  .subtle-divider {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      currentColor 20%,
+      currentColor 80%,
+      transparent 100%
+    );
+    height: 1px;
+  }
 }
-
-/* Smooth scroll styles */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Styles for responsive images */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-

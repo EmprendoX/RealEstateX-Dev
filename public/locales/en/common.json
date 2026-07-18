@@ -1,276 +1,213 @@
 {
   "nav": {
-    "home": "Home",
-    "properties": "Properties",
-    "about": "About",
-    "contact": "Contact",
-    "favorites": "Favorites"
+    "concept": "The concept",
+    "location": "Location",
+    "amenities": "Amenities",
+    "models": "Models",
+    "availability": "Availability",
+    "payment": "Payment plan",
+    "investment": "Investment",
+    "progress": "Progress",
+    "checkAvailability": "Check availability",
+    "whatsappDefault": "Hi, I'd like to know more about {{name}}."
   },
-  "language": {
-    "label": "Language",
-    "es": "Español",
-    "en": "English"
+
+  "hero": {
+    "deliveryPrefix": "Delivery",
+    "residencesCount": "{{count}} residences",
+    "priceFrom": "From {{price}}",
+    "checkAvailability": "Check availability",
+    "downloadBrochure": "Download brochure",
+    "scrollHint": "Discover",
+    "whatsappDefault": "Hi, I'd like more information about {{name}}.",
+    "whatsappCta": "WhatsApp",
+    "inquiryCta": "Contact"
   },
-  "whatsapp": {
-    "defaultMessage": "Hi, I'm interested in a property. Could you give me more information?",
-    "propertyMessage": "Hi, I'm interested in the property: {{title}}. Could you give me more information?",
-    "servicesMessage": "Hi, I'd like to learn more about your services.",
-    "contactMessage": "Hi, I'd like to get more information about your real estate services."
+
+  "heroInquiry": {
+    "eyebrow": "Get information",
+    "title": "Pricing, floor plans and availability",
+    "name": "Name",
+    "whatsapp": "WhatsApp",
+    "goalLabel": "You're looking to",
+    "goal": {
+      "live": "Live",
+      "invest": "Invest",
+      "both": "Both"
+    },
+    "submit": "Send request",
+    "sending": "Sending…",
+    "success": "Received. An advisor will be in touch.",
+    "required": "Please fill in name and WhatsApp.",
+    "sendError": "Couldn't send. Please try again.",
+    "disclaimer": "We don't share your data. Only our sales team uses it."
   },
-  "footer": {
-    "quickLinks": "Quick links",
-    "contact": "Contact",
-    "followUs": "Follow us",
-    "copyright": "© {{year}} {{site}}. All rights reserved.",
-    "developedBy": "Developed by {{name}}"
+
+  "concept": {
+    "eyebrow": "The concept"
   },
-  "propertyCard": {
-    "forSale": "For sale",
-    "forRent": "For rent",
-    "featured": "⭐ Featured",
-    "viewDetails": "View details"
+
+  "location": {
+    "eyebrow": "Location",
+    "heading": "On Baja Sur's most preserved coast.",
+    "openMap": "Open in map",
+    "distancesLabel": "Distances to key places",
+    "minutes": "min"
   },
-  "filters": {
-    "title": "Filter properties",
-    "clear": "Clear filters",
-    "search": "Search",
-    "searchPlaceholder": "Search by title, description or location...",
-    "operationType": "Operation type",
-    "all": "All",
-    "typeSale": "For sale",
-    "typeRent": "For rent",
-    "city": "City",
-    "currency": "Currency",
-    "minPrice": "Min price",
-    "maxPrice": "Max price",
-    "chooseCurrency": "Choose a currency",
-    "noLimit": "No limit",
-    "bedrooms": "Bedrooms (minimum)",
-    "bathrooms": "Bathrooms (minimum)",
-    "any": "Any",
-    "showing": "Showing",
-    "resultsCount_one": "property",
-    "resultsCount_other": "properties"
+
+  "amenities": {
+    "eyebrow": "Amenities",
+    "heading": "Designed to live the project.",
+    "intro": "Spaces built so residents and guests enjoy every day. Everything inside the development.",
+    "countLabel": "amenities"
   },
-  "contactForm": {
-    "requiredFields": "Please complete all required fields.",
-    "invalidEmail": "Please enter a valid email address.",
-    "sendError": "There was an error sending your message. Please try again or contact us directly.",
-    "interestedIn": "Interested in:",
-    "title": "Interested in this property?",
-    "subtitle": "Leave us your details and we'll get in touch with you as soon as possible.",
-    "fullName": "Full name",
-    "namePlaceholder": "Your name",
-    "email": "Email",
-    "emailPlaceholder": "you@email.com",
-    "phone": "Phone (optional)",
-    "phonePlaceholder": "+52 55 1234 5678",
-    "message": "Message",
-    "messagePlaceholder": "Tell us what interests you about this property...",
-    "success": "Message sent successfully! We'll get in touch with you soon.",
-    "sending": "Sending...",
-    "submit": "Send message"
+
+  "models": {
+    "eyebrow": "Models",
+    "heading": "Four ways to inhabit the project.",
+    "intro": "From getaway studios to flagship sky villas. Every model designed with Sea of Cortez views and premium finishes.",
+    "modelNumber": "Model {{n}}",
+    "studio": "Studio",
+    "bedrooms": "{{count}} bedrooms",
+    "bathrooms": "{{count}} baths",
+    "area": "{{area}} m² interior",
+    "terrace": "{{area}} m² terrace",
+    "parking": "{{count}} parking",
+    "priceFrom": "From",
+    "availability": "Available",
+    "viewAvailability": "View availability",
+    "requestInfo": "Request information"
   },
-  "mortgage": {
-    "title": "Mortgage calculator",
-    "subtitle": "Estimate your approximate monthly payment. Values are for guidance only.",
+
+  "availability": {
+    "eyebrow": "Live availability",
+    "heading": "Pick your unit.",
+    "intro": "Real-time inventory. Check final pricing, orientation and status for every unit.",
+    "unitsAvailable": "units available",
+    "absorbed": "sold or held",
+    "allModels": "All models",
+    "allStatuses": "All",
+    "statusAvailable": "Available",
+    "statusReserved": "Reserved",
+    "statusSold": "Sold",
+    "colUnit": "Unit",
+    "colModel": "Model",
+    "colLevel": "Floor",
+    "colOrientation": "Orientation",
+    "colArea": "Area",
+    "colPrice": "Price",
+    "colStatus": "Status",
+    "quote": "Get quote",
+    "empty": "No units match the selected filters.",
+    "disclaimer": "Prices may change without prior notice. Confirm final availability with an advisor."
+  },
+
+  "payment": {
+    "eyebrow": "Payment plan",
+    "heading": "Clear, flexible preventa terms.",
+    "intro": "Structured to spread the investment across the construction period, with the largest share due on delivery.",
+    "reservation": "Reservation",
     "downPayment": "Down payment",
-    "term": "Term",
-    "years": "{{count}} years",
-    "monthlyPayments": "{{count}} monthly payments",
-    "annualRate": "Annual rate",
-    "annualRateFixed": "Estimated fixed annual",
-    "estimatedMonthlyPayment": "Estimated monthly payment",
-    "price": "Price",
-    "loanAmount": "Loan amount",
-    "totalInterest": "Total interest",
-    "totalToPay": "Total to pay",
-    "disclaimer": "💡 This calculator uses fixed-rate (French) amortization and does not include taxes, insurance or notary fees. Check with your bank for actual terms."
+    "installments": "Monthly installments",
+    "onDelivery": "On delivery",
+    "percentOfPrice": "of total price",
+    "acrossMonths": "across {{count}} months",
+    "cashDiscountEyebrow": "Cash payment",
+    "cashDiscountHeading": "{{percent}}% discount on list price",
+    "cashDiscountCta": "Request quote"
   },
-  "favoriteButton": {
-    "remove": "Remove from favorites",
-    "add": "Add to favorites"
+
+  "investment": {
+    "eyebrow": "Investment analysis",
+    "heading": "Model the yield on your unit.",
+    "intro": "Based on the East Cape corridor vacation-rental market. Adjust assumptions and see the impact live.",
+    "assumptionsLabel": "Assumptions",
+    "selectModel": "Choose a model",
+    "adr": "ADR (average nightly rate)",
+    "adrSuffix": "USD",
+    "occupancy": "Annual occupancy",
+    "fixedOpex": "Fixed opex: {{amount}} / month",
+    "mgmtFee": "Management fee: {{percent}}% of revenue",
+    "appreciation": "Estimated appreciation: {{percent}}% per year",
+    "investmentPrice": "Investment",
+    "grossAnnual": "Gross annual revenue",
+    "grossYield": "gross yield",
+    "netAnnual": "Net annual income",
+    "netYield": "net yield",
+    "appreciationYear": "Appreciation year 1",
+    "annual": "annual",
+    "totalReturnYear": "Total return year 1 (net income + appreciation)",
+    "totalReturnSub": "Equivalent to {{percent}}% on the investment"
   },
-  "testimonials": {
-    "heading": "What our clients say",
-    "starsLabel": "{{count}} out of 5 stars"
+
+  "progress": {
+    "eyebrow": "Construction progress",
+    "heading": "We build with transparency.",
+    "intro": "Estimated delivery: {{date}}. We document every milestone so you can see your investment progress.",
+    "overallLabel": "Overall progress",
+    "milestoneProgress": "Progress",
+    "status": {
+      "completed": "Completed",
+      "in_progress": "In progress",
+      "upcoming": "Upcoming"
+    }
   },
-  "propertyHero": {
-    "viewFullscreen": "View image fullscreen",
-    "forSale": "For sale",
-    "forRent": "For rent",
-    "photosCount": "{{count}} photos",
-    "imageAlt": "{{title}} - Image {{index}}",
-    "price": "Price",
-    "bedrooms": "Bedrooms",
-    "bathrooms": "Bathrooms",
-    "parking": "Parking",
-    "area": "Area"
+
+  "developer": {
+    "eyebrow": "The developer",
+    "trackRecord": "Track record",
+    "yearsExperience": "years of experience",
+    "projectsDelivered": "projects delivered",
+    "unitsDelivered": "units titled",
+    "legalLabel": "Legal framework",
+    "legalNote": "Held in a Mexican trust (fideicomiso). Notarial closing in Baja California Sur. International financing available for foreign buyers."
   },
-  "propertyTour": {
-    "defaultTitle": "Virtual tour",
-    "subtitle": "Tour the property virtually before visiting in person."
-  },
-  "propertyGrid": {
-    "emptyTitle": "We couldn't find any properties with those filters.",
-    "emptyHint": "Try adjusting your search criteria."
-  },
-  "propertyMap": {
-    "title": "Location",
-    "viewOnGoogleMaps": "View on Google Maps →",
-    "mapAlt": "Map of {{title}}"
-  },
-  "pagination": {
-    "label": "Pagination",
-    "previous": "← Previous",
-    "next": "Next →",
-    "previousLabel": "Previous page",
-    "nextLabel": "Next page"
-  },
-  "layout": {
-    "defaultDescription": "Find your ideal property in {{city}}. {{slogan}}"
-  },
-  "home": {
-    "metaTitle": "Home",
-    "metaDescription": "Find your ideal property in {{city}}. {{slogan}}",
-    "heroAlt": "Hero",
-    "inCity": "In {{city}}",
-    "viewProperties": "View properties",
-    "contactWhatsapp": "Contact via WhatsApp",
-    "searchHeading": "Find your ideal property",
-    "operationType": "Operation type",
-    "allTypes": "All",
-    "typeSale": "For sale",
-    "typeRent": "For rent",
-    "city": "City",
-    "allCities": "All",
-    "viewCountProperties": "View {{count}} properties",
-    "featuredHeading": "Featured properties",
-    "featuredSubtitle": "The best options for you",
-    "viewAllProperties": "View all properties",
-    "learnMore": "Learn more",
-    "ctaHeading": "Ready to find your ideal property?",
-    "ctaSubtitle": "Schedule a call or request a free valuation of your property",
-    "contactNow": "Contact now",
-    "whatsapp": "WhatsApp"
-  },
-  "properties": {
-    "metaTitle": "Properties",
-    "metaDescription": "Explore our selection of properties for sale and rent",
-    "heading": "Our Properties",
-    "subtitle": "Find the perfect property for you",
-    "emptyTitle": "We couldn't find any properties with those filters",
-    "emptyHint": "Try adjusting the filters or clearing them to see all options.",
-    "clearFilters": "Clear filters",
-    "notFoundPrompt": "Can't find what you're looking for?",
-    "contactUs": "Contact us",
-    "andWeHelp": "and we'll help you."
-  },
-  "propertyDetail": {
-    "propertyMessage": "Hi, I'm interested in the property: {{title}}. Could you give me more information?",
-    "breadcrumbHome": "Home",
-    "breadcrumbProperties": "Properties",
-    "description": "Description",
-    "specs": "Specifications",
-    "type": "Type",
-    "bedrooms": "Bedrooms",
-    "bathrooms": "Bathrooms",
-    "parking": "Parking",
-    "area": "Area",
-    "location": "Location",
-    "pdfTitle": "Property fact sheet",
-    "pdfSubtitle": "Download a PDF with all the information to print or share.",
-    "downloadPdf": "Download PDF",
-    "shareTitle": "Share this property",
-    "shareSubtitle": "Copy the link and send it via WhatsApp, message, or anywhere. It shows up with a photo and info.",
-    "copyLink": "Copy link",
-    "copied": "Copied!",
-    "shareWhatsapp": "WhatsApp",
-    "shareMore": "Share",
-    "questionsHeading": "Have questions about this property?",
-    "questionsSubtitle": "Contact us directly via WhatsApp for a quick response",
-    "contactWhatsapp": "💬 Contact via WhatsApp"
-  },
-  "about": {
-    "metaTitle": "About",
-    "metaDescription": "Learn more about {{name}}, your real estate advisor in {{city}}",
-    "servicesMessage": "Hi, I'd like to learn more about your services.",
-    "heading": "About me",
-    "subtitle": "Your trusted real estate advisor in {{city}}",
-    "ctaHeading": "Ready to find your ideal property?",
-    "ctaSubtitle": "Contact me and together we'll find the perfect place for you",
-    "contactNow": "Contact now",
-    "whatsapp": "WhatsApp"
-  },
-  "contact": {
-    "metaTitle": "Contact",
-    "metaDescription": "Contact {{name}} to find your ideal property in {{city}}",
-    "message": "Hi, I'd like to get more information about your real estate services.",
-    "heading": "Contact us",
-    "subtitle": "We're here to help you find your ideal property",
-    "contactInfo": "Contact information",
-    "phone": "Phone",
+
+  "leadCapture": {
+    "eyebrow": "Let's talk",
+    "heading": "Receive the full information kit.",
+    "intro": "An advisor from {{name}} contacts you with pricing, floor plans, and payment plans tailored to your profile.",
+    "showroom": "Showroom",
+    "whatsappDefault": "Hi, I'd like to receive more information about {{name}}.",
+    "formEyebrow": "Contact form",
+    "name": "Full name",
     "email": "Email",
     "whatsapp": "WhatsApp",
-    "sendMessage": "Send message",
-    "location": "Location",
-    "hoursTitle": "Business hours",
-    "weekdays": "Monday to Friday:",
-    "weekdaysHours": "9:00 AM - 7:00 PM",
-    "saturday": "Saturdays:",
-    "saturdayHours": "10:00 AM - 4:00 PM",
-    "sunday": "Sundays:",
-    "sundayHours": "By appointment only",
-    "hoursNote": "You can also contact us via WhatsApp at any time. We'll respond as soon as possible.",
-    "preferWhatsapp": "Prefer WhatsApp?",
-    "preferWhatsappSubtitle": "Contact us directly via WhatsApp for a quick response",
-    "openWhatsapp": "💬 Open WhatsApp",
-    "map": "Map",
-    "mapNote": "(Integrate Google Maps here if you like)"
+    "goalLabel": "Purchase goal?",
+    "goals": {
+      "live": "To live",
+      "invest": "To invest",
+      "both": "Both"
+    },
+    "budget": "Budget range",
+    "modelInterest": "Model of interest",
+    "modelUnsure": "Not sure yet",
+    "timing": "When would you buy?",
+    "timings": {
+      "immediate": "Immediate (< 1 month)",
+      "1-3mo": "1 – 3 months",
+      "3-6mo": "3 – 6 months",
+      "6mo+": "6+ months"
+    },
+    "message": "Message (optional)",
+    "submit": "Request information",
+    "sending": "Sending…",
+    "successEyebrow": "Received",
+    "successHeading": "Thanks, {{name}}.",
+    "you": "you",
+    "successBody": "An advisor will contact you within 24 hours on WhatsApp with pricing, floor plans and availability.",
+    "required": "Please fill in name, email and WhatsApp.",
+    "invalidEmail": "Invalid email.",
+    "sendError": "Couldn't send. Please try again or message us on WhatsApp.",
+    "disclaimer": "We don't share your data with third parties. Only the project's sales team receives it."
   },
-  "favorites": {
-    "metaTitle": "Favorites",
-    "heading": "My favorites",
-    "loading": "Loading...",
-    "subtitle": "The properties you saved to review later",
-    "emptyTitle": "You haven't saved any properties yet",
-    "emptyHint": "Tap the heart on any property to save it here and compare it later.",
-    "viewProperties": "View properties",
-    "savedCount_one": "saved property",
-    "savedCount_other": "saved properties",
-    "selectedForCompare": "· {{count}} selected to compare",
-    "clearListConfirm": "Clear your favorites list?",
-    "clearList": "Clear list",
-    "compare": "Compare ({{count}})",
-    "compareHint": "💡 Select up to {{max}} properties to compare them side by side",
-    "removeFromFavorites": "Remove from favorites",
-    "compareCheckbox": "Compare",
-    "viewDetails": "View details →"
-  },
-  "compare": {
-    "metaTitle": "Compare properties",
-    "rowPrice": "Price",
-    "rowType": "Type",
-    "rowLocation": "Location",
-    "rowBedrooms": "Bedrooms",
-    "rowBathrooms": "Bathrooms",
-    "rowParking": "Parking",
-    "rowArea": "Area",
-    "rowFeatured": "Featured",
-    "typeSale": "For sale",
-    "typeRent": "For rent",
-    "yes": "Yes",
-    "no": "No",
-    "heading": "Compare properties",
-    "subtitle": "Up to {{max}} properties side by side",
-    "needAtLeastTwo": "You need at least 2 properties",
-    "needAtLeastTwoHint": "Go to Favorites, select 2 or 3 properties and tap \"Compare\".",
-    "goToFavorites": "Go to Favorites",
-    "feature": "Feature",
-    "actions": "Actions",
-    "viewDetails": "View details",
-    "whatsapp": "WhatsApp",
-    "dimmedNote": "Dimmed rows are identical across all properties.",
-    "backToFavorites": "← Back to Favorites"
+
+  "footer": {
+    "explore": "Explore",
+    "contact": "Contact",
+    "locationLabel": "Location",
+    "followUs": "Follow us",
+    "rightsReserved": "All rights reserved.",
+    "developedBy": "Developed by"
   }
 }

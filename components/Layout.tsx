@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
 import { siteConfig } from "@/config/siteConfig";
+import { development, t as tDev } from "@/data/development";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -14,6 +14,7 @@ interface LayoutProps {
   canonicalPath?: string;
   noindex?: boolean;
   jsonLd?: object;
+  hideChrome?: boolean;
 }
 
 function toAbsoluteUrl(urlOrPath: string | undefined, base: string): string | undefined {
@@ -31,25 +32,24 @@ export default function Layout({
   canonicalPath,
   noindex,
   jsonLd,
+  hideChrome = false,
 }: LayoutProps) {
-  const { t } = useTranslation("common");
   const { locale } = useRouter();
   const ogLocale = locale === "en" ? "en_US" : "es_MX";
+
+  const tagline = tDev.text(development.tagline, locale);
+  const intro = tDev.text(development.intro, locale);
+
   const pageTitle = title
     ? `${title} | ${siteConfig.siteName}`
-    : `${siteConfig.siteName} - ${siteConfig.slogan}`;
-  const pageDescription =
-    description ||
-    t("layout.defaultDescription", {
-      city: siteConfig.city,
-      slogan: siteConfig.slogan,
-    });
+    : `${siteConfig.siteName} — ${tagline}`;
+  const pageDescription = description || intro;
 
   const baseUrl = siteConfig.siteUrl.replace(/\/$/, "");
   const canonical = canonicalPath
     ? `${baseUrl}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`
     : baseUrl;
-  const ogImage = toAbsoluteUrl(image, baseUrl);
+  const ogImage = toAbsoluteUrl(image || development.heroImages[0], baseUrl);
 
   return (
     <>
@@ -76,7 +76,6 @@ export default function Layout({
         <meta name="twitter:description" content={pageDescription} />
         {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-        {/* Structured JSON-LD */}
         {jsonLd && (
           <script
             type="application/ld+json"
@@ -85,16 +84,13 @@ export default function Layout({
         )}
       </Head>
 
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
+      <div className="min-h-screen flex flex-col bg-surface">
+        {!hideChrome && <Navbar />}
         <main className="flex-grow">{children}</main>
-        <Footer />
+        {!hideChrome && <Footer />}
 
-        {/* Conditional injection of the chat script */}
         {siteConfig.chatScript && (
-          <div
-            dangerouslySetInnerHTML={{ __html: siteConfig.chatScript }}
-          />
+          <div dangerouslySetInnerHTML={{ __html: siteConfig.chatScript }} />
         )}
       </div>
     </>

@@ -1,29 +1,21 @@
 import { GetServerSideProps } from "next";
-import { properties } from "@/data/properties";
 import { siteConfig } from "@/config/siteConfig";
 
 function generateSitemap(baseUrl: string): string {
   const today = new Date().toISOString().split("T")[0];
 
-  const staticPaths = [
-    { loc: "/", priority: "1.0", changefreq: "weekly" },
-    { loc: "/properties", priority: "0.9", changefreq: "daily" },
-    { loc: "/about", priority: "0.6", changefreq: "monthly" },
-    { loc: "/contact", priority: "0.6", changefreq: "monthly" },
+  // Single-development site — just the landing page (plus its English variant).
+  const entries = [
+    { loc: "/", priority: "1.0" },
+    { loc: "/en", priority: "0.9" },
   ];
 
-  const propertyPaths = properties.map((p) => ({
-    loc: `/properties/${p.slug}`,
-    priority: "0.8",
-    changefreq: "weekly",
-  }));
-
-  const urls = [...staticPaths, ...propertyPaths]
+  const urls = entries
     .map(
-      ({ loc, priority, changefreq }) => `  <url>
+      ({ loc, priority }) => `  <url>
     <loc>${baseUrl}${loc}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>${changefreq}</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
   </url>`
     )
@@ -36,7 +28,6 @@ ${urls}
 }
 
 export default function Sitemap() {
-  // Rendered in getServerSideProps; the component is never mounted
   return null;
 }
 
