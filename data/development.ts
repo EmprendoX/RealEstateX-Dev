@@ -143,6 +143,8 @@ export interface Development {
   heroImages: string[];
   heroVideoUrl?: string;
   galleryImages: string[];
+  virtualTourUrl?: string;
+  virtualTourProvider?: "matterport" | "youtube" | "vimeo" | "generic";
   brochureUrl?: string;
   concept: {
     heading: I18nText;
@@ -588,7 +590,12 @@ export const development: Development = {
   deliveryDate: "2028-01",
   totalUnits: 28,
   heroImages: CARDON_HERO,
+  // Uncomment to render an autoplaying background video in the hero instead of the image crossfade:
+  // heroVideoUrl: "https://videos.pexels.com/video-files/2169307/2169307-hd_1920_1080_30fps.mp4",
   galleryImages: CARDON_GALLERY,
+  // Placeholder Matterport demo — replace with the real project tour once available.
+  virtualTourUrl: "https://my.matterport.com/show/?m=SxQL3iGyoDo",
+  virtualTourProvider: "matterport",
   brochureUrl: undefined,
   concept: {
     heading: {

@@ -9,6 +9,8 @@ import ConceptSection from "@/components/ConceptSection";
 import TrustStrip from "@/components/TrustStrip";
 import LocationSection from "@/components/LocationSection";
 import AmenitiesSection from "@/components/AmenitiesSection";
+import GallerySection from "@/components/GallerySection";
+import VirtualTourSection from "@/components/VirtualTourSection";
 import ModelsSection from "@/components/ModelsSection";
 import AvailabilitySection from "@/components/AvailabilitySection";
 import PaymentPlanSection from "@/components/PaymentPlanSection";
@@ -35,7 +37,6 @@ export default function Home() {
     /^https?:\/\//i.test(img) ? img : `${baseUrl}${img.startsWith("/") ? img : `/${img}`}`
   );
 
-  // Schema.org Residence — real estate development at project-level
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Residence",
@@ -59,13 +60,13 @@ export default function Home() {
 
   return (
     <Layout jsonLd={jsonLd}>
-      {/* Section order — per critique 2026-07-18:
-         desire → product → trust → location → deeper spec → action */}
       <Hero />
       <ConceptSection />
       <TrustStrip />
       <LocationSection />
       <AmenitiesSection />
+      <GallerySection />
+      <VirtualTourSection />
       <ModelsSection />
       <AvailabilitySection />
       <PaymentPlanSection />

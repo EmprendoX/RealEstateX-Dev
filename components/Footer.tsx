@@ -83,6 +83,20 @@ export default function Footer() {
                 </ul>
               </>
             )}
+
+            <p className="text-eyebrow text-white/50 mt-6 mb-3">{t("footer.resources")}</p>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a
+                  href={`/api/brochure?lang=${locale ?? "es"}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  {t("footer.brochurePdf")} ↗
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 

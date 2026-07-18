@@ -43,29 +43,43 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen min-h-[720px] w-full overflow-hidden bg-ink text-white">
-      {/* Image stack — crossfade + Ken Burns */}
+      {/* Background — prefers heroVideoUrl if set; otherwise image crossfade. */}
       <div className="absolute inset-0 z-0">
-        {images.map((src, i) => (
-          <div
-            key={src}
-            className="absolute inset-0 transition-opacity duration-[1600ms] ease-smooth"
-            style={{ opacity: i === index ? 1 : 0 }}
-            aria-hidden={i !== index}
+        {development.heroVideoUrl ? (
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: "brightness(0.72) contrast(1.05) saturate(0.95)" }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={images[0]}
           >
-            <div className="relative w-full h-full animate-ken-burns">
-              <Image
-                src={src}
-                alt={`${development.name} — ${i + 1}`}
-                fill
-                priority={i === 0}
-                className="object-cover"
-                sizes="100vw"
-                unoptimized
-                style={{ filter: "brightness(0.72) contrast(1.05) saturate(0.95)" }}
-              />
+            <source src={development.heroVideoUrl} type="video/mp4" />
+          </video>
+        ) : (
+          images.map((src, i) => (
+            <div
+              key={src}
+              className="absolute inset-0 transition-opacity duration-[1600ms] ease-smooth"
+              style={{ opacity: i === index ? 1 : 0 }}
+              aria-hidden={i !== index}
+            >
+              <div className="relative w-full h-full animate-ken-burns">
+                <Image
+                  src={src}
+                  alt={`${development.name} — ${i + 1}`}
+                  fill
+                  priority={i === 0}
+                  className="object-cover"
+                  sizes="100vw"
+                  unoptimized
+                  style={{ filter: "brightness(0.72) contrast(1.05) saturate(0.95)" }}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
         <div className="absolute inset-0 hero-gradient" />
       </div>
 
@@ -123,8 +137,8 @@ export default function Hero() {
         <span className="block h-10 w-[1px] bg-white/40" />
       </a>
 
-      {/* Slide indicator dots */}
-      {hasMultiple && (
+      {/* Slide indicator dots (only for image crossfade, not for video) */}
+      {!development.heroVideoUrl && hasMultiple && (
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {images.map((_, i) => (
             <button

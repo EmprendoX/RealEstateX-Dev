@@ -75,6 +75,33 @@
     "countLabel": "amenities"
   },
 
+  "gallery": {
+    "eyebrow": "Gallery",
+    "heading": "Cardón in images.",
+    "intro": "Renderings and references for finishes, textures and shared spaces.",
+    "view": "Open",
+    "openImage": "Open image {{n}}",
+    "viewAll": "See all {{count}} images"
+  },
+
+  "virtualTour": {
+    "eyebrow": "Virtual tour",
+    "heading": "Walk the project without leaving home.",
+    "intro": "Immersive walkthrough of the showroom and the sample unit. Explore scale, layout and finishes from any device.",
+    "startCta": "Start tour",
+    "startHint": "Interactive 3D walkthrough",
+    "disclaimer": "Reference tour. Final units may vary in finishes and furnishings.",
+    "placeholderHeading": "Virtual tour coming soon.",
+    "placeholderBody": "The 3D showroom walkthrough will be available shortly. Request the private dossier and we'll let you know when it's ready.",
+    "placeholderCta": "Request dossier",
+    "provider": {
+      "matterport": "Powered by Matterport",
+      "youtube": "YouTube video",
+      "vimeo": "Vimeo video",
+      "generic": "Embedded content"
+    }
+  },
+
   "models": {
     "eyebrow": "Models",
     "heading": "Four ways to inhabit the project.",
@@ -247,6 +274,8 @@
     "contact": "Contact",
     "locationLabel": "Location",
     "followUs": "Follow us",
+    "resources": "Resources",
+    "brochurePdf": "Brochure PDF",
     "rightsReserved": "All rights reserved.",
     "developedBy": "Developed by"
   }

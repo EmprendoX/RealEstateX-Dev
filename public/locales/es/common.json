@@ -75,6 +75,33 @@
     "countLabel": "amenidades"
   },
 
+  "gallery": {
+    "eyebrow": "Galería",
+    "heading": "Cardón en imágenes.",
+    "intro": "Renders y referencias de acabados, texturas y espacios comunes del proyecto.",
+    "view": "Ampliar",
+    "openImage": "Abrir imagen {{n}}",
+    "viewAll": "Ver las {{count}} imágenes"
+  },
+
+  "virtualTour": {
+    "eyebrow": "Tour virtual",
+    "heading": "Camina por el proyecto sin salir de casa.",
+    "intro": "Recorrido inmersivo del showroom y la unidad muestra. Explora escala, distribución y acabados desde tu computadora o celular.",
+    "startCta": "Iniciar tour",
+    "startHint": "Recorrido 3D interactivo",
+    "disclaimer": "Tour de referencia. Las unidades finales pueden variar en detalles de acabados y mobiliario.",
+    "placeholderHeading": "Tour virtual próximamente.",
+    "placeholderBody": "El recorrido 3D del showroom estará disponible en breve. Solicita el dossier privado y te avisamos cuando esté listo.",
+    "placeholderCta": "Solicitar dossier",
+    "provider": {
+      "matterport": "Powered by Matterport",
+      "youtube": "Video en YouTube",
+      "vimeo": "Video en Vimeo",
+      "generic": "Contenido embebido"
+    }
+  },
+
   "models": {
     "eyebrow": "Modelos",
     "heading": "Cuatro formas de habitar el proyecto.",
@@ -247,6 +274,8 @@
     "contact": "Contacto",
     "locationLabel": "Ubicación",
     "followUs": "Síguenos",
+    "resources": "Recursos",
+    "brochurePdf": "Brochure PDF",
     "rightsReserved": "Todos los derechos reservados.",
     "developedBy": "Desarrollado por"
   }
