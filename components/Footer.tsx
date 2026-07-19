@@ -102,8 +102,14 @@ export default function Footer() {
 
         <div className="mt-16 pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-white/50">
           <p>© {year} {development.name}. {t("footer.rightsReserved")}</p>
-          <p>
-            {t("footer.developedBy")} <span className="text-white/80">{siteConfig.developerCompany}</span>
+          <p className="flex items-center gap-4">
+            <span>
+              {t("footer.developedBy")} <span className="text-white/80">{siteConfig.developerCompany}</span>
+            </span>
+            <span className="text-white/20">·</span>
+            <a href="/admin" className="text-white/60 hover:text-white transition-colors">
+              Admin
+            </a>
           </p>
         </div>
       </div>
